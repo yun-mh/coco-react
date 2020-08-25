@@ -11,6 +11,9 @@
 # production
 /build
 
+# tailwind output
+tailwind.output.css
+
 # misc
 .DS_Store
 .env.local

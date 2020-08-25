@@ -1,23 +1,14 @@
 import React from "react";
+import styled from "styled-components";
+import tw from "twin.macro";
+import Router from "./components/Router";
+
+const Test = styled.div`
+  ${tw`bg-teal-500 border-gray-300 mb-4 w-full border-solid border rounded py-2 px-4`}
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <Router isLoggedIn={false} />;
 }
 
 export default App;
