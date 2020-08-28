@@ -4,7 +4,15 @@ import AuthPresenter from "./AuthPresenter";
 const AuthContainer = () => {
   const [action, setAction] = useState("logIn");
 
-  return <AuthPresenter action={action} />;
+  const handleAction = () => {
+    if (action === "logIn") {
+      setAction("signIn");
+    } else {
+      setAction("logIn");
+    }
+  };
+
+  return <AuthPresenter action={action} handleAction={handleAction} />;
 };
 
 export default AuthContainer;

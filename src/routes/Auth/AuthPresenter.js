@@ -4,6 +4,8 @@ import tw from "twin.macro";
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
+import SignInForm from "../../components/SignInForm";
+import SignUpForm from "../../components/SignUpForm";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
@@ -19,12 +21,12 @@ const ActionContainer = styled.div`
   ${tw`w-full h-full bg-primary-light p-16`}
 `;
 
-const Form = styled.form`
+const FormContainer = styled.div`
   ${tw`flex flex-col bg-white w-full h-full rounded-lg`}
 `;
 
 const LogoContainer = styled.div`
-  ${tw`flex flex-1 justify-center items-center rounded-t-lg`}
+  ${tw`flex flex-none justify-center items-center rounded-t-lg my-16`}
 `;
 
 const Logo = styled.img`
@@ -32,7 +34,15 @@ const Logo = styled.img`
 `;
 
 const InputContainter = styled.div`
-  ${tw`flex-none bg-red-300`}
+  ${tw`flex flex-1 px-10 items-center`}
+`;
+
+const ActionTabContainer = styled.div`
+  ${tw`flex flex-row h-16`}
+`;
+
+const ActionTab = styled.div`
+  ${tw`flex flex-1 justify-center items-center cursor-pointer`}
 `;
 
 const Footer = styled.div`
@@ -40,10 +50,10 @@ const Footer = styled.div`
 `;
 
 const Copyright = styled.span`
-  ${tw`text-sm`}
+  ${tw`text-sm text-gray-600`}
 `;
 
-const AuthPresenter = ({ action }) => {
+const AuthPresenter = ({ action, handleAction }) => {
   return (
     <Container>
       <SlideContainer>
@@ -60,17 +70,39 @@ const AuthPresenter = ({ action }) => {
         </AutoplaySlider>
       </SlideContainer>
       <ActionContainer>
-        <Form>
+        <FormContainer>
           <LogoContainer>
             <Logo src={require("../../assets/images/logo.png")} />
           </LogoContainer>
+          <ActionTabContainer>
+            <ActionTab
+              className={
+                action === "logIn"
+                  ? "bg-secondary-light text-white"
+                  : "bg-gray-100 text-gray-900"
+              }
+              onClick={handleAction}
+            >
+              <div>ログイン</div>
+            </ActionTab>
+            <ActionTab
+              className={
+                action === "signIn"
+                  ? "bg-secondary-light text-white"
+                  : "bg-gray-100 text-gray-900"
+              }
+              onClick={handleAction}
+            >
+              <div>会員登録</div>
+            </ActionTab>
+          </ActionTabContainer>
           <InputContainter>
-            {action === "logIn" ? <div>login</div> : <div>signup</div>}
+            {action === "logIn" ? <SignInForm /> : <SignUpForm />}
           </InputContainter>
           <Footer>
             <Copyright>© 2020 Minho Yun</Copyright>
           </Footer>
-        </Form>
+        </FormContainer>
       </ActionContainer>
     </Container>
   );
