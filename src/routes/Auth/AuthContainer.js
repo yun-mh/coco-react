@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import AuthPresenter from "./AuthPresenter";
 
 const AuthContainer = () => {
-  return <AuthPresenter />;
+  const [action, setAction] = useState("logIn");
+
+  return <AuthPresenter action={action} />;
 };
 
 export default AuthContainer;

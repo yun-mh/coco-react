@@ -8,7 +8,11 @@ const Test = styled.div`
 `;
 
 function App() {
-  return <Router isLoggedIn={false} />;
+  return (
+    <>
+      <Router isLoggedIn={false} />
+    </>
+  );
 }
 
 export default App;
