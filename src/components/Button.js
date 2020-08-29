@@ -7,7 +7,7 @@ const Container = styled.div`
 `;
 
 const Btn = styled.button`
-  ${tw`px-5 h-12 rounded-full`}
+  ${tw`px-5 h-12 rounded-full focus:outline-none active:bg-primary-light`}
 `;
 
 const Button = ({ type, title, accent = false, onClick }) => {

@@ -1,9 +1,9 @@
 import React from "react";
-import styled from "styled-components";
-import tw from "twin.macro";
 import Routes from "./components/Routes";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { IS_LOGGED_IN } from "./queries/Auth/AuthQueries";
 
 function App() {
@@ -12,10 +12,9 @@ function App() {
   return (
     <>
       <Router>
-        <>
-          <Routes isLoggedIn={data?.isLoggedIn} />
-        </>
+        <Routes isLoggedIn={data?.isLoggedIn} />
       </Router>
+      <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
     </>
   );
 }

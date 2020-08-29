@@ -19,7 +19,6 @@ const LoggedOutRoutes = () => (
 );
 
 const AppRouter = ({ isLoggedIn }) => {
-  console.log(isLoggedIn);
   return isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />;
 };
 

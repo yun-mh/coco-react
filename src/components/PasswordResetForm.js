@@ -4,19 +4,16 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import Field from "./Field";
 import Button from "./Button";
-import { LOGIN, LOCAL_LOG_IN } from "../queries/Auth/AuthQueries";
+import { PASSWORD_RESET } from "../queries/Auth/AuthQueries";
 import TextButton from "./TextButton";
 
-const SignInForm = ({ action, setAction }) => {
-  const [loginMutation] = useMutation(LOGIN);
-  const [localLoginMutation] = useMutation(LOCAL_LOG_IN);
+const PasswordResetForm = ({ action, setAction }) => {
+  const [passwordResetMutation] = useMutation(PASSWORD_RESET);
 
   const validate = (values) => {
     const errors = {};
     if (!values.email) {
       errors.email = "メールアドレスを入力してください。";
-    } else if (!values.password) {
-      errors.password = "パスワードを入力してください。";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
       errors.email = "有効ではないメールアドレスです。";
     }
@@ -24,19 +21,21 @@ const SignInForm = ({ action, setAction }) => {
   };
 
   const onSubmit = async () => {
-    if (action === "logIn") {
+    if (action === "reset") {
       if (formik.values.email !== "") {
         try {
           const {
-            data: { login: token },
-          } = await loginMutation({
+            data: { passwordReset },
+          } = await passwordResetMutation({
             variables: {
               email: formik.values.email,
-              password: formik.values.password,
             },
           });
-          if (token !== "" || token !== undefined) {
-            localLoginMutation({ variables: { token } });
+          if (passwordReset) {
+            toast.success(
+              "😄 メールを送信しました！メール箱を確認してください。"
+            );
+            setAction("logIn");
           }
         } catch (e) {
           toast.error(`😢 ${e.message}`);
@@ -49,7 +48,6 @@ const SignInForm = ({ action, setAction }) => {
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
     },
     validate,
     onSubmit,
@@ -66,23 +64,14 @@ const SignInForm = ({ action, setAction }) => {
         onBlur={formik.handleBlur}
         value={formik.values.email}
       />
-      <Field
-        label="パスワード"
-        type="password"
-        name="password"
-        errors={formik.errors.password}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.password}
-      />
-      <Button type="submit" accent={true} title="ログイン" />
+      <Button type="submit" accent={true} title="メール送信" />
       <TextButton
-        text="パスワードを忘れた場合は"
-        title="パスワード再設定"
-        handleClick={() => setAction("reset")}
+        text="パスワードを思い出した場合は"
+        title="ログイン"
+        handleClick={() => setAction("logIn")}
       />
     </form>
   );
 };
 
-export default SignInForm;
+export default PasswordResetForm;
