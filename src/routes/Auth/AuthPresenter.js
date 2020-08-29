@@ -1,36 +1,38 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import AwesomeSlider from "react-awesome-slider";
-import withAutoplay from "react-awesome-slider/dist/autoplay";
-import "react-awesome-slider/dist/styles.css";
 import SignInForm from "../../components/SignInForm";
 import SignUpForm from "../../components/SignUpForm";
-
-const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const Container = styled.div`
   ${tw`flex w-full h-screen bg-primary-light`}
 `;
 
-const SlideContainer = styled.div`
-  ${tw`md:w-full md:h-full md:bg-primary-light`}
+const ImageContainer = styled.div`
+  ${tw`flex hidden md:block md:w-2/3 md:h-full bg-cover`}
+  background-image: url(${require("../../assets/images/main.jpg")});
+  background-position: center top;
+  box-shadow: inset 0 0 0 2000px rgba(187, 227, 222, 0.85);
 `;
 
 const ActionContainer = styled.div`
-  ${tw`w-full h-full bg-primary-light p-16`}
+  ${tw`flex flex-1 w-full h-full bg-primary-light`}
 `;
 
 const FormContainer = styled.div`
-  ${tw`flex flex-col bg-white w-full h-full rounded-lg`}
+  ${tw`flex flex-col bg-white w-full h-full`}
 `;
 
 const LogoContainer = styled.div`
-  ${tw`flex flex-none justify-center items-center rounded-t-lg my-16`}
+  ${tw`flex flex-col flex-none justify-center items-center my-12`}
 `;
 
 const Logo = styled.img`
-  ${tw`w-12 h-12`}
+  ${tw`w-12 h-12 m-1`}
+`;
+
+const Title = styled.img`
+  ${tw`h-5`}
 `;
 
 const InputContainter = styled.div`
@@ -38,7 +40,7 @@ const InputContainter = styled.div`
 `;
 
 const ActionTabContainer = styled.div`
-  ${tw`flex flex-row h-16`}
+  ${tw`flex flex-row h-12`}
 `;
 
 const ActionTab = styled.div`
@@ -46,40 +48,29 @@ const ActionTab = styled.div`
 `;
 
 const Footer = styled.div`
-  ${tw`flex h-8 justify-center items-center bg-secondary-light rounded-b-lg`}
+  ${tw`flex h-8 justify-center items-center bg-secondary-light`}
 `;
 
 const Copyright = styled.span`
-  ${tw`text-sm text-gray-600`}
+  ${tw`text-xs text-gray-600`}
 `;
 
 const AuthPresenter = ({ action, handleAction }) => {
   return (
     <Container>
-      <SlideContainer>
-        <AutoplaySlider
-          className="awssld aws-btn w-full h-full"
-          play={true}
-          interval={6000}
-          bullets={false}
-          organicArrows={false}
-        >
-          <div data-src={require("../../assets/images/main1.jpg")} />
-          <div data-src={require("../../assets/images/main2.jpg")} />
-          <div data-src={require("../../assets/images/main3.jpg")} />
-        </AutoplaySlider>
-      </SlideContainer>
+      <ImageContainer></ImageContainer>
       <ActionContainer>
         <FormContainer>
           <LogoContainer>
             <Logo src={require("../../assets/images/logo.png")} />
+            <Title src={require("../../assets/images/title.png")} />
           </LogoContainer>
           <ActionTabContainer>
             <ActionTab
               className={
                 action === "logIn"
-                  ? "bg-secondary-light text-white"
-                  : "bg-gray-100 text-gray-900"
+                  ? "bg-secondary-light text-gray-900"
+                  : "bg-gray-100 text-gray-400"
               }
               onClick={handleAction}
             >
@@ -88,8 +79,8 @@ const AuthPresenter = ({ action, handleAction }) => {
             <ActionTab
               className={
                 action === "signIn"
-                  ? "bg-secondary-light text-white"
-                  : "bg-gray-100 text-gray-900"
+                  ? "bg-secondary-light text-gray-900"
+                  : "bg-gray-100 text-gray-400"
               }
               onClick={handleAction}
             >
@@ -97,7 +88,11 @@ const AuthPresenter = ({ action, handleAction }) => {
             </ActionTab>
           </ActionTabContainer>
           <InputContainter>
-            {action === "logIn" ? <SignInForm /> : <SignUpForm />}
+            {action === "logIn" ? (
+              <SignInForm action={action} />
+            ) : (
+              <SignUpForm action={action} />
+            )}
           </InputContainter>
           <Footer>
             <Copyright>© 2020 Minho Yun</Copyright>

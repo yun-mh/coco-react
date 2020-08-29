@@ -1,4 +1,4 @@
-import { CachePersistor } from "apollo-cache-persist";
+// import { CachePersistor } from "apollo-cache-persist";
 import {
   ApolloClient,
   InMemoryCache,
@@ -12,7 +12,8 @@ import {
   offsetLimitPagination,
 } from "@apollo/client/utilities";
 import { WebSocketLink } from "@apollo/client/link/ws";
-import { defaults, resolvers } from "./localState";
+import { resolvers } from "./localState";
+import { IS_LOGGED_IN } from "../queries/Auth/AuthQueries";
 
 const httpLink = new HttpLink({
   uri:
@@ -56,10 +57,10 @@ const cache = new InMemoryCache({
   },
 });
 
-export const persistor = new CachePersistor({
-  cache,
-  storage: localStorage,
-});
+// export const persistor = new CachePersistor({
+//   cache,
+//   storage: localStorage,
+// });
 
 const client = new ApolloClient({
   cache,
@@ -76,6 +77,14 @@ const client = new ApolloClient({
       authLink.concat(httpLink)
     ),
   ]),
+  resolvers,
+});
+
+cache.writeQuery({
+  query: IS_LOGGED_IN,
+  data: {
+    isLoggedIn: !!localStorage.getItem("token"),
+  },
 });
 
 export default client;

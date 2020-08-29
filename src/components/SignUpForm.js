@@ -23,14 +23,8 @@ const SignInForm = () => (
         setSubmitting(false);
       }, 400);
     }}
-    render={({
-      values,
-      handleChange,
-      errors,
-      handleBlur,
-      isSubmitting,
-      touched,
-    }) => (
+  >
+    {({ values, handleChange, errors, handleBlur, isSubmitting, touched }) => (
       <form className="w-full">
         <Field
           label="ユーザ名"
@@ -59,7 +53,7 @@ const SignInForm = () => (
         <Button type="submit" accent={true} title="会員登録" />
       </form>
     )}
-  />
+  </Formik>
 );
 
 export default SignInForm;

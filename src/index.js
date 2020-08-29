@@ -9,9 +9,9 @@ import { PersistProvider } from "./apollo/PersistContext";
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <PersistProvider persistor={persistor}>
-        <App />
-      </PersistProvider>
+      {/* <PersistProvider persistor={persistor}> */}
+      <App />
+      {/* </PersistProvider> */}
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")

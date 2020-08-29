@@ -7,15 +7,15 @@ const Container = styled.div`
 `;
 
 const Label = styled.label`
-  ${tw`text-gray-800 font-semibold text-gray-500 mb-1`}
+  ${tw`ml-3 text-sm text-gray-800 font-semibold text-gray-500`}
 `;
 
 const Input = styled.input`
-  ${tw`border border-primary-light px-5 py-2 rounded-full`}
+  ${tw`border border-gray-400 px-5 py-1 rounded-full focus:outline-none focus:border-primary`}
 `;
 
 const Error = styled.div`
-  ${tw`text-sm text-red-500 h-8`}
+  ${tw`ml-3 text-xs text-red-500 h-6`}
 `;
 
 const Field = ({ label, type, name, errors, onChange, value }) => {
