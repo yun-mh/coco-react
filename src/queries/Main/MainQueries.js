@@ -200,6 +200,7 @@ export const VIEW_FEED = gql`
         }
         createdAt
       }
+      commentCount
       createdAt
     }
   }

@@ -7,7 +7,7 @@ import Header from "./Header";
 import SearchBar from "./SearchBar";
 
 const LoggedInRoutes = () => (
-  <div className="container mx-auto border-r bg-secondary-light">
+  <div className="container mx-auto border-r bg-secondary-light min-h-screen">
     <Header />
     <div className="w-full pl-16">
       <SearchBar />

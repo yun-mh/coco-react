@@ -23,7 +23,7 @@ const httpLink = new HttpLink({
 });
 
 const authLink = setContext(async (_, { headers }) => {
-  const token = localStorage.getItem("jwt");
+  const token = localStorage.getItem("token");
   return {
     headers: {
       ...headers,
