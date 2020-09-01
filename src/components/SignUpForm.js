@@ -51,6 +51,7 @@ const SignUpForm = ({ action, setAction }) => {
             setAction("logIn");
           }
         } catch (e) {
+          toast.error(`😢 ${e.message}`);
           console.warn(e);
         }
       }

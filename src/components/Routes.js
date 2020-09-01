@@ -24,6 +24,7 @@ const LoggedInRoutes = () => (
 const LoggedOutRoutes = () => (
   <>
     <Route exact path="/" component={Auth} />
+    {/* <Route path="/reset" component={<div>Test</div>} /> */}
     <Redirect from="*" to="/" />
   </>
 );

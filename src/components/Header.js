@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
+import { Link, withRouter } from "react-router-dom";
 import { Home, Bell, Send } from "react-feather";
 import { useQuery } from "@apollo/client";
 import { PROFILE_THUMBNAIL } from "../queries/Main/MainQueries";
@@ -21,37 +22,39 @@ const MenuContainer = styled.ul`
   ${tw`w-full flex flex-col items-center py-8`}
 `;
 
-const MenuItem = styled.li`
+const MenuLink = styled(Link)`
   ${tw`my-3 text-gray-600`}
+  ${({ current }) => (current ? tw`text-primary` : tw`text-gray-600`)}
 `;
 
 const Avatar = styled.img`
   ${tw`w-10 h-10 bg-primary-light rounded-full`}
 `;
 
-const Header = () => {
+const Header = ({ location: { pathname } }) => {
   const { loading, data } = useQuery(PROFILE_THUMBNAIL);
+
   return (
     <HeaderWrapper>
       <LogoContainer>
         <Logo src={require("../assets/images/logo.png")} />
       </LogoContainer>
       <MenuContainer>
-        <MenuItem>
+        <MenuLink current={pathname === "/"} to="/">
           <Home size={32} />
-        </MenuItem>
-        <MenuItem>
+        </MenuLink>
+        <MenuLink>
           <Bell size={32} />
-        </MenuItem>
-        <MenuItem>
+        </MenuLink>
+        <MenuLink current={pathname === "/chat"}>
           <Send size={32} />
-        </MenuItem>
-        <MenuItem>
+        </MenuLink>
+        <MenuLink>
           <Avatar src={data?.viewMyself?.avatar} />
-        </MenuItem>
+        </MenuLink>
       </MenuContainer>
     </HeaderWrapper>
   );
 };
 
-export default Header;
+export default withRouter(Header);

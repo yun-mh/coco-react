@@ -25,13 +25,13 @@ const PasswordResetForm = ({ action, setAction }) => {
       if (formik.values.email !== "") {
         try {
           const {
-            data: { passwordReset },
+            data: { webPasswordReset },
           } = await passwordResetMutation({
             variables: {
               email: formik.values.email,
             },
           });
-          if (passwordReset) {
+          if (webPasswordReset) {
             toast.success(
               "😄 メールを送信しました！メール箱を確認してください。"
             );

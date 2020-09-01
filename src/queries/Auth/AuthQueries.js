@@ -12,6 +12,12 @@ export const LOCAL_LOG_IN = gql`
   }
 `;
 
+export const LOCAL_LOG_OUT = gql`
+  mutation logUserOut {
+    logUserOut @client
+  }
+`;
+
 export const IS_LOGGED_IN = gql`
   query isLoggedIn {
     isLoggedIn @client
@@ -19,8 +25,8 @@ export const IS_LOGGED_IN = gql`
 `;
 
 export const PASSWORD_RESET = gql`
-  mutation passwordReset($email: String!) {
-    passwordReset(email: $email)
+  mutation webPasswordReset($email: String!) {
+    webPasswordReset(email: $email)
   }
 `;
 

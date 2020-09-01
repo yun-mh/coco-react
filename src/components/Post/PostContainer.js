@@ -3,22 +3,24 @@ import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 // import useInput from "../../Hooks/useInput";
 import PostPresenter from "./PostPresenter";
+import { useMutation } from "@apollo/client";
+import { TOGGLE_LIKE } from "../../queries/Main/MainQueries";
 // import { TOGGLE_LIKE, ADD_COMMENT } from "./PostQueries";
 
 const PostContainer = ({
   id,
   user,
   files,
-  likeCount,
-  isLiked,
+  likeCount: likeCountProp,
+  isLiked: isLikedProp,
   comments,
   commentCount,
   createdAt,
   caption,
   location,
 }) => {
-  //   const [isLikedS, setIsLiked] = useState(isLiked);
-  //   const [likeCountS, setLikeCount] = useState(likeCount);
+  const [isLiked, setIsLiked] = useState(isLikedProp);
+  const [likeCount, setLikeCount] = useState(likeCountProp);
   //   const [currentItem, setCurrentItem] = useState(0);
   //   const [selfComments, setSelfComments] = useState([]);
   //   const comment = useInput("");
@@ -40,16 +42,19 @@ const PostContainer = ({
   //     slide();
   //   }, [currentItem]);
 
-  //   const toggleLike = () => {
-  //     toggleLikeMutation();
-  //     if (isLikedS === true) {
-  //       setIsLiked(false);
-  //       setLikeCount(likeCountS - 1);
-  //     } else {
-  //       setIsLiked(true);
-  //       setLikeCount(likeCountS + 1);
-  //     }
-  //   };
+  const handleLike = async () => {
+    if (isLiked === true) {
+      setLikeCount((l) => l - 1);
+    } else {
+      setLikeCount((l) => l + 1);
+    }
+    try {
+      setIsLiked((p) => !p);
+      await toggleLikeMutation();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   //   const onKeyPress = async (e) => {
   //     const { which } = e;
@@ -67,12 +72,19 @@ const PostContainer = ({
   //     }
   //   };
 
+  const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
+    variables: {
+      postId: id,
+    },
+  });
+
   return (
     <PostPresenter
+      id={id}
       user={user}
       files={files}
       likeCount={likeCount}
-      //   isLiked={isLikedS}
+      isLiked={isLiked}
       location={location}
       caption={caption}
       comments={comments}
@@ -82,7 +94,7 @@ const PostContainer = ({
       //   setIsLiked={setIsLiked}
       //   setLikeCount={setLikeCount}
       //   currentItem={currentItem}
-      //   toggleLike={toggleLike}
+      handleLike={handleLike}
       //   onKeyPress={onKeyPress}
       //   selfComments={selfComments}
     />

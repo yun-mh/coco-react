@@ -1,9 +1,5 @@
 import { IS_LOGGED_IN } from "../queries/Auth/AuthQueries";
 
-// export const typeDefs = {
-//   isLoggedIn: localStorage.getItem("token") !== null ? true : false,
-// };
-
 export const resolvers = {
   Mutation: {
     logUserIn: (_, { token }, { cache }) => {

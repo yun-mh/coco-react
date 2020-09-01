@@ -18,9 +18,16 @@ import { IS_LOGGED_IN } from "../queries/Auth/AuthQueries";
 const httpLink = new HttpLink({
   uri:
     process.env.NODE_ENV === "development"
-      ? "https://api-coco.herokuapp.com/"
+      ? "http://localhost:4000/"
       : "https://api-coco.herokuapp.com/",
 });
+
+// const httpLink = new HttpLink({
+//   uri:
+//     process.env.NODE_ENV === "development"
+//       ? "https://api-coco.herokuapp.com/"
+//       : "https://api-coco.herokuapp.com/",
+// });
 
 const authLink = setContext(async (_, { headers }) => {
   const token = localStorage.getItem("token");

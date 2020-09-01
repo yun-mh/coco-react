@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { Heart, MessageSquare } from "react-feather";
+import moment from "moment";
 import Carousel, { Dots } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import Avatar from "../Avatar";
@@ -58,6 +59,7 @@ const Timestamp = styled.span`
 `;
 
 export default ({
+  id,
   user: { username, avatar },
   location,
   caption,
@@ -66,12 +68,14 @@ export default ({
   likeCount,
   commentCount,
   createdAt,
-  toggleLike,
+  handleLike,
   onKeyPress,
   comments,
   selfComments,
 }) => {
   const [value, setValue] = useState(0);
+
+  moment.locale("jp");
 
   const onChange = (value) => {
     setValue(value);
@@ -95,7 +99,7 @@ export default ({
       <Caption>{caption}</Caption>
       <Meta>
         <Buttons>
-          <Button onClick={toggleLike}>
+          <Button onClick={handleLike}>
             {isLiked ? (
               <Heart size={28} className="text-red-400" />
             ) : (
@@ -109,7 +113,7 @@ export default ({
           <CommentCount>{commentCount}</CommentCount>
         </Buttons>
         <span text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
-        <Timestamp>{createdAt}</Timestamp>
+        <Timestamp>{moment(createdAt).format("ll")}</Timestamp>
       </Meta>
     </Post>
   );
