@@ -69,9 +69,6 @@ export default ({
   commentCount,
   createdAt,
   handleLike,
-  onKeyPress,
-  comments,
-  selfComments,
 }) => {
   const [value, setValue] = useState(0);
 

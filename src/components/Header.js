@@ -32,7 +32,7 @@ const Avatar = styled.img`
 `;
 
 const Header = ({ location: { pathname } }) => {
-  const { loading, data } = useQuery(PROFILE_THUMBNAIL);
+  const { data } = useQuery(PROFILE_THUMBNAIL);
 
   return (
     <HeaderWrapper>
@@ -40,13 +40,13 @@ const Header = ({ location: { pathname } }) => {
         <Logo src={require("../assets/images/logo.png")} />
       </LogoContainer>
       <MenuContainer>
-        <MenuLink current={pathname === "/"} to="/">
+        <MenuLink current={pathname === "/" ? true : false} to="/">
           <Home size={32} />
         </MenuLink>
         <MenuLink>
           <Bell size={32} />
         </MenuLink>
-        <MenuLink current={pathname === "/chat"}>
+        <MenuLink current={pathname === "/chat" ? true : false}>
           <Send size={32} />
         </MenuLink>
         <MenuLink>
