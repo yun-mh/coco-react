@@ -29,9 +29,8 @@ const Caption = styled.p`
 `;
 
 const Image = styled.div`
-  height: 500px;
   background-image: url(${({ url }) => url});
-  ${tw`w-full bg-cover`}
+  ${tw`w-full h-quarter md:h-half bg-cover`}
 `;
 
 const Meta = styled.div`

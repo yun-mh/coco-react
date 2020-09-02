@@ -25,11 +25,15 @@ export const SEARCH = gql`
         id
         url
       }
+      likeCount
+      commentCount
     }
     searchUser(term: $term) {
       id
       avatar
       username
+      isFollowing
+      isMyself
     }
   }
 `;

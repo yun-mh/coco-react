@@ -8,6 +8,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      height: {
+        half: "50vh",
+        quarter: "25vh",
+      },
       colors: {
         primary: "rgb(118, 198, 188)",
         "primary-light": "rgba(187, 227, 222, 0.8)",

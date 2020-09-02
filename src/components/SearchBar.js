@@ -3,8 +3,6 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import { Search } from "react-feather";
 import { withRouter } from "react-router-dom";
-import { useMutation } from "@apollo/client";
-import { LOCAL_LOG_OUT } from "../queries/Auth/AuthQueries";
 import useInput from "../hooks/useInput";
 
 const SearchBarWrapper = styled.div`
@@ -17,8 +15,6 @@ const SearchInput = styled.input`
 
 const SearchBar = ({ history }) => {
   const search = useInput("");
-
-  const [logUserOut] = useMutation(LOCAL_LOG_OUT);
 
   const onSearchSubmit = (e) => {
     e.preventDefault();
@@ -35,8 +31,6 @@ const SearchBar = ({ history }) => {
           placeholder="検索"
         />
       </form>
-      <button onClick={logUserOut}>logout</button>
-      {/* delete later */}
     </SearchBarWrapper>
   );
 };
