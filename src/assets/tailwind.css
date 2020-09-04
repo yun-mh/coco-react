@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+*:focus {
+  outline: none;
+}
+
 .Toastify__toast--success {
   background: #74c8b7;
 }
@@ -12,4 +16,18 @@
 
 .Toastify__toast--error {
   background: #ed768c;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(115, 200, 183, 0.7);
+  z-index: 30;
+}
+
+.ReactModal__Body--open {
+  overflow: hidden;
 }

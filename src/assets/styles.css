@@ -10590,12 +10590,20 @@ video {
   height: 100vh;
 }
 
+.h-threequarter {
+  height: 75vh;
+}
+
 .h-half {
   height: 50vh;
 }
 
 .h-quarter {
   height: 25vh;
+}
+
+.h-1\/2 {
+  height: 50%;
 }
 
 .text-xs {
@@ -11860,6 +11868,10 @@ video {
 
 .max-h-screen {
   max-height: 100vh;
+}
+
+.max-h-1\/2 {
+  max-height: 50%;
 }
 
 .max-w-none {
@@ -19084,6 +19096,10 @@ video {
   animation: bounce 1s infinite;
 }
 
+*:focus {
+  outline: none;
+}
+
 .Toastify__toast--success {
   background: #74c8b7;
 }
@@ -19094,6 +19110,20 @@ video {
 
 .Toastify__toast--error {
   background: #ed768c;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(115, 200, 183, 0.7);
+  z-index: 30;
+}
+
+.ReactModal__Body--open {
+  overflow: hidden;
 }
 
 @media (min-width: 640px) {
@@ -29110,12 +29140,20 @@ video {
     height: 100vh;
   }
 
+  .sm\:h-threequarter {
+    height: 75vh;
+  }
+
   .sm\:h-half {
     height: 50vh;
   }
 
   .sm\:h-quarter {
     height: 25vh;
+  }
+
+  .sm\:h-1\/2 {
+    height: 50%;
   }
 
   .sm\:text-xs {
@@ -30380,6 +30418,10 @@ video {
 
   .sm\:max-h-screen {
     max-height: 100vh;
+  }
+
+  .sm\:max-h-1\/2 {
+    max-height: 50%;
   }
 
   .sm\:max-w-none {
@@ -47588,12 +47630,20 @@ video {
     height: 100vh;
   }
 
+  .md\:h-threequarter {
+    height: 75vh;
+  }
+
   .md\:h-half {
     height: 50vh;
   }
 
   .md\:h-quarter {
     height: 25vh;
+  }
+
+  .md\:h-1\/2 {
+    height: 50%;
   }
 
   .md\:text-xs {
@@ -48858,6 +48908,10 @@ video {
 
   .md\:max-h-screen {
     max-height: 100vh;
+  }
+
+  .md\:max-h-1\/2 {
+    max-height: 50%;
   }
 
   .md\:max-w-none {
@@ -66066,12 +66120,20 @@ video {
     height: 100vh;
   }
 
+  .lg\:h-threequarter {
+    height: 75vh;
+  }
+
   .lg\:h-half {
     height: 50vh;
   }
 
   .lg\:h-quarter {
     height: 25vh;
+  }
+
+  .lg\:h-1\/2 {
+    height: 50%;
   }
 
   .lg\:text-xs {
@@ -67336,6 +67398,10 @@ video {
 
   .lg\:max-h-screen {
     max-height: 100vh;
+  }
+
+  .lg\:max-h-1\/2 {
+    max-height: 50%;
   }
 
   .lg\:max-w-none {
@@ -84544,12 +84610,20 @@ video {
     height: 100vh;
   }
 
+  .xl\:h-threequarter {
+    height: 75vh;
+  }
+
   .xl\:h-half {
     height: 50vh;
   }
 
   .xl\:h-quarter {
     height: 25vh;
+  }
+
+  .xl\:h-1\/2 {
+    height: 50%;
   }
 
   .xl\:text-xs {
@@ -85814,6 +85888,10 @@ video {
 
   .xl\:max-h-screen {
     max-height: 100vh;
+  }
+
+  .xl\:max-h-1\/2 {
+    max-height: 50%;
   }
 
   .xl\:max-w-none {

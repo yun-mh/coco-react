@@ -9,8 +9,13 @@ module.exports = {
   theme: {
     extend: {
       height: {
+        threequarter: "75vh",
         half: "50vh",
         quarter: "25vh",
+        "1/2": "50%",
+      },
+      maxHeight: {
+        "1/2": "50%",
       },
       colors: {
         primary: "rgb(118, 198, 188)",
