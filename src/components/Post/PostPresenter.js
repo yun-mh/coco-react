@@ -4,6 +4,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import { Heart, MessageSquare } from "react-feather";
 import moment from "moment";
+import Modal from "react-modal";
 import Carousel, { Dots } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import Avatar from "../Avatar";
@@ -68,10 +69,11 @@ export default ({
   commentCount,
   createdAt,
   handleLike,
+  modalIsOpen,
+  openModal,
+  closeModal,
 }) => {
   const [value, setValue] = useState(0);
-
-  moment.locale("jp");
 
   const onChange = (value) => {
     setValue(value);
@@ -111,6 +113,24 @@ export default ({
         <span text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
         <Timestamp>{moment(createdAt).format("ll")}</Timestamp>
       </Meta>
+      <div>
+        <button onClick={openModal}>Open Modal</button>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Example Modal"
+        >
+          <button onClick={closeModal}>close</button>
+          <div>I am a modal</div>
+          <form>
+            <input />
+            <button>tab navigation</button>
+            <button>stays</button>
+            <button>inside</button>
+            <button>the modal</button>
+          </form>
+        </Modal>
+      </div>
     </Post>
   );
 };
