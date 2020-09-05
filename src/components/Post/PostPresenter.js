@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { X, Heart, MessageSquare } from "react-feather";
+import { X, Heart, MessageSquare, Edit2 } from "react-feather";
 import moment from "moment";
 import Modal from "react-modal";
 import Carousel, { Dots } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import Avatar from "../Avatar";
-import ScrollContainer from "react-indiana-drag-scroll";
 import TextareaAutosize from "react-autosize-textarea";
 import { useScrollBodyLock } from "../../hooks/useScrollBodyLock";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 const Post = styled.div`
   ${tw`bg-white px-2 rounded-lg`}
@@ -61,15 +61,6 @@ const Timestamp = styled.span`
   ${tw`block text-right font-light text-gray-500 border-b text-xs my-2 pb-2`}
 `;
 
-const customStyles = {
-  // content: {
-  //   top: "50%",
-  //   left: "50%",
-  //   right: "auto",
-  //   bottom: "auto",
-  // },
-};
-
 const ModalAvatar = styled.img`
   ${tw`w-8 h-8 bg-primary-light rounded-full`}
 `;
@@ -88,6 +79,8 @@ export default ({
   commentCount,
   createdAt,
   handleLike,
+  newComment,
+  handleAddComment,
   modalIsOpen,
   openModal,
   closeModal,
@@ -148,13 +141,12 @@ export default ({
         onAfterClose={unlock}
         shouldFocusAfterRender
         onRequestClose={closeModal}
-        style={customStyles}
         contentLabel="Example Modal"
-        className="w-2/3 h-threequarter bg-white rounded-lg shadow"
+        className="w-2/3 md:h-threequarter bg-white rounded-lg shadow"
         overlayClassName="Overlay flex justify-center items-center"
       >
-        <div className="h-full flex flex-col relative">
-          <div className="h-full flex flex-col md:flex-row flex-1 p-3">
+        <div className="h-full flex flex-col">
+          <div className="h-full p-3 flex flex-col md:flex-row items-center">
             <div className="w-full md:w-1/2 p-3">
               <Carousel value={subValue} onChange={onChangeSub}>
                 {files &&
@@ -166,7 +158,7 @@ export default ({
                 number={files.length}
               />
             </div>
-            <div className="w-full md:w-1/2 px-3 relative">
+            <div className="w-full md:w-1/2 px-3">
               <div className="flex justify-between py-2 h-20">
                 <div className="flex items-center">
                   <ModalAvatar src={avatar} />
@@ -184,12 +176,7 @@ export default ({
                 </div>
               </div>
               <p className="pb-3 border-b border-gray-300">{caption}</p>
-              {/* <ScrollContainer
-                className="overflow-y-auto"
-                horizontal={false}
-                hideScrollbars={false}
-              > */}
-              <div className="overflow-y-auto max-h-1/2">
+              <ScrollToBottom className="overflow-y-auto h-quarter md:h-half">
                 {comments &&
                   comments.map((comment) => (
                     <div key={comment.id} className="flex py-2">
@@ -207,10 +194,22 @@ export default ({
                       </div>
                     </div>
                   ))}
-                {/* </ScrollContainer> */}
-              </div>
-              <div className="w-full h-16 flex flex-row justify-end">
-                <TextareaAutosize className="h-10 w-full border" maxRows={3} />
+              </ScrollToBottom>
+              <div className="w-full h-16 flex items-center">
+                <TextareaAutosize
+                  className="h-10 w-full border px-3 py-1 mr-3 flex justify-center"
+                  maxRows={2}
+                  value={newComment.value}
+                  onChange={newComment.onChange}
+                  placeholder="コメント入力"
+                  async={true}
+                />
+                <button
+                  className="focus:outline-none"
+                  onClick={handleAddComment}
+                >
+                  <Edit2 className="text-gray-600" />
+                </button>
               </div>
             </div>
           </div>

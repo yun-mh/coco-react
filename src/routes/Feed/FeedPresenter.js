@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import tw from "twin.macro";
 import Post from "../../components/Post";
+import Loader from "../../components/Loader";
 
 const LoaderContainer = styled.div`
   ${tw`flex flex-col items-center`}
@@ -13,12 +14,9 @@ const Container = styled.div`
 `;
 
 const FeedPresenter = ({ loading, data }) => {
-  console.log(data);
   return (
     <>
-      <LoaderContainer>
-        {loading && <div className="bg-red-600">loading</div>}
-      </LoaderContainer>
+      <LoaderContainer>{loading && <Loader />}</LoaderContainer>
       <Container>
         <Helmet>
           <title>ホーム ｜ ココ</title>

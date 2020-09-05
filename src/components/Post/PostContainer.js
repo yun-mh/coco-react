@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import PostPresenter from "./PostPresenter";
 import { useMutation } from "@apollo/client";
-import { TOGGLE_LIKE } from "../../queries/Main/MainQueries";
+import {
+  TOGGLE_LIKE,
+  ADD_COMMENT,
+  VIEW_POST,
+} from "../../queries/Main/MainQueries";
+import useInput from "../../hooks/useInput";
+import { toast } from "react-toastify";
 
 const PostContainer = ({
   id,
@@ -17,7 +23,22 @@ const PostContainer = ({
 }) => {
   const [isLiked, setIsLiked] = useState(isLikedProp);
   const [likeCount, setLikeCount] = useState(likeCountProp);
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const comment = useInput("");
+
+  const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
+    variables: {
+      postId: id,
+    },
+  });
+
+  const [addCommentMutation] = useMutation(ADD_COMMENT, {
+    variables: {
+      postId: id,
+      text: comment.value,
+    },
+    refetchQueries: () => [{ query: VIEW_POST, variables: { id } }],
+  });
 
   const openModal = () => {
     setIsOpen(true);
@@ -41,11 +62,19 @@ const PostContainer = ({
     }
   };
 
-  const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
-    variables: {
-      postId: id,
-    },
-  });
+  const handleAddComment = async () => {
+    if (comment.value === "") {
+      return;
+    }
+
+    try {
+      await addCommentMutation();
+    } catch (error) {
+      toast.error("コメント作成に失敗しました。もう一度試してください。");
+    } finally {
+      comment.setValue("");
+    }
+  };
 
   return (
     <PostPresenter
@@ -59,7 +88,9 @@ const PostContainer = ({
       comments={comments}
       commentCount={commentCount}
       createdAt={createdAt}
+      newComment={comment}
       handleLike={handleLike}
+      handleAddComment={handleAddComment}
       modalIsOpen={modalIsOpen}
       openModal={openModal}
       closeModal={closeModal}

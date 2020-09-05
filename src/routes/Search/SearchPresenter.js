@@ -3,9 +3,14 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import UserCard from "../../components/UserCard";
 import PostCard from "../../components/PostCard";
+import Loader from "../../components/Loader";
 
 const Wrapper = styled.div`
   ${tw`bg-white rounded-b-lg`}
+`;
+
+const LoaderContainer = styled.div`
+  ${tw`flex flex-col items-center`}
 `;
 
 const ActionTabContainer = styled.div`
@@ -31,9 +36,9 @@ const SearchPresenter = ({ searchTerm, loading, data, tab, setTab }) => {
     return <Wrapper></Wrapper>;
   } else if (loading === true) {
     return (
-      <Wrapper>
-        <div>Loading...</div>
-      </Wrapper>
+      <LoaderContainer>
+        <Loader />
+      </LoaderContainer>
     );
   } else if (data && data.searchUser && data.searchPost) {
     return (
