@@ -28,6 +28,7 @@
     "react-scripts": "3.4.3",
     "react-scroll-to-bottom": "^4.0.0",
     "react-spinners": "^0.9.0",
+    "react-tippy": "^1.4.0",
     "react-toastify": "^6.0.8",
     "styled-components": "^5.1.1",
     "subscriptions-transport-ws": "^0.9.18",

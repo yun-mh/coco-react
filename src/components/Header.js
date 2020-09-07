@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { Link, withRouter } from "react-router-dom";
-import Popover from "react-popover";
+import { Link, withRouter, useHistory } from "react-router-dom";
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 import { Home, Bell, Send } from "react-feather";
 import { useQuery, useMutation } from "@apollo/client";
 import { PROFILE_THUMBNAIL } from "../queries/Main/MainQueries";
@@ -39,13 +40,8 @@ const Avatar = styled.img`
   ${({ isPopoverOpen }) => (isPopoverOpen ? tw`border-2 border-primary` : "")};
 `;
 
-const PopoverWithStyle = styled(Popover)`
-  & > .Popover-tip {
-    fill: #74c8b7;
-  }
-`;
-
 const Header = ({ location: { pathname } }) => {
+  let history = useHistory();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const { data } = useQuery(PROFILE_THUMBNAIL);
@@ -66,21 +62,30 @@ const Header = ({ location: { pathname } }) => {
         <MenuLink current={pathname === "/chat" ? "true" : "false"}>
           <Send size={32} />
         </MenuLink>
-        <PopoverWithStyle
-          isOpen={isPopoverOpen}
-          place="right"
-          onOuterAction={() => setIsPopoverOpen(false)}
-          body={
-            <ul className="bg-white flex flex-col px-8 py-3 border border-primary-light">
+        <Tooltip
+          useContext
+          interactive
+          open={isPopoverOpen}
+          position="right"
+          trigger="click"
+          arrow="true"
+          theme="light"
+          html={
+            <ul className="bg-white flex flex-col px-8 py-3">
               <li className="mb-3 text-gray-800 cursor-pointer">
-                <Link
-                  to={{
-                    pathname: `/${data?.viewMyself?.username}`,
-                    state: { id: data?.viewMyself?.id },
+                <div
+                  onClick={() => {
+                    setIsPopoverOpen(false);
+                    setTimeout(() => {
+                      history.push({
+                        pathname: `/${data?.viewMyself?.username}`,
+                        state: { id: data?.viewMyself?.id },
+                      });
+                    }, 300);
                   }}
                 >
                   プロフィール
-                </Link>
+                </div>
               </li>
               <li
                 className="text-red-400 text-center cursor-pointer"
@@ -97,7 +102,7 @@ const Header = ({ location: { pathname } }) => {
               isPopoverOpen={isPopoverOpen}
             />
           </AvatarContainer>
-        </PopoverWithStyle>
+        </Tooltip>
       </MenuContainer>
     </HeaderWrapper>
   );

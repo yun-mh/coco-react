@@ -4,7 +4,8 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import { Heart, MessageSquare, MoreHorizontal } from "react-feather";
 import moment from "moment";
-import Popover from "react-popover";
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 import Carousel, { Dots } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import Avatar from "../Avatar";
@@ -116,30 +117,28 @@ export default ({
           </UserColumn>
         </PostHeader>
         {myId === user.id ? (
-          <>
-            <Popover
-              isOpen={isPopoverOpen}
-              place="below"
-              onOuterAction={() => setIsPopoverOpen(false)}
-              body={
-                <ul className="bg-white flex flex-col px-8 py-3 border border-primary-light">
-                  <li className="mb-3 text-gray-800 cursor-pointer">
-                    <Link>編集</Link>
-                  </li>
-                  <li
-                    className="text-red-400 text-center cursor-pointer"
-                    onClick={handleDeletePost}
-                  >
-                    削除
-                  </li>
-                </ul>
-              }
-            >
-              <MoreHorizontal
-                onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-              />
-            </Popover>
-          </>
+          <Tooltip
+            interactive
+            position="bottom"
+            trigger="click"
+            arrow="true"
+            theme="light"
+            html={
+              <ul className="bg-white flex flex-col px-8 py-3">
+                <li
+                  className="text-red-400 text-center cursor-pointer"
+                  onClick={handleDeletePost}
+                >
+                  削除
+                </li>
+              </ul>
+            }
+          >
+            <MoreHorizontal
+              className="text-gray-600 cursor-pointer"
+              onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+            />
+          </Tooltip>
         ) : (
           ""
         )}

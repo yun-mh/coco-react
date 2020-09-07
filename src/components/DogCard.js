@@ -42,7 +42,7 @@ const Breed = styled.div`
   ${tw`mr-3`}
 `;
 
-const DogCard = ({ key, id, name, image, gender, breed, birthdate }) => {
+const DogCard = ({ id, name, image, gender, breed, birthdate }) => {
   //   const [modalIsOpen, setIsOpen] = useState(false);
 
   //   const [addCommentMutation] = useMutation(ADD_COMMENT, {
