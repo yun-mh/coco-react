@@ -26,7 +26,8 @@ const MenuContainer = styled.ul`
 
 const MenuLink = styled(Link)`
   ${tw`my-3 text-gray-600`}
-  ${({ current }) => (current ? tw`text-primary` : tw`text-gray-600`)}
+  ${({ current }) =>
+    current === "true" ? tw`text-primary` : tw`text-gray-600`}
 `;
 
 const AvatarContainer = styled.div`
@@ -56,13 +57,13 @@ const Header = ({ location: { pathname } }) => {
         <Logo src={require("../assets/images/logo.png")} />
       </LogoContainer>
       <MenuContainer>
-        <MenuLink current={pathname === "/" ? true : false} to="/">
+        <MenuLink current={pathname === "/" ? "true" : "false"} to="/">
           <Home size={32} />
         </MenuLink>
         <MenuLink>
           <Bell size={32} />
         </MenuLink>
-        <MenuLink current={pathname === "/chat" ? true : false}>
+        <MenuLink current={pathname === "/chat" ? "true" : "false"}>
           <Send size={32} />
         </MenuLink>
         <PopoverWithStyle
@@ -75,7 +76,14 @@ const Header = ({ location: { pathname } }) => {
               onClick={() => setIsPopoverOpen(!isPopoverOpen)}
             >
               <li className="mb-3 text-gray-800 cursor-pointer">
-                会員情報修正
+                <Link
+                  to={{
+                    pathname: `/${data?.viewMyself?.username}`,
+                    state: { id: data?.viewMyself?.id },
+                  }}
+                >
+                  プロフィール
+                </Link>
               </li>
               <li
                 className="text-red-400 text-center cursor-pointer"

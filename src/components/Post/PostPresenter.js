@@ -85,9 +85,21 @@ export default ({
   return (
     <Post>
       <Header>
-        <Avatar url={user.avatar} />
+        <Link
+          to={{
+            pathname: `/${user.username}`,
+            state: { id: user.id },
+          }}
+        >
+          <Avatar url={user.avatar} />
+        </Link>
         <UserColumn>
-          <Link to={`/${user.username}`}>
+          <Link
+            to={{
+              pathname: `/${user.username}`,
+              state: { id: user.id },
+            }}
+          >
             <span className="font-semibold">{user.username}</span>
           </Link>
           <Location>{location ? location : "　"}</Location>

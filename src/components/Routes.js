@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Auth from "../routes/Auth";
 import Feed from "../routes/Feed";
 import Search from "../routes/Search";
+import Profile from "../routes/Profile";
 import Header from "./Header";
 import SearchBar from "./SearchBar";
 
@@ -16,6 +17,7 @@ const LoggedInRoutes = () => (
         <Switch>
           <Route exact path="/" component={Feed} />
           <Route path="/search" component={Search} />
+          <Route path="/:username" component={Profile} />
           <Redirect from="*" to="/" />
         </Switch>
       </div>

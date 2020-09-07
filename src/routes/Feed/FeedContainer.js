@@ -11,7 +11,7 @@ const FeedContainer = () => {
       limit: ITEMS,
     },
   });
-  console.log(data);
+  // console.log(data);
 
   return <FeedPresenter loading={loading} data={data} />;
 };

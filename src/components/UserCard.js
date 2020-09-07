@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import tw from "twin.macro";
 import Avatar from "./Avatar";
 import FollowButton from "./FollowButton";
@@ -15,8 +16,16 @@ const Username = styled.div`
 const UserCard = ({ id, username, isFollowing, url, isMyself }) => {
   return (
     <Card>
-      <Avatar url={url} />
-      <Username>{username}</Username>
+      <Link
+        className="flex flex-col items-center"
+        to={{
+          pathname: `/${username}`,
+          state: { id },
+        }}
+      >
+        <Avatar url={url} />
+        <Username>{username}</Username>
+      </Link>
       {!isMyself && <FollowButton id={id} isFollowing={isFollowing} />}
     </Card>
   );

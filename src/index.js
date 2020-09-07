@@ -5,17 +5,14 @@ import App from "./App";
 import moment from "moment";
 import "moment/locale/ja";
 import "./assets/styles.css";
-import client, { persistor } from "./apollo/client";
-import { PersistProvider } from "./apollo/PersistContext";
+import client from "./apollo/client";
 
 moment.locale("ja");
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      {/* <PersistProvider persistor={persistor}> */}
       <App />
-      {/* </PersistProvider> */}
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")

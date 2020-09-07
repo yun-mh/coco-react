@@ -13,6 +13,7 @@ export const PROFILE_THUMBNAIL = gql`
     viewMyself {
       id
       avatar
+      username
     }
   }
 `;
@@ -77,9 +78,31 @@ export const VIEW_USER = gql`
       }
       posts {
         id
+        location
+        caption
+        user {
+          id
+          avatar
+          username
+        }
         files {
+          id
           url
         }
+        likeCount
+        isLiked
+        comments {
+          id
+          text
+          user {
+            id
+            username
+            avatar
+          }
+          createdAt
+        }
+        commentCount
+        createdAt
       }
       isFollowing
       isMyself
