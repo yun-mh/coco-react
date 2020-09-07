@@ -21,12 +21,31 @@ export const SEARCH = gql`
   query search($term: String!) {
     searchPost(term: $term) {
       id
+      location
+      caption
+      user {
+        id
+        avatar
+        username
+      }
       files {
         id
         url
       }
       likeCount
+      isLiked
+      comments {
+        id
+        text
+        user {
+          id
+          username
+          avatar
+        }
+        createdAt
+      }
       commentCount
+      createdAt
     }
     searchUser(term: $term) {
       id

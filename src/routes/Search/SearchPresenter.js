@@ -95,8 +95,16 @@ const SearchPresenter = ({ searchTerm, loading, data, tab, setTab }) => {
               {data.searchPost.map((post) => (
                 <PostCard
                   key={post.id}
+                  id={post.id}
+                  user={post.user}
+                  location={post.location}
+                  caption={post.caption}
+                  files={post.files}
+                  isLiked={post.isLiked}
                   likeCount={post.likeCount}
+                  comments={post.comments}
                   commentCount={post.commentCount}
+                  createdAt={post.createdAt}
                   file={post.files[0]}
                 />
               ))}
