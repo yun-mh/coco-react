@@ -10,10 +10,10 @@ const LoaderContainer = styled.div`
 `;
 
 const Container = styled.div`
-  ${tw`grid grid-cols-1 gap-8 lg:grid lg:grid-cols-2 lg:gap-8`}
+  ${tw`grid grid-cols-1 gap-8 lg:grid lg:grid-cols-2 lg:gap-8 relative`}
 `;
 
-const FeedPresenter = ({ loading, data }) => {
+const FeedPresenter = ({ loading, data, myId }) => {
   return (
     <>
       <LoaderContainer>{loading && <Loader />}</LoaderContainer>
@@ -37,6 +37,7 @@ const FeedPresenter = ({ loading, data }) => {
               isLiked={post.isLiked}
               comments={post.comments}
               createdAt={post.createdAt}
+              myId={myId}
             />
           ))}
       </Container>

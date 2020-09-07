@@ -25,7 +25,7 @@ const HeaderColumn = styled.div`
 `;
 
 const ProfileAvatar = styled.img`
-  ${tw`w-32 h-32 bg-primary-light rounded-full`}
+  ${tw`w-40 h-40 bg-primary-light rounded-full`}
 `;
 
 const UserInfo = styled.div`
@@ -43,12 +43,11 @@ const Username = styled.span`
 `;
 
 const Counts = styled.ul`
-  display: flex;
-  margin: 15px 0;
+  ${tw`flex mt-3`}
 `;
 
 const Count = styled.li`
-  ${tw`flex flex-row items-center`}
+  ${tw`flex flex-row items-center text-lg`}
   &:not(:last-child) {
     margin-right: 10px;
   }
@@ -115,7 +114,7 @@ const ProfilePresenter = ({ loading, data }) => {
                 <Username>{username}</Username>
                 {isMyself ? (
                   <div>
-                    <Settings className="text-gray-800 cursor-pointer" />
+                    <Settings className="text-gray-600 cursor-pointer" />
                   </div>
                 ) : (
                   <div>
@@ -125,15 +124,15 @@ const ProfilePresenter = ({ loading, data }) => {
               </UsernameRow>
               <Counts>
                 <Count>
-                  <span className="text-xs mr-2">ポスト</span>
+                  <span className="text-base mr-2">ポスト</span>
                   <span>{postsCount}</span>
                 </Count>
                 <Count>
-                  <span className="text-xs mr-2">フォロワー</span>
+                  <span className="text-base mr-2">フォロワー</span>
                   <span>{followersCount}</span>
                 </Count>
                 <Count>
-                  <span className="text-xs mr-2">フォロー中</span>
+                  <span className="text-base mr-2">フォロー中</span>
                   <span>{followingCount}</span>
                 </Count>
               </Counts>

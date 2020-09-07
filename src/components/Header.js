@@ -71,10 +71,7 @@ const Header = ({ location: { pathname } }) => {
           place="right"
           onOuterAction={() => setIsPopoverOpen(false)}
           body={
-            <ul
-              className="bg-white flex flex-col px-8 py-3 border border-primary-light"
-              onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-            >
+            <ul className="bg-white flex flex-col px-8 py-3 border border-primary-light">
               <li className="mb-3 text-gray-800 cursor-pointer">
                 <Link
                   to={{

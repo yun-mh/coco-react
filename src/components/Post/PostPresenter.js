@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { Heart, MessageSquare } from "react-feather";
+import { Heart, MessageSquare, MoreHorizontal } from "react-feather";
 import moment from "moment";
+import Popover from "react-popover";
 import Carousel, { Dots } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import Avatar from "../Avatar";
@@ -14,7 +15,11 @@ const Post = styled.div`
 `;
 
 const Header = styled.header`
-  ${tw`flex items-center p-4`}
+  ${tw`flex items-center justify-between p-4`}
+`;
+
+const PostHeader = styled.div`
+  ${tw`flex items-center`}
 `;
 
 const UserColumn = styled.div`
@@ -69,8 +74,12 @@ export default ({
   comments,
   commentCount,
   createdAt,
+  myId,
+  isPopoverOpen,
+  setIsPopoverOpen,
   handleLike,
   newComment,
+  handleDeletePost,
   handleAddComment,
   modalIsOpen,
   openModal,
@@ -85,25 +94,55 @@ export default ({
   return (
     <Post>
       <Header>
-        <Link
-          to={{
-            pathname: `/${user.username}`,
-            state: { id: user.id },
-          }}
-        >
-          <Avatar url={user.avatar} />
-        </Link>
-        <UserColumn>
+        <PostHeader>
           <Link
             to={{
               pathname: `/${user.username}`,
               state: { id: user.id },
             }}
           >
-            <span className="font-semibold">{user.username}</span>
+            <Avatar url={user.avatar} />
           </Link>
-          <Location>{location ? location : "　"}</Location>
-        </UserColumn>
+          <UserColumn>
+            <Link
+              to={{
+                pathname: `/${user.username}`,
+                state: { id: user.id },
+              }}
+            >
+              <span className="font-semibold">{user.username}</span>
+            </Link>
+            <Location>{location ? location : "　"}</Location>
+          </UserColumn>
+        </PostHeader>
+        {myId === user.id ? (
+          <>
+            <Popover
+              isOpen={isPopoverOpen}
+              place="below"
+              onOuterAction={() => setIsPopoverOpen(false)}
+              body={
+                <ul className="bg-white flex flex-col px-8 py-3 border border-primary-light">
+                  <li className="mb-3 text-gray-800 cursor-pointer">
+                    <Link>編集</Link>
+                  </li>
+                  <li
+                    className="text-red-400 text-center cursor-pointer"
+                    onClick={handleDeletePost}
+                  >
+                    削除
+                  </li>
+                </ul>
+              }
+            >
+              <MoreHorizontal
+                onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+              />
+            </Popover>
+          </>
+        ) : (
+          ""
+        )}
       </Header>
       <Carousel value={value} onChange={onChange}>
         {files && files.map((file) => <Image key={file.id} url={file.url} />)}

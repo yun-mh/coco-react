@@ -5,6 +5,8 @@ import {
   TOGGLE_LIKE,
   ADD_COMMENT,
   VIEW_POST,
+  DELETE_POST,
+  VIEW_FEED,
 } from "../../queries/Main/MainQueries";
 import useInput from "../../hooks/useInput";
 import { toast } from "react-toastify";
@@ -20,10 +22,15 @@ const PostContainer = ({
   createdAt,
   caption,
   location,
+  myId,
 }) => {
+  const ITEMS = 3;
+
   const [isLiked, setIsLiked] = useState(isLikedProp);
   const [likeCount, setLikeCount] = useState(likeCountProp);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
   const comment = useInput("");
 
   const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
@@ -38,6 +45,16 @@ const PostContainer = ({
       text: comment.value,
     },
     refetchQueries: () => [{ query: VIEW_POST, variables: { id } }],
+  });
+
+  const [deletePostMutation] = useMutation(DELETE_POST, {
+    variables: {
+      id,
+      action: "DELETE",
+    },
+    refetchQueries: () => [
+      { query: VIEW_FEED, variables: { offset: 0, limit: ITEMS } },
+    ],
   });
 
   const openModal = () => {
@@ -59,6 +76,17 @@ const PostContainer = ({
       await toggleLikeMutation();
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleDeletePost = async () => {
+    try {
+      const { data: editPost } = await deletePostMutation();
+      if (editPost) {
+        setIsPopoverOpen(false);
+      }
+    } catch (e) {
+      console.warn(e);
     }
   };
 
@@ -89,7 +117,11 @@ const PostContainer = ({
       commentCount={commentCount}
       createdAt={createdAt}
       newComment={comment}
+      myId={myId}
+      isPopoverOpen={isPopoverOpen}
+      setIsPopoverOpen={setIsPopoverOpen}
       handleLike={handleLike}
+      handleDeletePost={handleDeletePost}
       handleAddComment={handleAddComment}
       modalIsOpen={modalIsOpen}
       openModal={openModal}
