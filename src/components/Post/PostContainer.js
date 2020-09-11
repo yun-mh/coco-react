@@ -29,7 +29,6 @@ const PostContainer = ({
   const [isLiked, setIsLiked] = useState(isLikedProp);
   const [likeCount, setLikeCount] = useState(likeCountProp);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const comment = useInput("");
 
@@ -81,10 +80,7 @@ const PostContainer = ({
 
   const handleDeletePost = async () => {
     try {
-      const { data: editPost } = await deletePostMutation();
-      if (editPost) {
-        setIsPopoverOpen(false);
-      }
+      await deletePostMutation();
     } catch (e) {
       console.warn(e);
     }
@@ -118,8 +114,6 @@ const PostContainer = ({
       createdAt={createdAt}
       newComment={comment}
       myId={myId}
-      isPopoverOpen={isPopoverOpen}
-      setIsPopoverOpen={setIsPopoverOpen}
       handleLike={handleLike}
       handleDeletePost={handleDeletePost}
       handleAddComment={handleAddComment}

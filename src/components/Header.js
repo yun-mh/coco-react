@@ -37,14 +37,17 @@ const AvatarContainer = styled.div`
 
 const Avatar = styled.img`
   ${tw`w-10 h-10 bg-primary-light rounded-full`}
-  ${({ isPopoverOpen }) => (isPopoverOpen ? tw`border-2 border-primary` : "")};
+  ${({ isPopoverOpen, current }) =>
+    isPopoverOpen || current ? tw`border-2 border-primary` : ""};
 `;
 
 const Header = ({ location: { pathname } }) => {
   let history = useHistory();
+
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const { data } = useQuery(PROFILE_THUMBNAIL);
+
   const [logUserOut] = useMutation(LOCAL_LOG_OUT);
 
   return (
@@ -56,16 +59,29 @@ const Header = ({ location: { pathname } }) => {
         <MenuLink current={pathname === "/" ? "true" : "false"} to="/">
           <Home size={32} />
         </MenuLink>
-        <MenuLink>
+        <MenuLink
+          current={pathname === "/notification" ? "true" : "false"}
+          to={{
+            pathname: `/notification`,
+            state: { id: data?.viewMyself?.id },
+          }}
+        >
           <Bell size={32} />
         </MenuLink>
-        <MenuLink current={pathname === "/chat" ? "true" : "false"}>
+        <MenuLink
+          current={pathname === "/chat" ? "true" : "false"}
+          to={{
+            pathname: `/chat`,
+            state: { id: data?.viewMyself?.id },
+          }}
+        >
           <Send size={32} />
         </MenuLink>
         <Tooltip
           useContext
           interactive
           open={isPopoverOpen}
+          onRequestClose={() => setIsPopoverOpen(false)}
           position="right"
           trigger="click"
           arrow="true"
@@ -100,6 +116,9 @@ const Header = ({ location: { pathname } }) => {
             <Avatar
               src={data?.viewMyself?.avatar}
               isPopoverOpen={isPopoverOpen}
+              current={
+                pathname === `/${data?.viewMyself?.username}` ? true : false
+              }
             />
           </AvatarContainer>
         </Tooltip>

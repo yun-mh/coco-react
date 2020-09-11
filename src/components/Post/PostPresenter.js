@@ -76,8 +76,6 @@ export default ({
   commentCount,
   createdAt,
   myId,
-  isPopoverOpen,
-  setIsPopoverOpen,
   handleLike,
   newComment,
   handleDeletePost,
@@ -134,10 +132,7 @@ export default ({
               </ul>
             }
           >
-            <MoreHorizontal
-              className="text-gray-600 cursor-pointer"
-              onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-            />
+            <MoreHorizontal className="text-gray-600 cursor-pointer" />
           </Tooltip>
         ) : (
           ""

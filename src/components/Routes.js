@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Auth from "../routes/Auth";
 import Feed from "../routes/Feed";
+import Notification from "../routes/Notification";
+import Chat from "../routes/Chat";
 import Search from "../routes/Search";
 import Profile from "../routes/Profile";
 import Header from "./Header";
@@ -17,6 +19,8 @@ const LoggedInRoutes = () => (
         <Switch>
           <Route exact path="/" component={Feed} />
           <Route path="/search" component={Search} />
+          <Route path="/notification" component={Notification} />
+          <Route path="/chat" component={Chat} />
           <Route path="/:username" component={Profile} />
           <Redirect from="*" to="/" />
         </Switch>

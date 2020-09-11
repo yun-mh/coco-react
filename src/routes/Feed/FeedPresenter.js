@@ -17,10 +17,10 @@ const FeedPresenter = ({ loading, data, myId }) => {
   return (
     <>
       <LoaderContainer>{loading && <Loader />}</LoaderContainer>
+      <Helmet>
+        <title>ホーム ｜ ココ</title>
+      </Helmet>
       <Container>
-        <Helmet>
-          <title>ホーム ｜ ココ</title>
-        </Helmet>
         {!loading &&
           data &&
           data.viewFeed &&

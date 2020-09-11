@@ -7,70 +7,69 @@ import PostCard from "../../components/PostCard";
 import DogCard from "../../components/DogCard";
 import FollowButton from "../../components/FollowButton";
 import { Settings } from "react-feather";
+import { Tooltip } from "react-tippy";
 
 const Container = styled.div`
-  ${tw`bg-white rounded-lg p-5`}
+  ${tw`bg-white rounded-lg`}
 `;
 
 const LoaderContainer = styled.div`
   ${tw`flex flex-col items-center`}
 `;
 
-const Header = styled.header`
-  ${tw`flex justify-around items-center mb-20`}
+const Header = styled.div`
+  ${tw`flex justify-around items-center h-32 sm:h-quarter`}
 `;
 
 const HeaderColumn = styled.div`
-  ${tw`w-full flex flex-col bg-white md:w-1/2 md:h-40 md:justify-center md:items-center`}
+  ${tw`w-full flex flex-col sm:flex-row bg-white justify-center items-center`}
 `;
 
 const ProfileAvatar = styled.img`
-  ${tw`w-40 h-40 bg-primary-light rounded-full`}
+  ${tw`w-20 h-20 sm:w-32 sm:h-32 bg-primary-light rounded-full mr-5 sm:mr-10`}
 `;
 
 const UserInfo = styled.div`
-  ${tw`w-full flex flex-col`}
+  ${tw`flex flex-col`}
 `;
 
 const UsernameRow = styled.div`
-  ${tw`w-full flex flex-row items-center`}
+  ${tw`flex flex-row items-center`}
 `;
 
 const Username = styled.span`
-  font-size: 26px;
-  display: block;
-  margin-right: 16px;
+  ${tw`block text-base sm:text-2xl mr-5`}
 `;
 
 const Counts = styled.ul`
-  ${tw`flex mt-3`}
+  ${tw`mt-3 hidden sm:flex`}
 `;
 
 const Count = styled.li`
-  ${tw`flex flex-row items-center text-lg`}
+  ${tw`flex flex-row items-center text-base sm:text-lg`}
   &:not(:last-child) {
     margin-right: 10px;
   }
 `;
 
 const Content = styled.div`
-  ${tw`flex flex-row`}
+  ${tw`flex flex-col md:flex-row`}
 `;
 
 const Dogs = styled.div`
-  ${tw`p-5 w-1/2 h-half overflow-y-auto bg-gray-200 flex justify-center`}
+  ${tw`p-5 w-full h-auto md:w-1/2 sm:h-half overflow-y-auto bg-primary-light flex justify-center`}
 `;
 
 const TitleContainer = styled.div`
-  ${tw`flex flex-row h-8`}
+  ${tw`flex flex-row w-full h-8 items-center bg-primary hidden md:flex`}
 `;
 
 const Title = styled.h3`
-  ${tw`w-1/2 text-center`}
+  ${tw`w-1/2 text-center text-white text-sm`}
 `;
 
 const Posts = styled.div`
-  ${tw`p-5 w-1/2 h-half overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-gray-200`}
+  ${tw`p-5 w-full h-half md:w-1/2 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-primary-light`}
   grid-template-rows: 120px;
   grid-auto-rows: 120px;
 `;
@@ -107,15 +106,41 @@ const ProfilePresenter = ({ loading, data }) => {
         <Header>
           <HeaderColumn>
             <ProfileAvatar src={avatar} />
-          </HeaderColumn>
-          <HeaderColumn>
             <UserInfo>
               <UsernameRow>
                 <Username>{username}</Username>
                 {isMyself ? (
-                  <div>
+                  <Tooltip
+                    useContext
+                    interactive
+                    // open={isPopoverOpen}
+                    // onRequestClose={() => setIsPopoverOpen(false)}
+                    position="right"
+                    trigger="click"
+                    arrow="true"
+                    theme="light"
+                    html={
+                      <ul className="bg-white flex flex-col px-8 py-3">
+                        <li className="text-gray-800 cursor-pointer">
+                          <div
+                          // onClick={() => {
+                          //   setIsPopoverOpen(false);
+                          //   setTimeout(() => {
+                          //     history.push({
+                          //       pathname: `/${data?.viewMyself?.username}`,
+                          //       state: { id: data?.viewMyself?.id },
+                          //     });
+                          //   }, 300);
+                          // }}
+                          >
+                            会員情報変更
+                          </div>
+                        </li>
+                      </ul>
+                    }
+                  >
                     <Settings className="text-gray-600 cursor-pointer" />
-                  </div>
+                  </Tooltip>
                 ) : (
                   <div>
                     <FollowButton id={id} isFollowing={isFollowing} />
@@ -124,15 +149,21 @@ const ProfilePresenter = ({ loading, data }) => {
               </UsernameRow>
               <Counts>
                 <Count>
-                  <span className="text-base mr-2">ポスト</span>
+                  <span className="text-gray-600 text-xs sm:text-sm mr-2">
+                    ポスト
+                  </span>
                   <span>{postsCount}</span>
                 </Count>
                 <Count>
-                  <span className="text-base mr-2">フォロワー</span>
+                  <span className="text-gray-600 text-xs sm:text-sm mr-2">
+                    フォロワー
+                  </span>
                   <span>{followersCount}</span>
                 </Count>
                 <Count>
-                  <span className="text-base mr-2">フォロー中</span>
+                  <span className="text-gray-600 text-xs sm:text-sm mr-2">
+                    フォロー中
+                  </span>
                   <span>{followingCount}</span>
                 </Count>
               </Counts>
