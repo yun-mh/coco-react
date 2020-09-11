@@ -13,6 +13,7 @@ module.exports = {
         half: "50vh",
         quarter: "25vh",
         "1/2": "50%",
+        entire: "calc(100vh - 8rem)",
       },
       maxHeight: {
         "1/2": "50%",

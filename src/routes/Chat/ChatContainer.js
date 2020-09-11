@@ -1,13 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import ChatPresenter from "./ChatPresenter";
-import { useQuery } from "@apollo/client";
-import { VIEW_USER } from "../../queries/Main/MainQueries";
+import { useQuery, useSubscription } from "@apollo/client";
+import {
+  GET_CHATROOMS,
+  GET_FRIENDS,
+  VIEW_CHATROOMS,
+} from "../../queries/Main/MainQueries";
 
-const ChatContainer = () => {
-  //   const { loading, data } = useQuery(VIEW_USER, { variables: { id } });
+const ChatContainer = ({
+  location: {
+    state: { id },
+  },
+}) => {
+  const [rooms, setRooms] = useState([]);
+  const [friends, setFriends] = useState([]);
 
-  return <ChatPresenter />;
+  const { data: newData } = useSubscription(GET_CHATROOMS, {
+    variables: { id },
+  });
+
+  const { loading, error, data } = useQuery(VIEW_CHATROOMS);
+
+  const { loading: friendLoading, data: friendData } = useQuery(GET_FRIENDS);
+
+  useEffect(() => {
+    if (!loading) {
+      const { viewChatRooms } = data;
+      setRooms([...viewChatRooms]);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!friendLoading) {
+      const {
+        viewMyself: { following },
+      } = friendData;
+      setFriends([...following]);
+    }
+  }, [friendData]);
+
+  const handleNewChatroom = () => {
+    if (newData !== undefined) {
+      const { getChatrooms } = newData;
+      let target = rooms.find((room) => room.id === getChatrooms.id);
+      if (target === undefined) {
+        setRooms((prev) => [getChatrooms, ...prev]);
+      } else {
+        setRooms((prev) => {
+          target = getChatrooms;
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (newData !== undefined) {
+      handleNewChatroom();
+    }
+  }, [newData]);
+
+  return (
+    <ChatPresenter
+      loading={loading}
+      rooms={rooms}
+      friendLoading={friendLoading}
+      friends={friends}
+      currentUser={id}
+    />
+  );
 };
 
 export default withRouter(ChatContainer);
