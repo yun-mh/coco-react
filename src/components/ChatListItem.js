@@ -4,7 +4,8 @@ import tw from "twin.macro";
 import utils from "../utils";
 
 const Container = styled.div`
-  ${tw`flex flex-row w-full border-b border-gray-200 p-5 items-center justify-between`}
+  ${tw`flex flex-row w-full border-b border-gray-200 p-5 items-center justify-between cursor-pointer hover:bg-gray-100`}
+  ${({ selected }) => (selected ? tw`bg-gray-100` : tw`bg-white`)}
 `;
 
 const Avatar = styled.img`
@@ -33,6 +34,7 @@ const ChatListItem = ({
   participants,
   currentUser,
   toChatroom,
+  selected,
 }) => {
   const [msg, setMsg] = useState([]);
 
@@ -46,7 +48,7 @@ const ChatListItem = ({
   }, [messages]);
 
   return (
-    <Container onClick={toChatroom}>
+    <Container selected={selected} onClick={toChatroom}>
       <Avatar src={counterpart.avatar} />
       <InfoContainer>
         <Username>{counterpart.username}</Username>

@@ -28,11 +28,10 @@ const ChatroomsContainer = styled.div`
 `;
 
 const ChatContainer = styled.div`
-  ${tw`flex w-3/5 flex-col bg-white h-entire ml-10 rounded-lg`}
+  ${tw`flex w-3/5 flex-col h-entire ml-10 rounded-lg bg-white`}
 `;
 
 const ChatPresenter = ({
-  children,
   loading,
   rooms,
   friendLoading,
@@ -40,11 +39,13 @@ const ChatPresenter = ({
   currentUser,
 }) => {
   const [room, setRoom] = useState();
+  const [selected, setSelected] = useState();
   const [counterpart, setCounterpart] = useState();
 
   const toChatroom = (roomId) => {
     const target = rooms.filter((room) => room.id === roomId)[0];
     setRoom(target);
+    setSelected(target.id);
     const counter = target.participants.filter(
       (person) => person.id !== currentUser
     )[0];
@@ -87,6 +88,7 @@ const ChatPresenter = ({
                     participants={room.participants}
                     currentUser={currentUser}
                     toChatroom={() => toChatroom(room.id)}
+                    selected={selected === room.id ? true : false}
                   />
                 ))}
             </ChatroomsContainer>

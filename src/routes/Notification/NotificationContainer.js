@@ -26,7 +26,7 @@ const NotificationContainer = ({
       const target = viewNotification.filter((item) => item.from.id !== id);
       setNotifications([...target]);
     }
-  }, [data]);
+  }, [loading, data, id]);
 
   const handleNewNotification = () => {
     console.log(newData);

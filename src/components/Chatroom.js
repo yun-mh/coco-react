@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import styled from "styled-components";
+import tw from "twin.macro";
+import { Send } from "react-feather";
+import TextareaAutosize from "react-autosize-textarea";
+import ScrollToBottom from "react-scroll-to-bottom";
 import Loader from "./Loader";
 import MessageBox from "./MessageBox";
 import {
@@ -8,46 +12,32 @@ import {
   SEND_MESSAGE,
   VIEW_CHATROOM,
 } from "../queries/Main/MainQueries";
+import useInput from "../hooks/useInput";
 
 const Container = styled.div`
-  flex: 1;
+  ${tw`h-entire relative bg-primary-light`};
 `;
 
-const ChatContainer = styled.div`
-  flex: 1;
+const ChatHeader = styled.div`
+  ${tw`w-full bg-white h-16 flex flex-row p-2 justify-center items-center font-semibold`};
 `;
 
-const ScrollView = styled.div``;
+const LoaderContainer = styled.div`
+  ${tw`flex flex-col items-center h-chat`}
+`;
+
+const ChatContainer = styled(ScrollToBottom)`
+  ${tw`flex h-chat`};
+`;
 
 const MessageInputContainer = styled.div`
-  flex-direction: row;
-  padding-vertical: 10px;
-  padding-horizontal: 10px;
-  align-items: center;
-  border-bottom-width: 0.5px;
-  border-bottom-color: lightgray;
-  border-top-width: 0.5px;
-  border-top-color: lightgray;
-  border-style: solid;
-`;
-
-const MessageInput = styled.textarea`
-  flex: 9;
-  height: ${({ height }) => height}px;
-  min-height: 24px;
-  padding-right: 10px;
-`;
-
-const MessageAddContainer = styled.div`
-  flex: 1;
-  justify-content: flex-end;
-  align-items: center;
+  ${tw`w-full absolute bg-white bottom-0 h-16 flex flex-row p-2 items-center`};
 `;
 
 export default ({ id, counterpart, currentUser }) => {
-  const [text, setText] = useState("");
-  const [height, setHeight] = useState(40);
   const [messages, setMessages] = useState([]);
+
+  const msg = useInput("");
 
   const { data: newData } = useSubscription(GET_MESSAGE, {
     variables: { roomId: id },
@@ -60,7 +50,7 @@ export default ({ id, counterpart, currentUser }) => {
   const [sendMessageMutation] = useMutation(SEND_MESSAGE, {
     variables: {
       roomId: id,
-      message: text,
+      message: msg.value,
       toId: counterpart.id,
     },
     refetchQueries: () => [{ query: VIEW_CHATROOM, variables: { id: id } }],
@@ -73,7 +63,7 @@ export default ({ id, counterpart, currentUser }) => {
       } = data;
       setMessages(messages);
     }
-  }, [data]);
+  }, [loading, data]);
 
   const handleNewMessage = () => {
     if (newData !== undefined) {
@@ -92,25 +82,20 @@ export default ({ id, counterpart, currentUser }) => {
     } catch (error) {
       console.warn(error);
     } finally {
-      setText("");
+      msg.setValue("");
     }
   };
 
   return (
     <Container>
+      <ChatHeader>{counterpart.username}</ChatHeader>
       <ChatContainer>
         {loading ? (
-          <div
-            style={{
-              flex: 1,
-              jusfifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+          <LoaderContainer>
             <Loader />
-          </div>
+          </LoaderContainer>
         ) : (
-          <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
+          <div>
             {messages.map((message) => (
               <MessageBox
                 key={message.id}
@@ -118,21 +103,23 @@ export default ({ id, counterpart, currentUser }) => {
                 isMyself={message.from.id === currentUser ? true : false}
               />
             ))}
-          </ScrollView>
+          </div>
         )}
       </ChatContainer>
       <MessageInputContainer>
-        <MessageInput
-          placeholder="メッセージを入力"
-          value={text}
-          onChangeText={(text) => setText(text)}
-          editable={true}
-          multiline={true}
-          height={height}
+        <TextareaAutosize
+          className="h-10 w-full border px-3 py-1 mr-3 flex justify-center"
+          maxRows={2}
+          value={msg.value}
+          onChange={msg.onChange}
+          placeholder="コメント入力"
+          async={true}
         />
-        <MessageAddContainer>
-          {text !== "" ? <div onPress={handleSendMessage}>send</div> : null}
-        </MessageAddContainer>
+        {msg !== "" && (
+          <button className="focus:outline-none" onClick={handleSendMessage}>
+            <Send className="text-gray-600" />
+          </button>
+        )}
       </MessageInputContainer>
     </Container>
   );

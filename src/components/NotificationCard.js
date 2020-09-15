@@ -66,7 +66,7 @@ export default ({ id, from, type, post, cmt, currentUser }) => {
         setFollowDone(true);
       }
     }
-  }, [post, from]);
+  }, [type, cmt, post, from, currentUser]);
 
   return (
     <Container>

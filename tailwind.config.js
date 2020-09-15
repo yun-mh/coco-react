@@ -14,9 +14,15 @@ module.exports = {
         quarter: "25vh",
         "1/2": "50%",
         entire: "calc(100vh - 8rem)",
+        chat: "calc(100vh - 16rem)",
       },
       maxHeight: {
         "1/2": "50%",
+      },
+      maxWidth: {
+        "1/4": "25%",
+        "1/2": "50%",
+        "3/4": "75%",
       },
       colors: {
         primary: "rgb(118, 198, 188)",

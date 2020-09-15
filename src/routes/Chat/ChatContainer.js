@@ -20,7 +20,7 @@ const ChatContainer = ({
     variables: { id },
   });
 
-  const { loading, error, data } = useQuery(VIEW_CHATROOMS);
+  const { loading, data } = useQuery(VIEW_CHATROOMS);
 
   const { loading: friendLoading, data: friendData } = useQuery(GET_FRIENDS);
 
@@ -29,7 +29,7 @@ const ChatContainer = ({
       const { viewChatRooms } = data;
       setRooms([...viewChatRooms]);
     }
-  }, [data]);
+  }, [loading, data]);
 
   useEffect(() => {
     if (!friendLoading) {
@@ -38,7 +38,7 @@ const ChatContainer = ({
       } = friendData;
       setFriends([...following]);
     }
-  }, [friendData]);
+  }, [friendLoading, friendData]);
 
   const handleNewChatroom = () => {
     if (newData !== undefined) {

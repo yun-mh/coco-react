@@ -10610,6 +10610,10 @@ video {
   height: calc(100vh - 8rem);
 }
 
+.h-chat {
+  height: calc(100vh - 16rem);
+}
+
 .text-xs {
   font-size: 0.75rem;
 }
@@ -11940,6 +11944,18 @@ video {
 
 .max-w-screen-xl {
   max-width: 1280px;
+}
+
+.max-w-1\/4 {
+  max-width: 25%;
+}
+
+.max-w-1\/2 {
+  max-width: 50%;
+}
+
+.max-w-3\/4 {
+  max-width: 75%;
 }
 
 .min-h-0 {
@@ -29164,6 +29180,10 @@ video {
     height: calc(100vh - 8rem);
   }
 
+  .sm\:h-chat {
+    height: calc(100vh - 16rem);
+  }
+
   .sm\:text-xs {
     font-size: 0.75rem;
   }
@@ -30494,6 +30514,18 @@ video {
 
   .sm\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .sm\:max-w-1\/4 {
+    max-width: 25%;
+  }
+
+  .sm\:max-w-1\/2 {
+    max-width: 50%;
+  }
+
+  .sm\:max-w-3\/4 {
+    max-width: 75%;
   }
 
   .sm\:min-h-0 {
@@ -47658,6 +47690,10 @@ video {
     height: calc(100vh - 8rem);
   }
 
+  .md\:h-chat {
+    height: calc(100vh - 16rem);
+  }
+
   .md\:text-xs {
     font-size: 0.75rem;
   }
@@ -48988,6 +49024,18 @@ video {
 
   .md\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .md\:max-w-1\/4 {
+    max-width: 25%;
+  }
+
+  .md\:max-w-1\/2 {
+    max-width: 50%;
+  }
+
+  .md\:max-w-3\/4 {
+    max-width: 75%;
   }
 
   .md\:min-h-0 {
@@ -66152,6 +66200,10 @@ video {
     height: calc(100vh - 8rem);
   }
 
+  .lg\:h-chat {
+    height: calc(100vh - 16rem);
+  }
+
   .lg\:text-xs {
     font-size: 0.75rem;
   }
@@ -67482,6 +67534,18 @@ video {
 
   .lg\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .lg\:max-w-1\/4 {
+    max-width: 25%;
+  }
+
+  .lg\:max-w-1\/2 {
+    max-width: 50%;
+  }
+
+  .lg\:max-w-3\/4 {
+    max-width: 75%;
   }
 
   .lg\:min-h-0 {
@@ -84646,6 +84710,10 @@ video {
     height: calc(100vh - 8rem);
   }
 
+  .xl\:h-chat {
+    height: calc(100vh - 16rem);
+  }
+
   .xl\:text-xs {
     font-size: 0.75rem;
   }
@@ -85976,6 +86044,18 @@ video {
 
   .xl\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .xl\:max-w-1\/4 {
+    max-width: 25%;
+  }
+
+  .xl\:max-w-1\/2 {
+    max-width: 50%;
+  }
+
+  .xl\:max-w-3\/4 {
+    max-width: 75%;
   }
 
   .xl\:min-h-0 {

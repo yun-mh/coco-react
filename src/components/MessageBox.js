@@ -4,35 +4,28 @@ import tw from "twin.macro";
 import utils from "../utils";
 
 const Container = styled.div`
-  ${tw`flex flex-row items-start justify-start px-5 my-3`}
+  ${tw`w-full flex flex-row items-start justify-start px-5 my-3`}
 `;
 
 const Avatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  margin-right: 10px;
+  ${tw`w-12 h-12 rounded-full mr-5`}
 `;
 
 const ContentContainer = styled.div`
-  flex: 1;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: ${({ isMyself }) => (isMyself ? "flex-end" : "flex-start")};
+  ${tw`w-full flex flex-row items-end`};
+  ${({ isMyself }) => (isMyself ? tw`justify-end` : tw`justify-start`)};
 `;
 
 const MessageContainer = styled.div`
-  border-radius: 10px;
-  padding: 10px;
-  margin-left: ${({ isMyself }) => (isMyself ? 10 : 0)}px;
-  margin-right: ${({ isMyself }) => (isMyself ? 0 : 10)}px;
+  ${tw`max-w-1/2 rounded-lg p-3`};
+  ${({ isMyself }) =>
+    isMyself ? tw`ml-3 bg-secondary-light` : tw`mr-3 bg-white`};
 `;
 
 const Message = styled.p``;
 
 const Time = styled.span`
-  font-size: 12px;
-  padding-bottom: 5px;
+  ${tw`text-sm mb-3`}
 `;
 
 export default ({ message, isMyself }) => {

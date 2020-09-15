@@ -86,7 +86,6 @@ const ProfilePresenter = ({ loading, data }) => {
     const {
       viewUser: {
         id,
-        email,
         avatar,
         username,
         isFollowing,
