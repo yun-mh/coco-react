@@ -51,7 +51,7 @@ const Friend = ({ id, avatar, username, currentUser }) => {
 
   return (
     <Container>
-      <TouchableContainer onPress={toChatroom}>
+      <TouchableContainer>
         <Avatar src={avatar} />
         <Username>{username}</Username>
       </TouchableContainer>

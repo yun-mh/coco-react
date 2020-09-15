@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import tw from "twin.macro";
 import Loader from "../../components/Loader";
 import Friend from "../../components/Friend";
+import ChatListItem from "../../components/ChatListItem";
+import Chatroom from "../../components/Chatroom";
 
 const Container = styled.div`
   ${tw`flex flex-row w-full h-entire`}
@@ -26,7 +28,7 @@ const ChatroomsContainer = styled.div`
 `;
 
 const ChatContainer = styled.div`
-  ${tw`flex w-3/5 flex-col`}
+  ${tw`flex w-3/5 flex-col bg-white h-entire ml-10 rounded-lg`}
 `;
 
 const ChatPresenter = ({
@@ -37,7 +39,18 @@ const ChatPresenter = ({
   friends,
   currentUser,
 }) => {
-  console.log(friends);
+  const [room, setRoom] = useState();
+  const [counterpart, setCounterpart] = useState();
+
+  const toChatroom = (roomId) => {
+    const target = rooms.filter((room) => room.id === roomId)[0];
+    setRoom(target);
+    const counter = target.participants.filter(
+      (person) => person.id !== currentUser
+    )[0];
+    setCounterpart(counter);
+  };
+
   if (loading) {
     return (
       <LoaderContainer>
@@ -56,6 +69,7 @@ const ChatPresenter = ({
               {friends &&
                 friends.map((friend) => (
                   <Friend
+                    key={friend.id}
                     id={friend.id}
                     avatar={friend.avatar}
                     username={friend.username}
@@ -64,22 +78,29 @@ const ChatPresenter = ({
                 ))}
             </FriendsContainer>
             <ChatroomsContainer>
-              {rooms && rooms.map((room) => <div>{room.id}</div>)}
+              {rooms &&
+                rooms.map((room) => (
+                  <ChatListItem
+                    key={room.id}
+                    id={room.id}
+                    messages={room.messages}
+                    participants={room.participants}
+                    currentUser={currentUser}
+                    toChatroom={() => toChatroom(room.id)}
+                  />
+                ))}
             </ChatroomsContainer>
           </ChatBar>
-          <ChatContainer>{children}</ChatContainer>
-          {/* {!loading &&
-            notifications &&
-            notifications.map((item) => (
-              <NotificationCard
-                key={item.id}
-                id={item.id}
-                type={item.type}
-                from={item.from}
-                cmt={item.comment}
+          <ChatContainer>
+            {room && (
+              <Chatroom
+                key={room.id}
+                id={room.id}
+                counterpart={counterpart}
                 currentUser={currentUser}
               />
-            ))} */}
+            )}
+          </ChatContainer>
         </Container>
       </>
     );

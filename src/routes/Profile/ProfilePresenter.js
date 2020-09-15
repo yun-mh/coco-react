@@ -10,7 +10,7 @@ import { Settings } from "react-feather";
 import { Tooltip } from "react-tippy";
 
 const Container = styled.div`
-  ${tw`bg-white rounded-lg`}
+  ${tw`bg-white rounded-lg h-entire`}
 `;
 
 const LoaderContainer = styled.div`

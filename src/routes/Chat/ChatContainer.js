@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import ChatPresenter from "./ChatPresenter";
 import { useQuery, useSubscription } from "@apollo/client";
 import {
   GET_CHATROOMS,
   GET_FRIENDS,
   VIEW_CHATROOMS,
 } from "../../queries/Main/MainQueries";
+import ChatPresenter from "./ChatPresenter";
 
 const ChatContainer = ({
   location: {
