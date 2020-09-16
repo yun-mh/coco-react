@@ -9,7 +9,7 @@ const Container = styled.div`
 `;
 
 const TouchableContainer = styled.div`
-  ${tw`p-1 flex flex-col items-center`};
+  ${tw`p-1 flex flex-col items-center cursor-pointer`};
 `;
 
 const Avatar = styled.img`
@@ -51,7 +51,7 @@ const Friend = ({ id, avatar, username, currentUser }) => {
 
   return (
     <Container>
-      <TouchableContainer>
+      <TouchableContainer onClick={toChatroom}>
         <Avatar src={avatar} />
         <Username>{username}</Username>
       </TouchableContainer>
