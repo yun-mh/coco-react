@@ -7,6 +7,7 @@ import Notification from "../routes/Notification";
 import Chat from "../routes/Chat";
 import Search from "../routes/Search";
 import Profile from "../routes/Profile";
+import ProfileEdit from "../routes/ProfileEdit";
 import Header from "./Header";
 import SearchBar from "./SearchBar";
 
@@ -21,6 +22,7 @@ const LoggedInRoutes = () => (
           <Route path="/search" component={Search} />
           <Route path="/notification" component={Notification} />
           <Route path="/chat" component={Chat} />
+          <Route path="/:username/edit" component={ProfileEdit} />
           <Route path="/:username" component={Profile} />
           <Redirect from="*" to="/" />
         </Switch>

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
+import { useHistory, withRouter } from "react-router-dom";
 import tw from "twin.macro";
 import Loader from "../../components/Loader";
 import PostCard from "../../components/PostCard";
@@ -75,6 +76,8 @@ const Posts = styled.div`
 `;
 
 const ProfilePresenter = ({ loading, data }) => {
+  let history = useHistory();
+
   if (loading) {
     return (
       <LoaderContainer>
@@ -112,8 +115,6 @@ const ProfilePresenter = ({ loading, data }) => {
                   <Tooltip
                     useContext
                     interactive
-                    // open={isPopoverOpen}
-                    // onRequestClose={() => setIsPopoverOpen(false)}
                     position="right"
                     trigger="click"
                     arrow="true"
@@ -122,15 +123,12 @@ const ProfilePresenter = ({ loading, data }) => {
                       <ul className="bg-white flex flex-col px-8 py-3">
                         <li className="text-gray-800 cursor-pointer">
                           <div
-                          // onClick={() => {
-                          //   setIsPopoverOpen(false);
-                          //   setTimeout(() => {
-                          //     history.push({
-                          //       pathname: `/${data?.viewMyself?.username}`,
-                          //       state: { id: data?.viewMyself?.id },
-                          //     });
-                          //   }, 300);
-                          // }}
+                            onClick={() => {
+                              history.push({
+                                pathname: `${username}/edit`,
+                                state: { id: id },
+                              });
+                            }}
                           >
                             会員情報変更
                           </div>
@@ -211,4 +209,4 @@ const ProfilePresenter = ({ loading, data }) => {
   }
 };
 
-export default ProfilePresenter;
+export default withRouter(ProfilePresenter);
