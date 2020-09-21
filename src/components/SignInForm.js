@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
@@ -8,6 +8,8 @@ import { LOGIN, LOCAL_LOG_IN } from "../queries/Auth/AuthQueries";
 import TextButton from "./TextButton";
 
 const SignInForm = ({ action, setAction }) => {
+  const [loading, setLoading] = useState(false);
+
   const [loginMutation] = useMutation(LOGIN);
   const [localLoginMutation] = useMutation(LOCAL_LOG_IN);
 
@@ -26,6 +28,7 @@ const SignInForm = ({ action, setAction }) => {
   const onSubmit = async () => {
     if (action === "logIn") {
       if (formik.values.email !== "") {
+        setLoading(true);
         try {
           const {
             data: { login: token },
@@ -41,6 +44,8 @@ const SignInForm = ({ action, setAction }) => {
         } catch (e) {
           toast.error(`😢 ${e.message}`);
           console.warn(e);
+        } finally {
+          setLoading(false);
         }
       }
     }
@@ -75,7 +80,7 @@ const SignInForm = ({ action, setAction }) => {
         onBlur={formik.handleBlur}
         value={formik.values.password}
       />
-      <Button type="submit" accent={true} title="ログイン" />
+      <Button type="submit" loading={loading} accent={true} title="ログイン" />
       <TextButton
         text="パスワードを忘れた場合は"
         title="パスワード再設定"

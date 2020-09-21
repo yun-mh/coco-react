@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
@@ -7,6 +7,8 @@ import Button from "./Button";
 import { CREATE_ACCOUNT } from "../queries/Auth/AuthQueries";
 
 const SignUpForm = ({ action, setAction }) => {
+  const [loading, setLoading] = useState(false);
+
   const [createAccountMutation] = useMutation(CREATE_ACCOUNT);
 
   const validate = (values) => {
@@ -30,6 +32,7 @@ const SignUpForm = ({ action, setAction }) => {
         formik.values.email !== "" &&
         formik.values.password !== ""
       ) {
+        setLoading(true);
         try {
           const {
             data: { createAccount },
@@ -43,9 +46,7 @@ const SignUpForm = ({ action, setAction }) => {
             },
           });
           if (!createAccount) {
-            toast.success(
-              "😢 会員登録に失敗しました。もう一度行ってください。"
-            );
+            toast.error("😢 会員登録に失敗しました。もう一度行ってください。");
           } else {
             toast.success("😄 会員登録が完了しました！");
             setAction("logIn");
@@ -53,6 +54,8 @@ const SignUpForm = ({ action, setAction }) => {
         } catch (e) {
           toast.error(`😢 ${e.message}`);
           console.warn(e);
+        } finally {
+          setLoading(false);
         }
       }
     }
@@ -94,7 +97,7 @@ const SignUpForm = ({ action, setAction }) => {
         onBlur={formik.handleBlur}
         value={formik.values.password}
       />
-      <Button type="submit" accent={true} title="会員登録" />
+      <Button loading={loading} type="submit" accent={true} title="会員登録" />
     </form>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
@@ -8,6 +8,8 @@ import { PASSWORD_RESET } from "../queries/Auth/AuthQueries";
 import TextButton from "./TextButton";
 
 const PasswordResetForm = ({ action, setAction }) => {
+  const [loading, setLoading] = useState(false);
+
   const [passwordResetMutation] = useMutation(PASSWORD_RESET);
 
   const validate = (values) => {
@@ -23,6 +25,7 @@ const PasswordResetForm = ({ action, setAction }) => {
   const onSubmit = async () => {
     if (action === "reset") {
       if (formik.values.email !== "") {
+        setLoading(true);
         try {
           const {
             data: { webPasswordReset },
@@ -40,6 +43,8 @@ const PasswordResetForm = ({ action, setAction }) => {
         } catch (e) {
           toast.error(`😢 ${e.message}`);
           console.warn(e);
+        } finally {
+          setLoading(false);
         }
       }
     }
@@ -64,7 +69,12 @@ const PasswordResetForm = ({ action, setAction }) => {
         onBlur={formik.handleBlur}
         value={formik.values.email}
       />
-      <Button type="submit" accent={true} title="メール送信" />
+      <Button
+        loading={loading}
+        type="submit"
+        accent={true}
+        title="メール送信"
+      />
       <TextButton
         text="パスワードを思い出した場合は"
         title="ログイン"

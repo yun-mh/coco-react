@@ -30,9 +30,18 @@ export const PASSWORD_RESET = gql`
   }
 `;
 
-export const CODE_CHECK = gql`
-  mutation codeCheck($code: String!, $email: String!) {
-    codeCheck(code: $code, email: $email)
+export const TOKEN_CHECK = gql`
+  query tokenCheck($token: String!) {
+    tokenCheck(token: $token)
+  }
+`;
+
+export const VIEW_USER = gql`
+  query viewUser($id: String!) {
+    viewUser(id: $id) {
+      id
+      email
+    }
   }
 `;
 
