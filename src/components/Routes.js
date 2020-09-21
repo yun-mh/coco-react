@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Auth from "../routes/Auth";
+import PasswordReset from "../routes/PasswordReset";
 import Feed from "../routes/Feed";
 import Notification from "../routes/Notification";
 import Chat from "../routes/Chat";
@@ -32,10 +33,11 @@ const LoggedInRoutes = () => (
 );
 
 const LoggedOutRoutes = () => (
-  <>
+  <Switch>
     <Route exact path="/" component={Auth} />
+    <Route path="/reset/:id/:token" component={PasswordReset} />
     <Redirect from="*" to="/" />
-  </>
+  </Switch>
 );
 
 const AppRouter = ({ isLoggedIn }) => {
