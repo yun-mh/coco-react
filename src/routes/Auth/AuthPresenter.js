@@ -17,7 +17,7 @@ const ImageContainer = styled.div`
     3
   )}.jpg`)});
   background-position: center top;
-  box-shadow: inset 0 0 0 2000px rgba(187, 227, 222, 0.85);
+  box-shadow: inset 0 0 0 2000px rgba(187, 227, 222, 0.7);
 `;
 
 const ActionContainer = styled.div`
