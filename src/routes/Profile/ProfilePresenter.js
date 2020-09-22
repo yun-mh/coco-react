@@ -89,6 +89,7 @@ const ProfilePresenter = ({ loading, data }) => {
     const {
       viewUser: {
         id,
+        email,
         avatar,
         username,
         isFollowing,
@@ -126,7 +127,12 @@ const ProfilePresenter = ({ loading, data }) => {
                             onClick={() => {
                               history.push({
                                 pathname: `${username}/edit`,
-                                state: { id: id },
+                                state: {
+                                  id: id,
+                                  username: username,
+                                  avatar: avatar,
+                                  email: email,
+                                },
                               });
                             }}
                           >

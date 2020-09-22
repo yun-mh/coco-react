@@ -13,10 +13,10 @@ const SignUpForm = ({ action, setAction }) => {
 
   const validate = (values) => {
     const errors = {};
-    if (!values.email) {
-      errors.email = "必須項目です。";
-    } else if (!values.username) {
+    if (!values.username) {
       errors.username = "必須項目です。";
+    } else if (!values.email) {
+      errors.email = "必須項目です。";
     } else if (!values.password) {
       errors.password = "必須項目です。";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
@@ -77,6 +77,7 @@ const SignUpForm = ({ action, setAction }) => {
         label="ユーザ名"
         type="text"
         name="username"
+        errors={formik.errors.username}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.username}
@@ -85,6 +86,7 @@ const SignUpForm = ({ action, setAction }) => {
         label="メールアドレス"
         type="email"
         name="email"
+        errors={formik.errors.email}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.email}
@@ -93,6 +95,7 @@ const SignUpForm = ({ action, setAction }) => {
         label="パスワード"
         type="password"
         name="password"
+        errors={formik.errors.password}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.password}
