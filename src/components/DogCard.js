@@ -2,17 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import moment from "moment";
-import { Calendar } from "react-feather";
+import { Calendar, MoreHorizontal } from "react-feather";
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 
 const Container = styled.div`
-  ${tw`w-3/4 h-24 md:h-32 px-4 py-2 flex flex-col md:flex-row items-center bg-white rounded-lg`}
+  ${tw`w-3/4 h-24 md:h-32 px-4 py-2 flex flex-col md:flex-row items-center justify-between bg-white rounded-lg`}
 `;
 
 const InfoContainer = styled.div`
   ${tw`flex flex-col invisible md:visible`}
 `;
 const DogImage = styled.img`
-  ${tw`w-20 h-20 rounded-lg mr-2`}
+  ${tw`w-20 h-20 rounded-lg`}
 `;
 const DogHeader = styled.div`
   ${tw`flex flex-row`}
@@ -65,6 +67,31 @@ const DogCard = ({ id, name, image, gender, breed, birthdate }) => {
           <Breed>{breed}</Breed>
         </DogInfo>
       </InfoContainer>
+      <Tooltip
+        interactive
+        position="bottom"
+        trigger="click"
+        arrow="true"
+        theme="light"
+        html={
+          <ul className="bg-white flex flex-col px-8 py-3">
+            <li
+              className="mb-3 text-center cursor-pointer"
+              // onClick={handleDeletePost}
+            >
+              修正
+            </li>
+            <li
+              className="text-red-400 text-center cursor-pointer"
+              // onClick={handleDeletePost}
+            >
+              削除
+            </li>
+          </ul>
+        }
+      >
+        <MoreHorizontal className="text-gray-600 cursor-pointer" />
+      </Tooltip>
     </Container>
   );
 };

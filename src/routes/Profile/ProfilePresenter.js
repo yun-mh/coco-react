@@ -11,7 +11,7 @@ import { Settings } from "react-feather";
 import { Tooltip } from "react-tippy";
 
 const Container = styled.div`
-  ${tw`bg-white rounded-lg h-entire`}
+  ${tw`bg-white rounded-lg h-entire flex flex-col justify-between`}
 `;
 
 const LoaderContainer = styled.div`
@@ -58,7 +58,7 @@ const Content = styled.div`
 `;
 
 const Dogs = styled.div`
-  ${tw`p-5 w-full h-auto md:w-1/2 sm:h-half overflow-y-auto bg-primary-light flex justify-center`}
+  ${tw`p-5 w-full md:w-1/2 md:h-half overflow-y-auto bg-primary-light flex justify-center md:rounded-bl-lg`}
 `;
 
 const TitleContainer = styled.div`
@@ -70,7 +70,7 @@ const Title = styled.h3`
 `;
 
 const Posts = styled.div`
-  ${tw`p-5 w-full h-half md:w-1/2 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-primary-light`}
+  ${tw`p-5 w-full h-half md:w-1/2 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-primary-light md:rounded-br-lg`}
   grid-template-rows: 120px;
   grid-auto-rows: 120px;
 `;
@@ -172,43 +172,45 @@ const ProfilePresenter = ({ loading, data }) => {
             </UserInfo>
           </HeaderColumn>
         </Header>
-        <TitleContainer>
-          <Title>マイドッグ</Title>
-          <Title>マイポスト</Title>
-        </TitleContainer>
-        <Content>
-          <Dogs>
-            {dogs.map((dog) => (
-              <DogCard
-                key={dog.id}
-                id={dog.id}
-                name={dog.name}
-                image={dog.image}
-                gender={dog.gender}
-                breed={dog.breed}
-                birthdate={dog.birthdate}
-              />
-            ))}
-          </Dogs>
-          <Posts>
-            {posts.map((post) => (
-              <PostCard
-                key={post.id}
-                id={post.id}
-                user={post.user}
-                location={post.location}
-                caption={post.caption}
-                files={post.files}
-                isLiked={post.isLiked}
-                likeCount={post.likeCount}
-                comments={post.comments}
-                commentCount={post.commentCount}
-                createdAt={post.createdAt}
-                file={post.files[0]}
-              />
-            ))}
-          </Posts>
-        </Content>
+        <div>
+          <TitleContainer>
+            <Title>マイドッグ</Title>
+            <Title>マイポスト</Title>
+          </TitleContainer>
+          <Content>
+            <Dogs>
+              {dogs.map((dog) => (
+                <DogCard
+                  key={dog.id}
+                  id={dog.id}
+                  name={dog.name}
+                  image={dog.image}
+                  gender={dog.gender}
+                  breed={dog.breed}
+                  birthdate={dog.birthdate}
+                />
+              ))}
+            </Dogs>
+            <Posts>
+              {posts.map((post) => (
+                <PostCard
+                  key={post.id}
+                  id={post.id}
+                  user={post.user}
+                  location={post.location}
+                  caption={post.caption}
+                  files={post.files}
+                  isLiked={post.isLiked}
+                  likeCount={post.likeCount}
+                  comments={post.comments}
+                  commentCount={post.commentCount}
+                  createdAt={post.createdAt}
+                  file={post.files[0]}
+                />
+              ))}
+            </Posts>
+          </Content>
+        </div>
       </Container>
     );
   }
