@@ -5,7 +5,6 @@ import tw from "twin.macro";
 import { Plus } from "react-feather";
 import Field from "../../components/Field";
 import Button from "../../components/Button";
-import { toast } from "react-toastify";
 
 const Container = styled.div`
   ${tw`bg-white rounded-lg h-entire flex flex-col items-center justify-center`}
@@ -35,7 +34,6 @@ const ProfileEditPresenter = ({
   inputEl,
   avatar,
   email,
-  username,
   formik,
   handlePickAvatar,
 }) => {

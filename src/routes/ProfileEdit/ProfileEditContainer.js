@@ -50,7 +50,6 @@ const ProfileEditContainer = ({
 
       const formData = new FormData();
       formData.append("file", image);
-      console.log(formData);
       const {
         data: { locations },
       } = await axios.post(
@@ -75,11 +74,9 @@ const ProfileEditContainer = ({
         });
         if (editUser) {
           toast.success("😄 会員情報を変更しました！");
-          console.log(editUser);
         }
       } catch (e) {
         toast.error(`😢 ${e.message}`);
-        console.warn(e);
       } finally {
         setLoading(false);
       }

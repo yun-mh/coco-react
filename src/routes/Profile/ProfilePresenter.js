@@ -85,7 +85,6 @@ const ProfilePresenter = ({ loading, data }) => {
       </LoaderContainer>
     );
   } else {
-    console.log(data);
     const {
       viewUser: {
         id,

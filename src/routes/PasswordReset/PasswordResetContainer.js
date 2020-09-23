@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
+import { useQuery } from "@apollo/client";
 import { VIEW_USER, TOKEN_CHECK } from "../../queries/Auth/AuthQueries";
 import PasswordResetPresenter from "./PasswordResetPresenter";
 
