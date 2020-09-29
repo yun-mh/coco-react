@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { useHistory, withRouter } from "react-router-dom";
 import tw from "twin.macro";
+import { PlusCircle, Settings } from "react-feather";
+import { Tooltip } from "react-tippy";
 import Loader from "../../components/Loader";
 import PostCard from "../../components/PostCard";
 import DogCard from "../../components/DogCard";
 import FollowButton from "../../components/FollowButton";
-import { Settings } from "react-feather";
-import { Tooltip } from "react-tippy";
+import AddDogModal from "../../components/AddDogModal";
 
 const Container = styled.div`
   ${tw`bg-white rounded-lg h-entire flex flex-col justify-between`}
@@ -75,7 +76,13 @@ const Posts = styled.div`
   grid-auto-rows: 120px;
 `;
 
-const ProfilePresenter = ({ loading, data }) => {
+const ProfilePresenter = ({
+  loading,
+  data,
+  modalIsOpen,
+  openModal,
+  closeModal,
+}) => {
   let history = useHistory();
 
   if (loading) {
@@ -100,6 +107,7 @@ const ProfilePresenter = ({ loading, data }) => {
         dogs,
       },
     } = data;
+
     return (
       <Container>
         <Helmet>
@@ -179,6 +187,10 @@ const ProfilePresenter = ({ loading, data }) => {
           </TitleContainer>
           <Content>
             <Dogs>
+              <PlusCircle
+                className="text-gray-600 cursor-pointer"
+                onClick={openModal}
+              />
               {dogs.map((dog) => (
                 <DogCard
                   key={dog.id}
@@ -188,6 +200,7 @@ const ProfilePresenter = ({ loading, data }) => {
                   gender={dog.gender}
                   breed={dog.breed}
                   birthdate={dog.birthdate}
+                  currentUser={id}
                 />
               ))}
             </Dogs>
@@ -211,6 +224,11 @@ const ProfilePresenter = ({ loading, data }) => {
             </Posts>
           </Content>
         </div>
+        <AddDogModal
+          currentUser={id}
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+        />
       </Container>
     );
   }

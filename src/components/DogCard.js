@@ -5,6 +5,9 @@ import moment from "moment";
 import { Calendar, MoreHorizontal } from "react-feather";
 import { Tooltip } from "react-tippy";
 import "react-tippy/dist/tippy.css";
+import { useMutation } from "@apollo/client";
+import { DELETE_DOG, VIEW_USER } from "../queries/Main/MainQueries";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   ${tw`w-3/4 h-24 md:h-32 px-4 py-2 flex flex-col md:flex-row items-center justify-between bg-white rounded-lg`}
@@ -41,7 +44,36 @@ const Breed = styled.div`
   ${tw`mr-3 text-sm text-gray-500`}
 `;
 
-const DogCard = ({ id, name, image, gender, breed, birthdate }) => {
+const DogCard = ({
+  id,
+  name,
+  image,
+  gender,
+  breed,
+  birthdate,
+  currentUser,
+}) => {
+  const [deleteDogMutation] = useMutation(DELETE_DOG, {
+    variables: {
+      id,
+      action: "DELETE",
+    },
+    refetchQueries: () => [
+      { query: VIEW_USER, variables: { id: currentUser } },
+    ],
+  });
+
+  const deleteDog = async (id) => {
+    try {
+      const { data: editDog } = await deleteDogMutation();
+      if (editDog) {
+        toast.success("👍 削除が完了しました。");
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
   return (
     <Container>
       <DogImage src={image} />
@@ -83,7 +115,7 @@ const DogCard = ({ id, name, image, gender, breed, birthdate }) => {
             </li>
             <li
               className="text-red-400 text-center cursor-pointer"
-              // onClick={handleDeletePost}
+              onClick={() => deleteDog(id)}
             >
               削除
             </li>

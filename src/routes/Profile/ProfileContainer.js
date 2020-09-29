@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import ProfilePresenter from "./ProfilePresenter";
 import { useQuery } from "@apollo/client";
@@ -9,9 +9,27 @@ const ProfileContainer = ({
     state: { id },
   },
 }) => {
+  const [modalIsOpen, setIsOpen] = useState(false);
+
   const { loading, data } = useQuery(VIEW_USER, { variables: { id } });
 
-  return <ProfilePresenter loading={loading} data={data} />;
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  return (
+    <ProfilePresenter
+      loading={loading}
+      data={data}
+      modalIsOpen={modalIsOpen}
+      openModal={openModal}
+      closeModal={closeModal}
+    />
+  );
 };
 
 export default withRouter(ProfileContainer);
