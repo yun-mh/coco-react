@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import tw from "twin.macro";
 import SignInForm from "../../components/SignInForm";
 import SignUpForm from "../../components/SignUpForm";
@@ -67,6 +68,9 @@ const Copyright = styled.span`
 const AuthPresenter = ({ action, setAction }) => {
   return (
     <Container>
+      <Helmet>
+        <title>犬のためのSNS | ココ</title>
+      </Helmet>
       <ImageContainer></ImageContainer>
       <ActionContainer>
         <FormContainer>
