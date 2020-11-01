@@ -28,7 +28,7 @@ const HeaderColumn = styled.div`
 `;
 
 const ProfileAvatar = styled.img`
-  ${tw`w-20 h-20 sm:w-32 sm:h-32 bg-primary-light rounded-full mr-5 sm:mr-10`}
+  ${tw`w-20 h-20 object-cover sm:w-32 sm:h-32 bg-primary-light rounded-full mr-5 sm:mr-10`}
 `;
 
 const UserInfo = styled.div`

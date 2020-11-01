@@ -11,6 +11,7 @@ const ProfileEditContainer = ({
   location: {
     state: { id, username, email, avatar },
   },
+  history
 }) => {
   const [avatarS, setAvatar] = useState(
     avatar ||
@@ -48,20 +49,29 @@ const ProfileEditContainer = ({
     if (formik.values.username !== "") {
       setLoading(true);
 
-      const formData = new FormData();
-      formData.append("file", image);
-      const {
-        data: { locations },
-      } = await axios.post(
-        "https://api-coco.herokuapp.com/api/upload",
-        formData,
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        }
-      );
-      let location = locations[0];
+      if (image === undefined && username === formik.values.username) {
+        setLoading(false);
+        history.push({pathname: `/${formik.values.username}`, state: {id}});
+        return;
+      }
+
+      let location = "";
+      if (image !== undefined) {
+        const formData = new FormData();
+        formData.append("file", image);
+        const {
+          data: { locations },
+        } = await axios.post(
+          "https://api-coco.herokuapp.com/api/upload",
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          }
+        );
+        location = locations[0];
+      }
 
       try {
         const {
@@ -74,6 +84,7 @@ const ProfileEditContainer = ({
         });
         if (editUser) {
           toast.success("😄 会員情報を変更しました！");
+          history.push({pathname: `/${formik.values.username}`, state: {id}});
         }
       } catch (e) {
         toast.error(`😢 ${e.message}`);

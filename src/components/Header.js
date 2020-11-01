@@ -36,7 +36,7 @@ const AvatarContainer = styled.div`
 `;
 
 const Avatar = styled.img`
-  ${tw`w-10 h-10 bg-primary-light rounded-full`}
+  ${tw`w-10 h-10 object-cover bg-primary-light rounded-full`}
   ${({ isPopoverOpen, current }) =>
     isPopoverOpen || current ? tw`border-2 border-primary` : ""};
 `;

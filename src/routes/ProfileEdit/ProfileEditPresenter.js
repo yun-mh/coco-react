@@ -15,7 +15,7 @@ const AvatarContainer = styled.div`
 `;
 
 const Avatar = styled.img`
-  ${tw`w-48 h-48 rounded-full`}
+  ${tw`w-48 h-48 rounded-full object-cover`}
   position: absolute;
 `;
 
