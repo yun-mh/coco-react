@@ -12,7 +12,7 @@
 /build
 
 # tailwind output
-tailwind.output.css
+/src/assets/styles.css
 
 # misc
 .DS_Store

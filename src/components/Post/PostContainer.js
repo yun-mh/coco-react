@@ -6,7 +6,6 @@ import {
   ADD_COMMENT,
   VIEW_POST,
   DELETE_POST,
-  VIEW_FEED,
 } from "../../queries/Main/MainQueries";
 import useInput from "../../hooks/useInput";
 import PostPresenter from "./PostPresenter";
@@ -24,8 +23,6 @@ const PostContainer = ({
   location,
   myId,
 }) => {
-  const ITEMS = 4;
-
   const [isLiked, setIsLiked] = useState(isLikedProp);
   const [likeCount, setLikeCount] = useState(likeCountProp);
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -51,9 +48,17 @@ const PostContainer = ({
       id,
       action: "DELETE",
     },
-    refetchQueries: () => [
-      { query: VIEW_FEED, variables: { offset: 0, limit: ITEMS } },
-    ],
+    update(cache, { data: { editPost } }) {
+      cache.modify({
+        fields: {
+          viewFeed(existingPostRefs, { readField }) {
+            return existingPostRefs.filter(
+              postRef => id !== readField('id', postRef)
+            );
+          },
+        },
+      })
+    }
   });
 
   const openModal = () => {

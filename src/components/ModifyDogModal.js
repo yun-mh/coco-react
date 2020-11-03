@@ -58,10 +58,10 @@ export default ({
     imageP || "https://coco-for-dogs.s3-ap-northeast-1.amazonaws.com/anonymous-dog.jpg"
   );
   const [image, setImage] = useState();
-  const [name, setName] = useState(nameP);
+  const [name] = useState(nameP);
   const [gender, setGender] = useState(genderP);
   const [birthdate, setBirthdate] = useState(birthdateP);
-  const [breed, setBreed] = useState(breedP);
+  const [breed] = useState(breedP);
   const [loading, setLoading] = useState(false);
   const [isDateModalVisible, setIsDateModalVisible] = useState(false);
 
