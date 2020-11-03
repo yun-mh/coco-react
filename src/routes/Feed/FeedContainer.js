@@ -5,7 +5,7 @@ import { VIEW_FEED, CHECK_MYSELF } from "../../queries/Main/MainQueries";
 import FeedPresenter from "./FeedPresenter";
 
 const FeedContainer = () => {
-  const ITEMS = 4; // fix this later
+  const ITEMS = 4;
 
   const [myId, setMyId] = useState();
   const [canFetchMore, setCanFetchMore] = useState(true);

@@ -8,7 +8,7 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation } from "@apollo/client";
 import { useScrollBodyLock } from "../hooks/useScrollBodyLock";
-import { ADD_DOG, MODIFY_DOG, VIEW_USER } from "../queries/Main/MainQueries";
+import { MODIFY_DOG, VIEW_USER } from "../queries/Main/MainQueries";
 import Field from "./Field";
 import Button from "./Button";
 import RadioButton from "./RadioButton";
@@ -64,19 +64,6 @@ export default ({
   const [breed, setBreed] = useState(breedP);
   const [loading, setLoading] = useState(false);
   const [isDateModalVisible, setIsDateModalVisible] = useState(false);
-
-  const [dogRegisterMutation] = useMutation(ADD_DOG, {
-    variables: {
-      image,
-      name,
-      breed,
-      gender,
-      birthdate,
-    },
-    refetchQueries: () => [
-      { query: VIEW_USER, variables: { id: currentUser } },
-    ],
-  });
 
   const [modifyDogMutation] = useMutation(MODIFY_DOG, {
     variables: {
