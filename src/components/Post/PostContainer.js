@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import PostPresenter from "./PostPresenter";
 import { useMutation } from "@apollo/client";
+import { toast } from "react-toastify";
 import {
   TOGGLE_LIKE,
   ADD_COMMENT,
@@ -9,7 +9,7 @@ import {
   VIEW_FEED,
 } from "../../queries/Main/MainQueries";
 import useInput from "../../hooks/useInput";
-import { toast } from "react-toastify";
+import PostPresenter from "./PostPresenter";
 
 const PostContainer = ({
   id,
@@ -24,7 +24,7 @@ const PostContainer = ({
   location,
   myId,
 }) => {
-  const ITEMS = 3;
+  const ITEMS = 4;
 
   const [isLiked, setIsLiked] = useState(isLikedProp);
   const [likeCount, setLikeCount] = useState(likeCountProp);

@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import moment from "moment";
 import { Calendar, MoreHorizontal } from "react-feather";
 import { Tooltip } from "react-tippy";
-import "react-tippy/dist/tippy.css";
+import { toast } from "react-toastify";
 import { useMutation } from "@apollo/client";
 import { DELETE_DOG, VIEW_USER } from "../queries/Main/MainQueries";
-import { toast } from "react-toastify";
+import ModifyDogModal from "./ModifyDogModal";
+import "react-tippy/dist/tippy.css";
 
 const Container = styled.div`
   ${tw`w-3/4 h-24 md:h-32 px-4 py-2 my-2 flex flex-col md:flex-row items-center justify-between bg-white rounded-lg`}
@@ -53,6 +54,9 @@ const DogCard = ({
   birthdate,
   currentUser,
 }) => {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+
   const [deleteDogMutation] = useMutation(DELETE_DOG, {
     variables: {
       id,
@@ -62,6 +66,14 @@ const DogCard = ({
       { query: VIEW_USER, variables: { id: currentUser } },
     ],
   });
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   const deleteDog = async (id) => {
     try {
@@ -101,6 +113,8 @@ const DogCard = ({
       </InfoContainer>
       <Tooltip
         interactive
+        open={isPopoverOpen}
+        onRequestClose={() => setIsPopoverOpen(false)}
         position="bottom"
         trigger="click"
         arrow="true"
@@ -109,7 +123,12 @@ const DogCard = ({
           <ul className="bg-white flex flex-col px-8 py-3">
             <li
               className="mb-3 text-center cursor-pointer"
-              // onClick={handleDeletePost}
+              onClick={() => {
+                setIsPopoverOpen(false);
+                setTimeout(() => {
+                  openModal();
+                }, 300);
+              }}
             >
               修正
             </li>
@@ -122,8 +141,19 @@ const DogCard = ({
           </ul>
         }
       >
-        <MoreHorizontal className="text-gray-600 cursor-pointer" />
+        <MoreHorizontal className="text-gray-600 cursor-pointer" onClick={() => setIsPopoverOpen(!isPopoverOpen)} />
       </Tooltip>
+      <ModifyDogModal
+        currentUser={currentUser}
+        dogId={id}
+        image={image}
+        name={name}
+        gender={gender}
+        breed={breed}
+        birthdate={birthdate}
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+      />
     </Container>
   );
 };
