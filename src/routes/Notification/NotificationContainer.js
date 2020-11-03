@@ -29,7 +29,6 @@ const NotificationContainer = ({
   }, [loading, data, id]);
 
   const handleNewNotification = () => {
-    console.log(newData);
     if (newData !== undefined) {
       const { getNotification } = newData;
       setNotifications((prev) => [getNotification, ...prev]);

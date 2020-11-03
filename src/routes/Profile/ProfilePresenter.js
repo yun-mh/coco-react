@@ -182,10 +182,7 @@ const ProfilePresenter = ({
         </Header>
         <div>
           <TitleContainer>
-            <Title>
-              マイドッグ
-              
-            </Title>
+            <Title>マイドッグ</Title>
             <Title>マイポスト</Title>
           </TitleContainer>
           <Content>
@@ -200,15 +197,18 @@ const ProfilePresenter = ({
                   breed={dog.breed}
                   birthdate={dog.birthdate}
                   currentUser={id}
+                  isMyself={isMyself}
                 />
               ))}
-              <div className="mt-2 flex items-center" onClick={openModal}>
-                <PlusCircle
-                  size={30}
-                  className="text-primary cursor-pointer"
-                />
-                <span className="cursor-pointer ml-2 text-primary">追加</span>
-              </div>
+              {isMyself && (
+                <div className="mt-2 flex items-center" onClick={openModal}>
+                  <PlusCircle
+                    size={30}
+                    className="text-primary cursor-pointer"
+                  />
+                  <span className="cursor-pointer ml-2 text-primary">追加</span>
+                </div>
+              )}
             </Dogs>
             <Posts>
               {posts.map((post) => (

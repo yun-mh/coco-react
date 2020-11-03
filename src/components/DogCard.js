@@ -53,6 +53,7 @@ const DogCard = ({
   breed,
   birthdate,
   currentUser,
+  isMyself,
 }) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -111,38 +112,40 @@ const DogCard = ({
           <Breed>{breed}</Breed>
         </DogInfo>
       </InfoContainer>
-      <Tooltip
-        interactive
-        open={isPopoverOpen}
-        onRequestClose={() => setIsPopoverOpen(false)}
-        position="bottom"
-        trigger="click"
-        arrow="true"
-        theme="light"
-        html={
-          <ul className="bg-white flex flex-col px-8 py-3">
-            <li
-              className="mb-3 text-center cursor-pointer"
-              onClick={() => {
-                setIsPopoverOpen(false);
-                setTimeout(() => {
-                  openModal();
-                }, 300);
-              }}
-            >
-              修正
-            </li>
-            <li
-              className="text-red-400 text-center cursor-pointer"
-              onClick={() => deleteDog(id)}
-            >
-              削除
-            </li>
-          </ul>
-        }
-      >
-        <MoreHorizontal className="text-gray-600 cursor-pointer" onClick={() => setIsPopoverOpen(!isPopoverOpen)} />
-      </Tooltip>
+      { isMyself && (
+        <Tooltip
+          interactive
+          open={isPopoverOpen}
+          onRequestClose={() => setIsPopoverOpen(false)}
+          position="bottom"
+          trigger="click"
+          arrow="true"
+          theme="light"
+          html={
+            <ul className="bg-white flex flex-col px-8 py-3">
+              <li
+                className="mb-3 text-center cursor-pointer"
+                onClick={() => {
+                  setIsPopoverOpen(false);
+                  setTimeout(() => {
+                    openModal();
+                  }, 300);
+                }}
+              >
+                修正
+              </li>
+              <li
+                className="text-red-400 text-center cursor-pointer"
+                onClick={() => deleteDog(id)}
+              >
+                削除
+              </li>
+            </ul>
+          }
+        >
+          <MoreHorizontal className="text-gray-600 cursor-pointer" onClick={() => setIsPopoverOpen(!isPopoverOpen)} />
+        </Tooltip>
+      )}
       <ModifyDogModal
         currentUser={currentUser}
         dogId={id}

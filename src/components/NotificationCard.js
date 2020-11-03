@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { Heart, MessageSquare, UserCheck, UserPlus } from "react-feather";
@@ -70,7 +71,14 @@ export default ({ id, from, type, post, cmt, currentUser }) => {
 
   return (
     <Container>
-      <Avatar src={from.avatar} />
+      <Link
+        to={{
+          pathname: `/${from.username}`,
+          state: { id: from.id },
+        }}
+      >
+        <Avatar src={from.avatar} />
+      </Link>
       <DataContainer>
         <Message>
           {type === "COMMENT" && `${from.username}さんがコメントしました。`}
