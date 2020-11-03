@@ -10,7 +10,7 @@ import { PROFILE_THUMBNAIL } from "../queries/Main/MainQueries";
 import { LOCAL_LOG_OUT } from "../queries/Auth/AuthQueries";
 
 const HeaderWrapper = styled.div`
-  ${tw`fixed flex flex-col w-16 items-center justify-between h-screen bg-white px-2 border-r`}
+  ${tw`fixed flex flex-col w-16 items-center justify-between h-screen bg-white border-r`}
 `;
 
 const LogoContainer = styled.div`

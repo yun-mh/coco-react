@@ -10,14 +10,14 @@ import { DELETE_DOG, VIEW_USER } from "../queries/Main/MainQueries";
 import { toast } from "react-toastify";
 
 const Container = styled.div`
-  ${tw`w-3/4 h-24 md:h-32 px-4 py-2 flex flex-col md:flex-row items-center justify-between bg-white rounded-lg`}
+  ${tw`w-3/4 h-24 md:h-32 px-4 py-2 my-2 flex flex-col md:flex-row items-center justify-between bg-white rounded-lg`}
 `;
 
 const InfoContainer = styled.div`
   ${tw`flex flex-col invisible md:visible`}
 `;
 const DogImage = styled.img`
-  ${tw`w-20 h-20 rounded-lg`}
+  ${tw`w-20 h-20 rounded-lg object-cover`}
 `;
 const DogHeader = styled.div`
   ${tw`flex flex-row`}

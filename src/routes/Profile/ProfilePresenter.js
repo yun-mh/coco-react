@@ -59,15 +59,15 @@ const Content = styled.div`
 `;
 
 const Dogs = styled.div`
-  ${tw`p-5 w-full md:w-1/2 md:h-half overflow-y-auto bg-primary-light flex justify-center md:rounded-bl-lg`}
+  ${tw`p-5 w-full md:w-1/2 md:h-half overflow-y-auto bg-primary-light flex flex-col items-center md:rounded-bl-lg`}
 `;
 
 const TitleContainer = styled.div`
-  ${tw`flex flex-row w-full h-8 items-center bg-primary hidden md:flex`}
+  ${tw`flex flex-row w-full h-12 items-center bg-primary hidden md:flex`}
 `;
 
-const Title = styled.h3`
-  ${tw`w-1/2 text-center text-white text-sm`}
+const Title = styled.div`
+  ${tw`w-1/2 flex items-center justify-center text-white text-sm`}
 `;
 
 const Posts = styled.div`
@@ -182,15 +182,14 @@ const ProfilePresenter = ({
         </Header>
         <div>
           <TitleContainer>
-            <Title>マイドッグ</Title>
+            <Title>
+              マイドッグ
+              
+            </Title>
             <Title>マイポスト</Title>
           </TitleContainer>
           <Content>
             <Dogs>
-              <PlusCircle
-                className="text-gray-600 cursor-pointer"
-                onClick={openModal}
-              />
               {dogs.map((dog) => (
                 <DogCard
                   key={dog.id}
@@ -203,6 +202,13 @@ const ProfilePresenter = ({
                   currentUser={id}
                 />
               ))}
+              <div className="mt-2 flex items-center" onClick={openModal}>
+                <PlusCircle
+                  size={30}
+                  className="text-primary cursor-pointer"
+                />
+                <span className="cursor-pointer ml-2 text-primary">追加</span>
+              </div>
             </Dogs>
             <Posts>
               {posts.map((post) => (

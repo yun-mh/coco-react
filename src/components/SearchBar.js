@@ -18,7 +18,9 @@ const SearchBar = ({ history }) => {
 
   const onSearchSubmit = (e) => {
     e.preventDefault();
-    history.push(`/search?term=${search.value}`);
+    if (search.value !== "") {
+      history.push(`/search?term=${search.value}`);
+    }
   };
 
   return (

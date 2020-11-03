@@ -5,19 +5,33 @@ import { VIEW_FEED, CHECK_MYSELF } from "../../queries/Main/MainQueries";
 import FeedPresenter from "./FeedPresenter";
 
 const FeedContainer = () => {
-  const ITEMS = 3; // fix this later
+  const ITEMS = 4; // fix this later
 
   const [myId, setMyId] = useState();
+  const [canFetchMore, setCanFetchMore] = useState(true);
 
   const { loading: myLoading, data: myData } = useQuery(CHECK_MYSELF);
 
-  const { loading, data } = useQuery(VIEW_FEED, {
+  const { loading, data, fetchMore } = useQuery(VIEW_FEED, {
     variables: {
       offset: 0,
       limit: ITEMS,
     },
   });
-  // console.log(data);
+
+  const onEndReached = async () => {
+    if (!loading && data) {
+      const res = await fetchMore({
+        variables: {
+          offset: data?.viewFeed?.length,
+          limit: ITEMS,
+        },
+      });
+      if (res.data.viewFeed.length === 0) {
+        setCanFetchMore(false);
+      }
+    }
+  };
 
   useEffect(() => {
     if (!myLoading) {
@@ -25,7 +39,7 @@ const FeedContainer = () => {
     }
   }, [myData, myLoading]);
 
-  return <FeedPresenter loading={loading} data={data} myId={myId} />;
+  return <FeedPresenter loading={loading} data={data} myId={myId} onEndReached={onEndReached} canFetchMore={canFetchMore} />;
 };
 
 export default withRouter(FeedContainer);

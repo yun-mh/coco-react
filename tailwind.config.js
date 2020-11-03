@@ -7,6 +7,10 @@ module.exports = {
     "./public/**/*.html",
   ],
   theme: {
+    fill: theme => ({
+      'gray': theme('colors.gray.700'),
+      'white': theme('colors.white'),
+    }),
     extend: {
       height: {
         threequarter: "75vh",

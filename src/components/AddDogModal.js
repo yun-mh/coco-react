@@ -1,20 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { Plus } from "react-feather";
-import moment from "moment";
 import Modal from "react-modal";
-import Carousel, { Dots } from "@brainhubeu/react-carousel";
-import "@brainhubeu/react-carousel/lib/style.css";
-import { useScrollBodyLock } from "../hooks/useScrollBodyLock";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { useMutation } from "@apollo/client";
+import { useScrollBodyLock } from "../hooks/useScrollBodyLock";
+import { ADD_DOG, VIEW_USER } from "../queries/Main/MainQueries";
 import Field from "./Field";
 import Button from "./Button";
-import { useMutation } from "@apollo/client";
-import { ADD_DOG, VIEW_USER } from "../queries/Main/MainQueries";
 import RadioButton from "./RadioButton";
+import DatePicker from "./DatePicker";
 
 Modal.setAppElement("#root");
 
@@ -26,12 +24,8 @@ const ImageContainer = styled.div`
   ${tw`w-full md:w-1/2 p-3 flex items-center justify-center`}
 `;
 
-const AvatarContainer = styled.div`
-  ${tw`cursor-pointer w-48 h-48 rounded-full flex items-center justify-center relative`}
-`;
-
 const Image = styled.img`
-  ${tw`w-64 h-64 rounded-full`}
+  ${tw`w-64 h-64 rounded-full object-cover`}
   position: absolute;
 `;
 
@@ -43,28 +37,27 @@ const ContentContainer = styled.div`
   ${tw`w-full md:w-1/2 px-3`}
 `;
 
+const Label = styled.label`
+  ${tw`ml-3 text-sm text-gray-800 font-semibold text-gray-500`}
+`;
+
 export default ({
   currentUser,
-  location,
-  caption,
-  files,
-  comments,
-  newComment,
-  handleAddComment,
   modalIsOpen,
   closeModal,
 }) => {
   const { lock, unlock } = useScrollBodyLock();
 
-  const [image, setImage] = useState(
+  const [avatar, setAvatar] = useState(
     "https://coco-for-dogs.s3-ap-northeast-1.amazonaws.com/anonymous-dog.jpg"
   );
+  const [image, setImage] = useState();
   const [name, setName] = useState("");
   const [gender, setGender] = useState("male");
-  const [isDateModalVisible, setIsDateModalVisible] = useState(false);
-  const [birthdate, setBirthdate] = useState("");
+  const [birthdate, setBirthdate] = useState(new Date());
   const [breed, setBreed] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isDateModalVisible, setIsDateModalVisible] = useState(false);
 
   const [dogRegisterMutation] = useMutation(ADD_DOG, {
     variables: {
@@ -82,60 +75,82 @@ export default ({
   const inputEl = useRef(null);
 
   const handlePickImage = () => {
-    // const file = inputEl.current.files[0];
-    // if (file) {
-    //   setImage(file);
-    //   setAvatar(URL.createObjectURL(file));
-    // }
+    const file = inputEl.current.files[0];
+    if (file) {
+      setImage(file);
+      setAvatar(URL.createObjectURL(file));
+    }
   };
 
   const validate = (values) => {
     const errors = {};
-    if (!values.username) {
-      errors.email = "ユーザ名を入力してください。";
+    if (!values.name) {
+      errors.name = "犬の名前を入力してください。";
+    }
+    if (!values.breed) {
+      errors.breed = "犬種を入力してください。";
     }
     return errors;
   };
 
   const onSubmit = async () => {
-    if (formik.values.username !== "") {
+    if (formik.values.name !== "" && formik.values.breed !== "") {
       setLoading(true);
 
-      const formData = new FormData();
-      formData.append("file", image);
-      const {
-        data: { locations },
-      } = await axios.post(
-        "https://api-coco.herokuapp.com/api/upload",
-        formData,
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        }
-      );
-      let location = locations[0];
+      let location = "";
+      if (image !== undefined) {
+        const formData = new FormData();
+        formData.append("file", image);
+        const {
+          data: { locations },
+        } = await axios.post(
+          "https://api-coco.herokuapp.com/api/upload",
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          }
+        );
+        location = locations[0];
+      }
 
-      // try {
-      //   const {
-      //     data: { editUser },
-      //   } = await editUserMutation({
-      //     variables: {
-      //       avatar: location !== "" ? location : avatar,
-      //       username: formik.values.username,
-      //     },
-      //   });
-      //   if (editUser) {
-      //     toast.success("😄 会員情報を変更しました！");
-      //   }
-      // } catch (e) {
-      //   toast.error(`😢 ${e.message}`);
-      // } finally {
-      //   setLoading(false);
-      // }
+      try {
+        const {
+          data: { registerDog },
+        } = await dogRegisterMutation({
+          variables: {
+            image: location !== "" ? location : avatar,
+            name: formik.values.name,
+            breed: formik.values.breed,
+            gender: formik.values.gender,
+            birthdate: formik.values.birthdate,
+          },
+        });
+        if (registerDog) {
+          setAvatar("https://coco-for-dogs.s3-ap-northeast-1.amazonaws.com/anonymous-dog.jpg");
+          closeModal();
+          toast.success("😄 犬を登録しました！");
+        }
+      } catch (e) {
+        toast.error(`😢 ${e.message}`);
+      } finally {
+        formik.values.image = "";
+        formik.values.name = "";
+        formik.values.gender = "";
+        formik.values.birthdate = "";
+        formik.values.breed = "";
+        setName("");
+        setGender("male");
+        setBirthdate(new Date());
+        setBreed("");
+        setImage("");
+        setLoading(false);
+      }
     }
   };
 
+  
   const formik = useFormik({
     initialValues: {
       image,
@@ -147,10 +162,14 @@ export default ({
     validate,
     onSubmit: onSubmit,
   });
+  
+  useEffect(() => {
+    formik.values.birthdate = birthdate;
+  }, [birthdate, formik.values.birthdate])
 
   const radioProps = [
-    { key: "male", ios: "ios-male", md: "md-male", text: "男" },
-    { key: "female", ios: "ios-female", md: "md-female", text: "女" },
+    { key: "male", text: "男" },
+    { key: "female", text: "女" },
   ];
 
   return (
@@ -168,7 +187,7 @@ export default ({
         onSubmit={formik.handleSubmit}
       >
         <ImageContainer>
-          <Image src={image} />
+          <Image src={avatar} />
           <Plus size={40} className="absolute" />
           <input
             ref={inputEl}
@@ -193,17 +212,21 @@ export default ({
                 value={formik.values.name}
                 placeholder="犬名"
               />
-              <RadioButton />
               <Field
                 label="犬種"
                 type="text"
                 name="breed"
-                errors={formik.errors.name}
+                errors={formik.errors.breed}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.name}
+                value={formik.values.breed}
                 placeholder="犬種"
               />
+              <Label>性別</Label>
+              <RadioButton name="gender" prop={radioProps} gender={gender} setGender={setGender} onChange={formik.handleChange} value={formik.values.gender} />
+              
+              <Label>生年月日</Label>
+              <DatePicker name="birthdate" birthdate={birthdate} setBirthdate={setBirthdate} open={isDateModalVisible} toggleOpen={setIsDateModalVisible} />
             </InputContainer>
             <Button
               type="submit"
