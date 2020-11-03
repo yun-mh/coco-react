@@ -15,11 +15,11 @@ import {
 import useInput from "../hooks/useInput";
 
 const Container = styled.div`
-  ${tw`h-entire relative bg-primary-light`};
+  ${tw`h-entire relative bg-primary-light rounded-lg`};
 `;
 
 const ChatHeader = styled.div`
-  ${tw`w-full bg-white h-16 flex flex-row p-2 justify-center items-center font-semibold`};
+  ${tw`w-full bg-white h-16 flex flex-row p-2 justify-center items-center font-semibold border-t border-white rounded-t-lg`};
 `;
 
 const LoaderContainer = styled.div`
@@ -31,7 +31,7 @@ const ChatContainer = styled(ScrollToBottom)`
 `;
 
 const MessageInputContainer = styled.div`
-  ${tw`w-full absolute bg-white bottom-0 h-16 flex flex-row p-2 items-center`};
+  ${tw`w-full absolute bg-white bottom-0 h-16 flex flex-row p-2 items-center rounded-b-lg`};
 `;
 
 export default ({ id, counterpart, currentUser }) => {

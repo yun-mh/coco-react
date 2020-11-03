@@ -42,14 +42,17 @@ const ChatPresenter = ({
   const [selected, setSelected] = useState();
   const [counterpart, setCounterpart] = useState();
 
-  const toChatroom = (roomId) => {
-    const target = rooms.filter((room) => room.id === roomId)[0];
-    setRoom(target);
-    setSelected(target.id);
+  const toChatroom = (roomId, chatroom = {}) => {
+    let target = rooms.filter((room) => room.id === roomId)[0];
+    if (target === undefined) {
+      target = chatroom;
+    }
     const counter = target.participants.filter(
       (person) => person.id !== currentUser
     )[0];
     setCounterpart(counter);
+    setRoom(target);
+    setSelected(target.id);
   };
 
   if (loading) {
@@ -75,6 +78,7 @@ const ChatPresenter = ({
                     avatar={friend.avatar}
                     username={friend.username}
                     currentUser={currentUser}
+                    toChatroom={toChatroom}
                   />
                 ))}
             </FriendsContainer>

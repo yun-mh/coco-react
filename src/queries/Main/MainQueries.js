@@ -473,6 +473,20 @@ export const CREATE_CHATROOM = gql`
   mutation createChatRoom($toId: String!) {
     createChatRoom(toId: $toId) {
       id
+      participants {
+        id
+        avatar
+        username
+      }
+      messages {
+        id
+        text
+        from {
+          id
+          avatar
+        }
+        createdAt
+      }
     }
   }
 `;
