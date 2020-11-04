@@ -142,10 +142,13 @@ export default ({
             {comments &&
               comments.map((comment) => (
                 <Comment key={comment.id}>
-                  <Link to={{
-                    pathname: `/user/${comment.user.username}`,
-                    state: { id: comment.user.id },
-                  }}>
+                  <Link 
+                    to={{
+                      pathname: `/user/${comment.user.username}`,
+                      state: { id: comment.user.id },
+                    }}
+                    className="flex-none"
+                  >
                     <ModalAvatar src={comment.user.avatar} />
                   </Link>
                   <CommentContent>

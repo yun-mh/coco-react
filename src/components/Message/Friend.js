@@ -13,7 +13,7 @@ const TouchableContainer = styled.div`
 `;
 
 const Avatar = styled.img`
-  ${tw`w-12 h-12 rounded-full`};
+  ${tw`w-12 h-12 rounded-full object-cover`};
 `;
 
 const Username = styled.span`

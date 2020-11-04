@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Avatar = styled.img`
-  ${tw`w-16 h-16 rounded-full mr-5`}
+  ${tw`w-16 h-16 rounded-full mr-5 object-cover`}
 `;
 
 const DataContainer = styled.div`
