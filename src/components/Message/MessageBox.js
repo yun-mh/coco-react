@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import utils from "../utils";
+import utils from "../../utils";
 
 const Container = styled.div`
   ${tw`w-full flex flex-row items-start justify-start px-5 my-3`}

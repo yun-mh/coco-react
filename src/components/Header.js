@@ -94,7 +94,7 @@ const Header = ({ location: { pathname } }) => {
                     setIsPopoverOpen(false);
                     setTimeout(() => {
                       history.push({
-                        pathname: `/${data?.viewMyself?.username}`,
+                        pathname: `/user/${data?.viewMyself?.username}`,
                         state: { id: data?.viewMyself?.id },
                       });
                     }, 300);
@@ -117,7 +117,7 @@ const Header = ({ location: { pathname } }) => {
               src={data?.viewMyself?.avatar}
               isPopoverOpen={isPopoverOpen}
               current={
-                pathname === `/${data?.viewMyself?.username}` ? true : false
+                pathname === `/user/${data?.viewMyself?.username}` ? true : false
               }
             />
           </AvatarContainer>

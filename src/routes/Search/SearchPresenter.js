@@ -31,7 +31,7 @@ const PostSection = styled.div`
   grid-auto-rows: 200px;
 `;
 
-const SearchPresenter = ({ searchTerm, loading, data, tab, setTab }) => {
+const SearchPresenter = ({ currentUser, searchTerm, loading, data, tab, setTab }) => {
   if (searchTerm === undefined) {
     return <Wrapper></Wrapper>;
   } else if (loading === true) {
@@ -75,6 +75,7 @@ const SearchPresenter = ({ searchTerm, loading, data, tab, setTab }) => {
             <UserSection>
               {data.searchUser.map((user) => (
                 <UserCard
+                  currentUser={currentUser}
                   key={user.id}
                   id={user.id}
                   username={user.username}

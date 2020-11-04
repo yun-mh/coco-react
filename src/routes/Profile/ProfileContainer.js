@@ -9,25 +9,50 @@ const ProfileContainer = ({
     state: { id },
   },
 }) => {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [addDogModalIsOpen, setIsAddDogModalOpen] = useState(false);
+  const [followersModalIsOpen, setIsFollowersModalOpen] = useState(false);
+  const [followingsModalIsOpen, setIsFollowingsModalOpen] = useState(false);
 
   const { loading, data } = useQuery(VIEW_USER, { variables: { id } });
 
-  const openModal = () => {
-    setIsOpen(true);
+  const openAddDogModal = () => {
+    setIsAddDogModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
+  const closeAddDogModal = () => {
+    setIsAddDogModalOpen(false);
+  };
+
+  const openFollowersModal = () => {
+    setIsFollowersModalOpen(true);
+  };
+
+  const closeFollowersModal = () => {
+    setIsFollowersModalOpen(false);
+  };
+
+  const openFollowingsModal = () => {
+    setIsFollowingsModalOpen(true);
+  };
+
+  const closeFollowingsModal = () => {
+    setIsFollowingsModalOpen(false);
   };
 
   return (
     <ProfilePresenter
+      currentUser={id}
       loading={loading}
       data={data}
-      modalIsOpen={modalIsOpen}
-      openModal={openModal}
-      closeModal={closeModal}
+      addDogModalIsOpen={addDogModalIsOpen}
+      openAddDogModal={openAddDogModal}
+      closeAddDogModal={closeAddDogModal}
+      followersModalIsOpen={followersModalIsOpen}
+      followingsModalIsOpen={followingsModalIsOpen}
+      openFollowersModal={openFollowersModal}
+      closeFollowersModal={closeFollowersModal}
+      openFollowingsModal={openFollowingsModal}
+      closeFollowingsModal={closeFollowingsModal}
     />
   );
 };

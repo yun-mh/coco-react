@@ -115,9 +115,17 @@ export default ({
         <ContentContainer>
           <ModalHeader>
             <UserInfo>
-              <ModalAvatar src={user.avatar} />
+              <Link to={{
+                pathname: `/user/${user.username}`,
+                state: { id: user.id },
+              }}>
+                <ModalAvatar src={user.avatar} />
+              </Link>
               <UserColumn>
-                <Link to={`/${user.username}`}>
+                <Link to={{
+                  pathname: `/user/${user.username}`,
+                  state: { id: user.id },
+                }}>
                   <span className="font-semibold">{user.username}</span>
                 </Link>
                 <Location>{location ? location : "　"}</Location>
@@ -134,12 +142,22 @@ export default ({
             {comments &&
               comments.map((comment) => (
                 <Comment key={comment.id}>
-                  <ModalAvatar src={comment.user.avatar} />
+                  <Link to={{
+                    pathname: `/user/${comment.user.username}`,
+                    state: { id: comment.user.id },
+                  }}>
+                    <ModalAvatar src={comment.user.avatar} />
+                  </Link>
                   <CommentContent>
                     <p className="text-sm">
+                    <Link to={{
+                      pathname: `/user/${comment.user.username}`,
+                      state: { id: comment.user.id },
+                    }}>
                       <span className="font-semibold mr-2">
                         {comment.user.username}
                       </span>
+                    </Link>
                       {comment.text}
                     </p>
                     <CommentDate>

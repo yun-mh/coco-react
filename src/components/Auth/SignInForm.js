@@ -2,20 +2,23 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import Field from "./Field";
-import Button from "./Button";
-import { PASSWORD_RESET } from "../queries/Auth/AuthQueries";
-import TextButton from "./TextButton";
+import Field from "../Field";
+import Button from "../Button";
+import { LOGIN, LOCAL_LOG_IN } from "../../queries/Auth/AuthQueries";
+import TextButton from "../TextButton";
 
-const PasswordResetForm = ({ action, setAction }) => {
+const SignInForm = ({ action, setAction }) => {
   const [loading, setLoading] = useState(false);
 
-  const [passwordResetMutation] = useMutation(PASSWORD_RESET);
+  const [loginMutation] = useMutation(LOGIN);
+  const [localLoginMutation] = useMutation(LOCAL_LOG_IN);
 
   const validate = (values) => {
     const errors = {};
     if (!values.email) {
       errors.email = "メールアドレスを入力してください。";
+    } else if (!values.password) {
+      errors.password = "パスワードを入力してください。";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
       errors.email = "有効ではないメールアドレスです。";
     }
@@ -23,22 +26,20 @@ const PasswordResetForm = ({ action, setAction }) => {
   };
 
   const onSubmit = async () => {
-    if (action === "reset") {
+    if (action === "logIn") {
       if (formik.values.email !== "") {
         setLoading(true);
         try {
           const {
-            data: { webPasswordReset },
-          } = await passwordResetMutation({
+            data: { login: token },
+          } = await loginMutation({
             variables: {
               email: formik.values.email,
+              password: formik.values.password,
             },
           });
-          if (webPasswordReset) {
-            toast.success(
-              "😄 メールを送信しました！メール箱を確認してください。"
-            );
-            setAction("logIn");
+          if (token !== "" || token !== undefined) {
+            localLoginMutation({ variables: { token } });
           }
         } catch (e) {
           toast.error(`😢 ${e.message}`);
@@ -53,6 +54,7 @@ const PasswordResetForm = ({ action, setAction }) => {
   const formik = useFormik({
     initialValues: {
       email: "",
+      password: "",
     },
     validate,
     onSubmit,
@@ -69,19 +71,23 @@ const PasswordResetForm = ({ action, setAction }) => {
         onBlur={formik.handleBlur}
         value={formik.values.email}
       />
-      <Button
-        loading={loading}
-        type="submit"
-        accent={true}
-        title="メール送信"
+      <Field
+        label="パスワード"
+        type="password"
+        name="password"
+        errors={formik.errors.password}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values.password}
       />
+      <Button type="submit" loading={loading} accent={true} title="ログイン" />
       <TextButton
-        text="パスワードを思い出した場合は"
-        title="ログイン"
-        handleClick={() => setAction("logIn")}
+        text="パスワードを忘れた場合は"
+        title="パスワード再設定"
+        handleClick={() => setAction("reset")}
       />
     </form>
   );
 };
 
-export default PasswordResetForm;
+export default SignInForm;

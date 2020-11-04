@@ -6,7 +6,7 @@ import { Calendar, MoreHorizontal } from "react-feather";
 import { Tooltip } from "react-tippy";
 import { toast } from "react-toastify";
 import { useMutation } from "@apollo/client";
-import { DELETE_DOG, VIEW_USER } from "../queries/Main/MainQueries";
+import { DELETE_DOG, VIEW_USER } from "../../queries/Main/MainQueries";
 import ModifyDogModal from "./ModifyDogModal";
 import "react-tippy/dist/tippy.css";
 

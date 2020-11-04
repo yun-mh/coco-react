@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import tw from "twin.macro";
-import SignInForm from "../../components/SignInForm";
-import SignUpForm from "../../components/SignUpForm";
-import PasswordResetForm from "../../components/PasswordResetForm";
+import SignInForm from "../../components/Auth/SignInForm";
+import SignUpForm from "../../components/Auth/SignUpForm";
+import PasswordResetForm from "../../components/Auth/PasswordResetForm";
 
 const getRandomInt = (int) => Math.floor(Math.random() * Math.floor(int));
 

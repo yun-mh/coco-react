@@ -7,12 +7,12 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation } from "@apollo/client";
-import { useScrollBodyLock } from "../hooks/useScrollBodyLock";
-import { MODIFY_DOG, VIEW_USER } from "../queries/Main/MainQueries";
-import Field from "./Field";
-import Button from "./Button";
-import RadioButton from "./RadioButton";
-import DatePicker from "./DatePicker";
+import { useScrollBodyLock } from "../../hooks/useScrollBodyLock";
+import { ADD_DOG, VIEW_USER } from "../../queries/Main/MainQueries";
+import Field from "../Field";
+import Button from "../Button";
+import RadioButton from "../RadioButton";
+import DatePicker from "../DatePicker";
 
 Modal.setAppElement("#root");
 
@@ -43,37 +43,29 @@ const Label = styled.label`
 
 export default ({
   currentUser,
-  dogId,
-  image: imageP,
-  name: nameP,
-  gender: genderP,
-  breed: breedP,
-  birthdate: birthdateP,
   modalIsOpen,
   closeModal,
 }) => {
   const { lock, unlock } = useScrollBodyLock();
 
   const [avatar, setAvatar] = useState(
-    imageP || "https://coco-for-dogs.s3-ap-northeast-1.amazonaws.com/anonymous-dog.jpg"
+    "https://coco-for-dogs.s3-ap-northeast-1.amazonaws.com/anonymous-dog.jpg"
   );
   const [image, setImage] = useState();
-  const [name] = useState(nameP);
-  const [gender, setGender] = useState(genderP);
-  const [birthdate, setBirthdate] = useState(birthdateP);
-  const [breed] = useState(breedP);
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("male");
+  const [birthdate, setBirthdate] = useState(new Date());
+  const [breed, setBreed] = useState("");
   const [loading, setLoading] = useState(false);
   const [isDateModalVisible, setIsDateModalVisible] = useState(false);
 
-  const [modifyDogMutation] = useMutation(MODIFY_DOG, {
+  const [dogRegisterMutation] = useMutation(ADD_DOG, {
     variables: {
-      id: dogId,
       image,
       name,
+      breed,
       gender,
       birthdate,
-      breed,
-      action: "EDIT",
     },
     refetchQueries: () => [
       { query: VIEW_USER, variables: { id: currentUser } },
@@ -102,11 +94,6 @@ export default ({
   };
 
   const onSubmit = async () => {
-    if (formik.values.name === nameP && formik.values.breed === breedP && formik.values.birthdate === birthdateP && formik.values.gender === genderP && formik.values.image === undefined) {
-      closeModal();
-      return;
-    }
-
     if (formik.values.name !== "" && formik.values.breed !== "") {
       setLoading(true);
 
@@ -130,30 +117,40 @@ export default ({
 
       try {
         const {
-          data: { editDog },
-        } = await modifyDogMutation({
+          data: { registerDog },
+        } = await dogRegisterMutation({
           variables: {
-            id: dogId,
             image: location !== "" ? location : avatar,
             name: formik.values.name,
             breed: formik.values.breed,
             gender: formik.values.gender,
             birthdate: formik.values.birthdate,
-            action: "EDIT",
           },
         });
-        if (editDog) {
+        if (registerDog) {
+          setAvatar("https://coco-for-dogs.s3-ap-northeast-1.amazonaws.com/anonymous-dog.jpg");
           closeModal();
-          toast.success("😄 情報を修正しました！");
+          toast.success("😄 犬を登録しました！");
         }
       } catch (e) {
         toast.error(`😢 ${e.message}`);
       } finally {
+        formik.values.image = "";
+        formik.values.name = "";
+        formik.values.gender = "";
+        formik.values.birthdate = "";
+        formik.values.breed = "";
+        setName("");
+        setGender("male");
+        setBirthdate(new Date());
+        setBreed("");
+        setImage("");
         setLoading(false);
       }
     }
   };
 
+  
   const formik = useFormik({
     initialValues: {
       image,
@@ -233,7 +230,7 @@ export default ({
             </InputContainer>
             <Button
               type="submit"
-              title={"修正"}
+              title={"登録"}
               accent={true}
               loading={loading}
             />

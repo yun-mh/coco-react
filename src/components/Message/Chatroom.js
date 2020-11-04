@@ -5,14 +5,14 @@ import tw from "twin.macro";
 import { Send } from "react-feather";
 import TextareaAutosize from "react-autosize-textarea";
 import ScrollToBottom from "react-scroll-to-bottom";
-import Loader from "./Loader";
+import Loader from "../Loader";
 import MessageBox from "./MessageBox";
 import {
   GET_MESSAGE,
   SEND_MESSAGE,
   VIEW_CHATROOM,
-} from "../queries/Main/MainQueries";
-import useInput from "../hooks/useInput";
+} from "../../queries/Main/MainQueries";
+import useInput from "../../hooks/useInput";
 
 const Container = styled.div`
   ${tw`h-entire relative bg-primary-light rounded-lg`};

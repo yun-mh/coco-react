@@ -13,20 +13,20 @@ const Username = styled.div`
   ${tw`text-gray-700 mt-2`}
 `;
 
-const UserCard = ({ id, username, isFollowing, url, isMyself }) => {
+const UserCard = ({ currentUser, id, username, isFollowing, url, isMyself }) => {
   return (
     <Card>
       <Link
         className="flex flex-col items-center"
         to={{
-          pathname: `/${username}`,
+          pathname: `/user/${username}`,
           state: { id },
         }}
       >
         <Avatar url={url} />
         <Username>{username}</Username>
       </Link>
-      {!isMyself && <FollowButton id={id} isFollowing={isFollowing} />}
+      {!isMyself && <FollowButton currentUser={currentUser} id={id} isFollowing={isFollowing} />}
     </Card>
   );
 };

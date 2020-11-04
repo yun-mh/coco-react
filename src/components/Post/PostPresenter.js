@@ -96,7 +96,7 @@ export default ({
         <PostHeader>
           <Link
             to={{
-              pathname: `/${user.username}`,
+              pathname: `/user/${user.username}`,
               state: { id: user.id },
             }}
           >
@@ -105,7 +105,7 @@ export default ({
           <UserColumn>
             <Link
               to={{
-                pathname: `/${user.username}`,
+                pathname: `/user/${user.username}`,
                 state: { id: user.id },
               }}
             >

@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import Field from "./Field";
-import Button from "./Button";
-import { LOGIN, LOCAL_LOG_IN } from "../queries/Auth/AuthQueries";
-import TextButton from "./TextButton";
+import { useFormik } from "formik";
+import Field from "../Field";
+import Button from "../Button";
+import { CREATE_ACCOUNT } from "../../queries/Auth/AuthQueries";
 
-const SignInForm = ({ action, setAction }) => {
+const SignUpForm = ({ action, setAction }) => {
   const [loading, setLoading] = useState(false);
 
-  const [loginMutation] = useMutation(LOGIN);
-  const [localLoginMutation] = useMutation(LOCAL_LOG_IN);
+  const [createAccountMutation] = useMutation(CREATE_ACCOUNT);
 
   const validate = (values) => {
     const errors = {};
-    if (!values.email) {
-      errors.email = "メールアドレスを入力してください。";
+    if (!values.username) {
+      errors.username = "必須項目です。";
+    } else if (!values.email) {
+      errors.email = "必須項目です。";
     } else if (!values.password) {
-      errors.password = "パスワードを入力してください。";
+      errors.password = "必須項目です。";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
       errors.email = "有効ではないメールアドレスです。";
     }
@@ -26,20 +26,30 @@ const SignInForm = ({ action, setAction }) => {
   };
 
   const onSubmit = async () => {
-    if (action === "logIn") {
-      if (formik.values.email !== "") {
+    if (action === "signUp") {
+      if (
+        formik.values.username !== "" &&
+        formik.values.email !== "" &&
+        formik.values.password !== ""
+      ) {
         setLoading(true);
         try {
           const {
-            data: { login: token },
-          } = await loginMutation({
+            data: { createAccount },
+          } = await createAccountMutation({
             variables: {
+              avatar:
+                "https://coco-for-dogs.s3-ap-northeast-1.amazonaws.com/anonymous.jpg",
+              username: formik.values.username,
               email: formik.values.email,
               password: formik.values.password,
             },
           });
-          if (token !== "" || token !== undefined) {
-            localLoginMutation({ variables: { token } });
+          if (!createAccount) {
+            toast.error("😢 会員登録に失敗しました。もう一度行ってください。");
+          } else {
+            toast.success("😄 会員登録が完了しました！");
+            setAction("logIn");
           }
         } catch (e) {
           toast.error(`😢 ${e.message}`);
@@ -53,6 +63,7 @@ const SignInForm = ({ action, setAction }) => {
 
   const formik = useFormik({
     initialValues: {
+      username: "",
       email: "",
       password: "",
     },
@@ -62,6 +73,15 @@ const SignInForm = ({ action, setAction }) => {
 
   return (
     <form className="w-full" onSubmit={formik.handleSubmit}>
+      <Field
+        label="ユーザ名"
+        type="text"
+        name="username"
+        errors={formik.errors.username}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values.username}
+      />
       <Field
         label="メールアドレス"
         type="email"
@@ -80,14 +100,9 @@ const SignInForm = ({ action, setAction }) => {
         onBlur={formik.handleBlur}
         value={formik.values.password}
       />
-      <Button type="submit" loading={loading} accent={true} title="ログイン" />
-      <TextButton
-        text="パスワードを忘れた場合は"
-        title="パスワード再設定"
-        handleClick={() => setAction("reset")}
-      />
+      <Button loading={loading} type="submit" accent={true} title="会員登録" />
     </form>
   );
 };
 
-export default SignInForm;
+export default SignUpForm;

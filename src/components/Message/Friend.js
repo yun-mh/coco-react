@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { gql, useMutation } from "@apollo/client";
-import { CREATE_CHATROOM, VIEW_CHATROOMS } from "../queries/Main/MainQueries";
+import { useMutation } from "@apollo/client";
+import { CREATE_CHATROOM, VIEW_CHATROOMS } from "../../queries/Main/MainQueries";
 
 const Container = styled.div`
   ${tw`p-1`};

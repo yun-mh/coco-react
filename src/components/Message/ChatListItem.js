@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import utils from "../utils";
+import utils from "../../utils";
 
 const Container = styled.div`
   ${tw`flex flex-row w-full border-b border-gray-200 p-5 items-center justify-between cursor-pointer hover:bg-gray-100`}

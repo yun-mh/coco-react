@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import tw from "twin.macro";
 import Loader from "../../components/Loader";
-import Friend from "../../components/Friend";
-import ChatListItem from "../../components/ChatListItem";
-import Chatroom from "../../components/Chatroom";
+import Friend from "../../components/Message/Friend";
+import ChatListItem from "../../components/Message/ChatListItem";
+import Chatroom from "../../components/Message/Chatroom";
 
 const Container = styled.div`
   ${tw`flex flex-row w-full h-entire`}

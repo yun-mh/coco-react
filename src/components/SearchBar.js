@@ -15,7 +15,7 @@ const SearchInput = styled.input`
 
 const SearchBar = ({ history }) => {
   const search = useInput("");
-
+  
   const onSearchSubmit = (e) => {
     e.preventDefault();
     if (search.value !== "") {

@@ -7,9 +7,11 @@ import { PlusCircle, Settings } from "react-feather";
 import { Tooltip } from "react-tippy";
 import Loader from "../../components/Loader";
 import PostCard from "../../components/PostCard";
-import DogCard from "../../components/DogCard";
+import DogCard from "../../components/Profile/DogCard";
 import FollowButton from "../../components/FollowButton";
-import AddDogModal from "../../components/AddDogModal";
+import AddDogModal from "../../components/Profile/AddDogModal";
+import FollowersModal from "../../components/Profile/FollowersModal";
+import FollowingsModal from "../../components/Profile/FollowingsModal";
 
 const Container = styled.div`
   ${tw`bg-white rounded-lg h-entire flex flex-col justify-between`}
@@ -77,11 +79,18 @@ const Posts = styled.div`
 `;
 
 const ProfilePresenter = ({
+  currentUser,
   loading,
   data,
-  modalIsOpen,
-  openModal,
-  closeModal,
+  addDogModalIsOpen,
+  openAddDogModal,
+  closeAddDogModal,
+  followersModalIsOpen,
+  followingsModalIsOpen,
+  openFollowersModal,
+  closeFollowersModal,
+  openFollowingsModal,
+  closeFollowingsModal,
 }) => {
   let history = useHistory();
 
@@ -98,6 +107,8 @@ const ProfilePresenter = ({
         email,
         avatar,
         username,
+        followers,
+        following,
         isFollowing,
         isMyself,
         followingCount,
@@ -107,6 +118,8 @@ const ProfilePresenter = ({
         dogs,
       },
     } = data;
+
+    console.log(data)
 
     return (
       <Container>
@@ -164,13 +177,13 @@ const ProfilePresenter = ({
                   </span>
                   <span>{postsCount}</span>
                 </Count>
-                <Count>
+                <Count className="cursor-pointer" onClick={() => openFollowersModal()}>
                   <span className="text-gray-600 text-xs sm:text-sm mr-2">
                     フォロワー
                   </span>
                   <span>{followersCount}</span>
                 </Count>
-                <Count>
+                <Count className="cursor-pointer" onClick={() => openFollowingsModal()}>
                   <span className="text-gray-600 text-xs sm:text-sm mr-2">
                     フォロー中
                   </span>
@@ -201,7 +214,7 @@ const ProfilePresenter = ({
                 />
               ))}
               {isMyself && (
-                <div className="mt-2 flex items-center" onClick={openModal}>
+                <div className="mt-2 flex items-center" onClick={openAddDogModal}>
                   <PlusCircle
                     size={30}
                     className="text-primary cursor-pointer"
@@ -232,8 +245,20 @@ const ProfilePresenter = ({
         </div>
         <AddDogModal
           currentUser={id}
-          modalIsOpen={modalIsOpen}
-          closeModal={closeModal}
+          modalIsOpen={addDogModalIsOpen}
+          closeModal={closeAddDogModal}
+        />
+        <FollowersModal
+          currentUser={currentUser}
+          followers={followers}
+          modalIsOpen={followersModalIsOpen}
+          closeModal={closeFollowersModal}
+        />
+        <FollowingsModal
+          currentUser={currentUser}
+          followings={following}
+          modalIsOpen={followingsModalIsOpen}
+          closeModal={closeFollowingsModal}
         />
       </Container>
     );
