@@ -209,6 +209,7 @@ const ProfilePresenter = ({
                   gender={dog.gender}
                   breed={dog.breed}
                   birthdate={dog.birthdate}
+                  isMissed={dog.isMissed}
                   currentUser={id}
                   isMyself={isMyself}
                 />

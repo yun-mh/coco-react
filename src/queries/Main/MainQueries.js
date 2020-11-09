@@ -87,6 +87,7 @@ export const VIEW_USER = gql`
         breed
         gender
         birthdate
+        isMissed
       }
       posts {
         id

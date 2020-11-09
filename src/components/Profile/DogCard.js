@@ -9,6 +9,7 @@ import { useMutation } from "@apollo/client";
 import { DELETE_DOG, VIEW_USER } from "../../queries/Main/MainQueries";
 import ModifyDogModal from "./ModifyDogModal";
 import "react-tippy/dist/tippy.css";
+import SetDogLostModal from "./SetDogLostModal";
 
 const Container = styled.div`
   ${tw`w-3/4 h-24 md:h-32 px-4 py-2 my-2 flex flex-col md:flex-row items-center justify-between bg-white rounded-lg`}
@@ -52,11 +53,13 @@ const DogCard = ({
   gender,
   breed,
   birthdate,
+  isMissed,
   currentUser,
   isMyself,
 }) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modifyModalIsOpen, setModifyIsOpen] = useState(false);
+  const [dogLostModalIsOpen, setDogLostIsOpen] = useState(false);
 
   const [deleteDogMutation] = useMutation(DELETE_DOG, {
     variables: {
@@ -68,12 +71,20 @@ const DogCard = ({
     ],
   });
 
-  const openModal = () => {
-    setIsOpen(true);
+  const openModifyModal = () => {
+    setModifyIsOpen(true);
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
+  const closeModifyModal = () => {
+    setModifyIsOpen(false);
+  };
+
+  const openSetLostModal = () => {
+    setDogLostIsOpen(true);
+  };
+
+  const closeSetLostModal = () => {
+    setDogLostIsOpen(false);
   };
 
   const deleteDog = async (id) => {
@@ -128,11 +139,22 @@ const DogCard = ({
                 onClick={() => {
                   setIsPopoverOpen(false);
                   setTimeout(() => {
-                    openModal();
+                    openModifyModal();
                   }, 300);
                 }}
               >
                 修正
+              </li>
+              <li
+                className="mb-3 text-center cursor-pointer"
+                onClick={() => {
+                  setIsPopoverOpen(false);
+                  setTimeout(() => {
+                    openSetLostModal();
+                  }, 300);
+                }}
+              >
+                迷子設定
               </li>
               <li
                 className="text-red-400 text-center cursor-pointer"
@@ -154,8 +176,20 @@ const DogCard = ({
         gender={gender}
         breed={breed}
         birthdate={birthdate}
-        modalIsOpen={modalIsOpen}
-        closeModal={closeModal}
+        modalIsOpen={modifyModalIsOpen}
+        closeModal={closeModifyModal}
+      />
+      <SetDogLostModal
+        currentUser={currentUser}
+        dogId={id}
+        image={image}
+        name={name}
+        gender={gender}
+        breed={breed}
+        birthdate={birthdate}
+        isMissed={isMissed}
+        modalIsOpen={dogLostModalIsOpen}
+        closeModal={closeSetLostModal}
       />
     </Container>
   );
