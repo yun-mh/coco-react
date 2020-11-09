@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const Avatar = styled.img`
-  ${tw`w-12 h-12 rounded-full mr-5`}
+  ${tw`w-12 h-12 rounded-full mr-5 object-cover`}
 `;
 
 const ContentContainer = styled.div`

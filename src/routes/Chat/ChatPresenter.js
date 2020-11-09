@@ -20,7 +20,7 @@ const ChatBar = styled.div`
 `;
 
 const FriendsContainer = styled.div`
-  ${tw`flex flex-row h-24 items-center border-b overflow-x-auto px-3`}
+  ${tw`flex flex-row h-32 px-2 items-center border-b overflow-x-auto px-3`}
 `;
 
 const ChatroomsContainer = styled.div`
@@ -34,7 +34,6 @@ const ChatContainer = styled.div`
 const ChatPresenter = ({
   loading,
   rooms,
-  friendLoading,
   friends,
   currentUser,
 }) => {

@@ -52,6 +52,7 @@ export default ({ id, counterpart, currentUser }) => {
       roomId: id,
       message: msg.value,
       toId: counterpart.id,
+      token: counterpart.token,
     },
     refetchQueries: () => [{ query: VIEW_CHATROOM, variables: { id: id } }],
   });
@@ -80,7 +81,6 @@ export default ({ id, counterpart, currentUser }) => {
     try {
       await sendMessageMutation();
     } catch (error) {
-      console.warn(error);
     } finally {
       msg.setValue("");
     }

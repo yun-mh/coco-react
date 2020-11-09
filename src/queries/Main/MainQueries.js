@@ -437,6 +437,7 @@ export const VIEW_CHATROOMS = gql`
         id
         avatar
         username
+        token
       }
       messages {
         id
@@ -472,6 +473,7 @@ export const GET_CHATROOMS = gql`
 export const GET_FRIENDS = gql`
   query viewMyself {
     viewMyself {
+      username
       following {
         id
         avatar
@@ -526,8 +528,8 @@ export const VIEW_CHATROOM = gql`
 `;
 
 export const SEND_MESSAGE = gql`
-  mutation sendMessage($roomId: String, $message: String!, $toId: String) {
-    sendMessage(roomId: $roomId, message: $message, toId: $toId) {
+  mutation sendMessage($roomId: String, $message: String!, $toId: String, $token: String) {
+    sendMessage(roomId: $roomId, message: $message, toId: $toId, token: $token) {
       id
       text
       from {

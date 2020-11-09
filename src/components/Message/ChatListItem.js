@@ -8,8 +8,12 @@ const Container = styled.div`
   ${({ selected }) => (selected ? tw`bg-gray-100` : tw`bg-white`)}
 `;
 
+const UserContainer = styled.div`
+  ${tw`flex`}
+`;
+
 const Avatar = styled.img`
-  ${tw`w-12 h-12 rounded-full mr-5`}
+  ${tw`w-12 h-12 rounded-full mr-5 object-cover`}
 `;
 
 const InfoContainer = styled.div`
@@ -49,17 +53,19 @@ const ChatListItem = ({
 
   return (
     <Container selected={selected} onClick={toChatroom}>
-      <Avatar src={counterpart.avatar} />
-      <InfoContainer>
-        <Username>{counterpart.username}</Username>
-        <Message>
-          {msg && msg.length > 0
-            ? msg[0].text.length > 28
-              ? msg[0].text.slice(0, 28) + "..."
-              : msg[0].text
-            : ""}
-        </Message>
-      </InfoContainer>
+      <UserContainer>
+        <Avatar src={counterpart.avatar} />
+        <InfoContainer>
+          <Username>{counterpart.username}</Username>
+          <Message>
+            {msg && msg.length > 0
+              ? msg[0].text.length > 28
+                ? msg[0].text.slice(0, 28) + "..."
+                : msg[0].text
+              : ""}
+          </Message>
+        </InfoContainer>
+      </UserContainer>
       <Time>{msg && msg.length > 0 && utils.formatDate(msg[0].createdAt)}</Time>
     </Container>
   );

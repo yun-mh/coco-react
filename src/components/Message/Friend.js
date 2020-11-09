@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { CREATE_CHATROOM, VIEW_CHATROOMS } from "../../queries/Main/MainQueries";
 
 const Container = styled.div`
-  ${tw`p-1`};
+  ${tw`p-1 flex-none`};
 `;
 
 const TouchableContainer = styled.div`
