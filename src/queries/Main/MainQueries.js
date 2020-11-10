@@ -219,6 +219,18 @@ export const MODIFY_DOG = gql`
   }
 `;
 
+export const TOGGLE_STATUS = gql`
+  mutation toggleMissingStatus(
+    $id: String!
+    $isMissed: Boolean!
+  ) {
+    toggleMissingStatus(
+      id: $id
+      isMissed: $isMissed
+    )
+  }
+`;
+
 export const DELETE_DOG = gql`
   mutation editDog($id: String!, $action: ACTIONS!) {
     editDog(id: $id, action: $action) {

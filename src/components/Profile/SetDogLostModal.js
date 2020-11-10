@@ -1,21 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import moment from "moment";
 import Modal from "react-modal";
 import { Calendar } from "react-feather";
 import axios from "axios";
-import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation } from "@apollo/client";
+import { QRCode } from "react-qrcode-logo";
 import { useScrollBodyLock } from "../../hooks/useScrollBodyLock";
-import { MODIFY_DOG, VIEW_USER } from "../../queries/Main/MainQueries";
+import { TOGGLE_STATUS, VIEW_USER } from "../../queries/Main/MainQueries";
 import Field from "../Field";
 import Button from "../Button";
-import RadioButton from "../RadioButton";
-import DatePicker from "../DatePicker";
 import Switch from "../Switch";
-import { QRCode } from "react-qrcode-logo";
 
 Modal.setAppElement("#root");
 
@@ -81,36 +78,54 @@ const Breed = styled.div`
 export default ({
   currentUser,
   dogId,
-  image: imageP,
-  name: nameP,
-  gender: genderP,
-  breed: breedP,
-  birthdate: birthdateP,
+  image,
+  name,
+  gender,
+  breed,
+  birthdate,
   isMissed: isMissedP,
   modalIsOpen,
   closeModal,
 }) => {
   const { lock, unlock } = useScrollBodyLock();
 
-  const [avatar, setAvatar] = useState(
-    imageP || "https://coco-for-dogs.s3-ap-northeast-1.amazonaws.com/anonymous-dog.jpg"
-  );
-  const [image, setImage] = useState();
-  const [name] = useState(nameP);
-  const [gender, setGender] = useState(genderP);
-  const [birthdate, setBirthdate] = useState(birthdateP);
-  const [breed] = useState(breedP);
   const [isMissed, setIsMissed] = useState(isMissedP);
   const [loading, setLoading] = useState(false);
-  const [on, setOn] = useState(false);
 
   const code = useRef(null);
+
+  const [modifyDogMutation] = useMutation(TOGGLE_STATUS, {
+    variables: {
+      id: dogId,
+      isMissed,
+    },
+    refetchQueries: () => [
+      { query: VIEW_USER, variables: { id: currentUser } },
+    ],
+  });
 
   const downloadCode = () => {
     const link = document.createElement("a");
     link.download = "test.png";
     link.href = code.current.canvas.current.toDataURL();
     link.click();
+  }
+
+  const openAsNewWindow = () => {
+    window.open(`http://localhost:3001/${dogId}?owner=${currentUser}`)
+  }
+
+  const toggleMissingStatus = async () => {
+    const { data: { toggleMissingStatus } } = await modifyDogMutation({ 
+      variables: {
+        id: dogId,
+        isMissed: !isMissed,
+      } 
+    });
+    console.log(toggleMissingStatus);
+    if (toggleMissingStatus) {
+      setIsMissed(!isMissed);
+    }
   }
   
   return (
@@ -132,7 +147,7 @@ export default ({
             <Switch
               isOn={isMissed}
               onColor="#EF476F"
-              handleToggle={() => setIsMissed(!isMissed)}
+              handleToggle={toggleMissingStatus}
             />
             <div>
               {isMissed ? "on" : "off"}
@@ -143,12 +158,12 @@ export default ({
             <Button title="QRコードダウンロード" onClick={downloadCode} />
           </QRCodeContainer>
           <LinkContainer>
-            <Button title="犬の迷子状況ページへ" accent={true} onClick={downloadCode} />
+            <Button title="犬の迷子状況ページへ" accent={true} onClick={openAsNewWindow} />
           </LinkContainer>
         </ControlContainer>
         <StatusContainer>
           <DogContainer>
-            <DogImage src={avatar} />
+            <DogImage src={image} />
             <InfoContainer>
                 <DogHeader>
                 <Name>{name}</Name>

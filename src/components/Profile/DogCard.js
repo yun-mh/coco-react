@@ -89,7 +89,7 @@ const DogCard = ({
 
   const deleteDog = async (id) => {
     try {
-      const { data: editDog } = await deleteDogMutation();
+      const { data: { editDog } } = await deleteDogMutation();
       if (editDog) {
         toast.success("👍 削除が完了しました。");
       }

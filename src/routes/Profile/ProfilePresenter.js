@@ -119,8 +119,6 @@ const ProfilePresenter = ({
       },
     } = data;
 
-    console.log(data)
-
     return (
       <Container>
         <Helmet>
