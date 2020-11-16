@@ -170,6 +170,10 @@ export default ({
     formik.values.birthdate = birthdate;
   }, [birthdate, formik.values.birthdate])
 
+  useEffect(() => {
+    formik.values.image = image;
+  }, [image, formik.values.image])
+
   const radioProps = [
     { key: "male", text: "男" },
     { key: "female", text: "女" },

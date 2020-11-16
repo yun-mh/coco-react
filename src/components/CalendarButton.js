@@ -10,7 +10,7 @@ const Btn = styled.button`
   ${tw`px-5 py-1 rounded-full focus:outline-none active:bg-secondary-light flex items-center justify-center`}
 `;
 
-const Button = ({ loading, type, title, accent = false, onClick }) => {
+const CalendarButton = ({ loading, type, title, accent = false, onClick }) => {
   return (
     <Container>
       <Btn
@@ -26,4 +26,4 @@ const Button = ({ loading, type, title, accent = false, onClick }) => {
   );
 };
 
-export default Button;
+export default CalendarButton;
