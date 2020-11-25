@@ -112,7 +112,7 @@ export default ({
   }
 
   const openAsNewWindow = () => {
-    window.open(`http://localhost:3001/${dogId}?owner=${currentUser}`)
+    window.open(`https://support.cocofordogs.com/${dogId}?owner=${currentUser}`)
   }
 
   const toggleMissingStatus = async () => {
@@ -122,7 +122,6 @@ export default ({
         isMissed: !isMissed,
       } 
     });
-    console.log(toggleMissingStatus);
     if (toggleMissingStatus) {
       setIsMissed(!isMissed);
     }
@@ -154,7 +153,7 @@ export default ({
             </div>
           </ButtonContainer>
           <QRCodeContainer>
-            <QRCode ref={code} value="https://google.com" />
+            <QRCode ref={code} value={`https://support.cocofordogs.com/${dogId}`} />
             <Button title="QRコードダウンロード" onClick={downloadCode} />
           </QRCodeContainer>
           <LinkContainer>
