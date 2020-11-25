@@ -3,45 +3,53 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import moment from "moment";
 import Modal from "react-modal";
-import { Calendar } from "react-feather";
-import axios from "axios";
+import { Calendar, Info, X } from "react-feather";
 import { toast } from "react-toastify";
 import { useMutation } from "@apollo/client";
 import { QRCode } from "react-qrcode-logo";
 import { useScrollBodyLock } from "../../hooks/useScrollBodyLock";
 import { TOGGLE_STATUS, VIEW_USER } from "../../queries/Main/MainQueries";
-import Field from "../Field";
 import Button from "../Button";
 import Switch from "../Switch";
 
 Modal.setAppElement("#root");
 
 const ModalContainer = styled.div`
-  ${tw`h-full p-3 flex flex-col md:flex-row items-center`}
+  ${tw`mt-12 pb-3 flex flex-col items-center overflow-y-auto`}
+  height: calc(100% - 3rem);
 `;
 
-const ControlContainer = styled.div`
-  ${tw`w-full md:w-1/2 p-3 flex flex-col items-center justify-center`}
+const ModalTitle = styled.div`
+  ${tw`fixed w-4/5 md:w-1/3 flex items-center justify-center h-12 border-b font-semibold bg-white rounded-t-lg`}
 `;
 
-const ButtonContainer = styled.div`
-  ${tw`w-full flex items-center justify-center`}
-`
-
-const QRCodeContainer = styled.div`
-  ${tw`w-full flex flex-col items-center justify-center`}
-`
-
-const LinkContainer = styled.div`
-  ${tw`w-full flex items-center justify-center`}
-`
+const CloseButton = styled.div`
+  ${tw`absolute`}
+  right: 10px;
+`;
 
 const StatusContainer = styled.div`
-  ${tw`w-full md:w-1/2 px-3`}
+  ${tw`w-full px-3`}
 `;
 
 const DogContainer = styled.div`
-  ${tw`w-3/4 h-24 md:h-32 px-4 py-2 my-2 flex flex-col md:flex-row items-center justify-between bg-white rounded-lg`}
+  ${tw`w-full h-24 md:h-32 p-4 flex flex-col md:flex-row items-center justify-around border-b`}
+`;
+
+const ButtonContainer = styled.div`
+  ${tw`w-full flex items-center justify-around py-4 border-b`}
+`;
+
+const CodeContainer = styled.div`
+  ${tw`w-full h-full flex flex-col items-center justify-center px-3`}
+`;
+
+const QRCodeContainer = styled.div`
+  ${tw`w-full flex flex-col items-center justify-center`}
+`;
+
+const LinkContainer = styled.div`
+  ${tw`w-full flex flex-col items-center justify-center mt-5`}
 `;
 
 const InfoContainer = styled.div`
@@ -109,23 +117,26 @@ export default ({
     link.download = "test.png";
     link.href = code.current.canvas.current.toDataURL();
     link.click();
-  }
+  };
 
   const openAsNewWindow = () => {
     window.open(`https://support.cocofordogs.com/${dogId}?owner=${currentUser}`)
-  }
+  };
 
   const toggleMissingStatus = async () => {
-    const { data: { toggleMissingStatus } } = await modifyDogMutation({ 
-      variables: {
-        id: dogId,
-        isMissed: !isMissed,
-      } 
-    });
-    if (toggleMissingStatus) {
-      setIsMissed(!isMissed);
+    const result = window.confirm("本当に犬の迷子状態を変更しますか？");
+    if (result) {
+      const { data: { toggleMissingStatus } } = await modifyDogMutation({ 
+        variables: {
+          id: dogId,
+          isMissed: !isMissed,
+        } 
+      });
+      if (toggleMissingStatus) {
+        setIsMissed(!isMissed);
+      }        
     }
-  }
+  };
   
   return (
     <Modal
@@ -134,32 +145,16 @@ export default ({
       onAfterClose={unlock}
       shouldFocusAfterRender
       onRequestClose={closeModal}
-      className="w-4/5 md:w-2/3 md:h-threequarter bg-white rounded-lg shadow"
+      className="w-4/5 md:w-1/3 h-threequarter bg-white rounded-lg shadow"
       overlayClassName="Overlay flex justify-center items-center"
     >
-      <ModalContainer className="w-full flex flex-col items-center justify-center">
-        <ControlContainer>
-          <ButtonContainer>
-            <div>
-                迷子状態
-            </div>
-            <Switch
-              isOn={isMissed}
-              onColor="#EF476F"
-              handleToggle={toggleMissingStatus}
-            />
-            <div>
-              {isMissed ? "on" : "off"}
-            </div>
-          </ButtonContainer>
-          <QRCodeContainer>
-            <QRCode ref={code} value={`https://support.cocofordogs.com/${dogId}`} />
-            <Button title="QRコードダウンロード" onClick={downloadCode} />
-          </QRCodeContainer>
-          <LinkContainer>
-            <Button title="犬の迷子状況ページへ" accent={true} onClick={openAsNewWindow} />
-          </LinkContainer>
-        </ControlContainer>
+      <ModalTitle>
+        迷子設定
+        <CloseButton onClick={() => closeModal()}>
+          <X size={30} className="text-gray-600 cursor-pointer" />
+        </CloseButton>
+      </ModalTitle>
+      <ModalContainer>
         <StatusContainer>
           <DogContainer>
             <DogImage src={image} />
@@ -186,7 +181,37 @@ export default ({
                 </DogInfo>
             </InfoContainer>
           </DogContainer>
+          <ButtonContainer>
+            <div className="mr-3">
+                迷子状態に設定する
+            </div>
+            <Switch
+              isOn={isMissed}
+              onColor="#EF476F"
+              handleToggle={toggleMissingStatus}
+            />
+          </ButtonContainer>
         </StatusContainer>
+        <CodeContainer className="">
+          <QRCodeContainer>
+            <QRCode 
+              ref={code}
+              value={`https://support.cocofordogs.com/${dogId}`}
+              quietZone={20}
+              logoWidth={40}
+              logoHeight={40}
+              logoImage={require("../../assets/images/qr-logo.png")}
+            />
+            <div className="flex items-center px-5">
+              <Info size={14} />
+              <p className="ml-2 text-sm text-gray-700">QRコードをプリントし首輪・ハーネスなどに付着すると、迷子になった際に有用に使えます。</p>
+            </div>
+          </QRCodeContainer>
+          <LinkContainer>
+            <Button title="QRコードダウンロード" onClick={downloadCode} />
+            <Button title="犬の迷子状況ページへ" accent={true} onClick={openAsNewWindow} />
+          </LinkContainer>
+        </CodeContainer>
       </ModalContainer>
     </Modal>
   );
