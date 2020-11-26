@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import tw from "twin.macro";
+import utils from "../utils";
 import Avatar from "./Avatar";
 import FollowButton from "./FollowButton";
 
@@ -24,7 +25,7 @@ const UserCard = ({ currentUser, id, username, isFollowing, url, isMyself }) => 
         }}
       >
         <Avatar url={url} />
-        <Username>{username}</Username>
+        <Username>{utils.truncateText(username, 14)}</Username>
       </Link>
       {!isMyself && <FollowButton currentUser={currentUser} id={id} isFollowing={isFollowing} />}
     </Card>

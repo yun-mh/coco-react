@@ -4,6 +4,7 @@ import tw from "twin.macro";
 import { X } from "react-feather";
 import Modal from "react-modal";
 import { useScrollBodyLock } from "../../hooks/useScrollBodyLock";
+import utils from "../../utils";
 import FollowButton from "../FollowButton";
 
 Modal.setAppElement("#root");
@@ -49,8 +50,6 @@ export default ({
 }) => {
   const { lock, unlock } = useScrollBodyLock();
 
-  console.log(followings)
-
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -72,7 +71,7 @@ export default ({
           <FollowingCard key={following.id}>
             <UserInfo>
               <Avatar url={following.avatar} />
-              <Username>{ following.username }</Username>
+              <Username>{ utils.truncateText(following.username) }</Username>
             </UserInfo>
             <FollowButton currentUser={currentUser} id={following.id} isFollowing={following.isFollowing} isBig={false} />
           </FollowingCard>

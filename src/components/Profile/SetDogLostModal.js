@@ -4,7 +4,6 @@ import tw from "twin.macro";
 import moment from "moment";
 import Modal from "react-modal";
 import { Calendar, Info, X } from "react-feather";
-import { toast } from "react-toastify";
 import { useMutation } from "@apollo/client";
 import { QRCode } from "react-qrcode-logo";
 import { useScrollBodyLock } from "../../hooks/useScrollBodyLock";
@@ -98,7 +97,6 @@ export default ({
   const { lock, unlock } = useScrollBodyLock();
 
   const [isMissed, setIsMissed] = useState(isMissedP);
-  const [loading, setLoading] = useState(false);
 
   const code = useRef(null);
 

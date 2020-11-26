@@ -47,4 +47,11 @@ export default {
     const regEx = /(?:\.([^.]+))?$/;
     return regEx.exec(image);
   },
+  truncateText: (text, limit = 10, ending = "...") => {
+    if (text.length > limit) {
+      return text.substring(0, limit) + ending;
+    } else {
+      return text;
+    }
+  } 
 };
