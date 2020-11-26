@@ -27,7 +27,7 @@ const httpLink = new HttpLink({
     process.env.NODE_ENV === "development"
       ? "https://api-coco.herokuapp.com/"
       : "https://api-coco.herokuapp.com/",
-  credentials: 'same-origin'
+  credentials: "same-origin",
 });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -41,7 +41,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const wsLink = new WebSocketLink({
-  uri: `ws://api-coco.herokuapp.com/`,
+  uri: `wss://api-coco.herokuapp.com/`,
   options: {
     reconnect: true,
     connectionParams: async () => {
