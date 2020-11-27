@@ -118,7 +118,7 @@ export default ({
   };
 
   const openAsNewWindow = () => {
-    window.open(`https://support.cocofordogs.com/${dogId}?owner=${currentUser}`)
+    window.open(`https://support.cocofordogs.com/${dogId}?owner=${currentUser}`);
   };
 
   const toggleMissingStatus = async () => {
@@ -190,7 +190,7 @@ export default ({
             />
           </ButtonContainer>
         </StatusContainer>
-        <CodeContainer className="">
+        <CodeContainer>
           <QRCodeContainer>
             <QRCode 
               ref={code}
