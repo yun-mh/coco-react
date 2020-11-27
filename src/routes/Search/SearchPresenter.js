@@ -4,9 +4,10 @@ import tw from "twin.macro";
 import UserCard from "../../components/UserCard";
 import PostCard from "../../components/PostCard";
 import Loader from "../../components/Loader";
+import { Frown } from "react-feather";
 
 const Wrapper = styled.div`
-  ${tw`bg-white rounded-b-lg`}
+  ${tw`bg-white rounded-lg shadow overflow-hidden`}
 `;
 
 const LoaderContainer = styled.div`
@@ -68,8 +69,8 @@ const SearchPresenter = ({ currentUser, searchTerm, loading, data, tab, setTab }
         {searchTerm === undefined && <div>Search for something</div>}
         {tab === "user" &&
           (data.searchUser.length === 0 ? (
-            <div className="h-48 flex items-center justify-center text-gray-800">
-              一致する検索結果がありません。
+            <div className="h-48 flex items-center justify-center text-gray-700 text-lg">
+              <Frown size={36} className="text-red-300 mr-3" /> 一致する検索結果がありません。
             </div>
           ) : (
             <UserSection>
@@ -88,8 +89,8 @@ const SearchPresenter = ({ currentUser, searchTerm, loading, data, tab, setTab }
           ))}
         {tab === "post" &&
           (data.searchPost.length === 0 ? (
-            <div className="h-48 flex items-center justify-center text-gray-800">
-              一致する検索結果がありません。
+            <div className="h-48 flex items-center justify-center text-gray-700 text-lg">
+              <Frown size={36} className="text-red-300 mr-3" /> 一致する検索結果がありません。
             </div>
           ) : (
             <PostSection>

@@ -14,7 +14,7 @@ import FollowersModal from "../../components/Profile/FollowersModal";
 import FollowingsModal from "../../components/Profile/FollowingsModal";
 
 const Container = styled.div`
-  ${tw`bg-white rounded-lg h-entire flex flex-col justify-between`}
+  ${tw`bg-white rounded-lg h-entire flex flex-col justify-between shadow`}
 `;
 
 const LoaderContainer = styled.div`
@@ -73,9 +73,9 @@ const Title = styled.div`
 `;
 
 const Posts = styled.div`
-  ${tw`p-5 w-full h-half md:w-1/2 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-primary-light md:rounded-br-lg`}
-  grid-template-rows: 120px;
-  grid-auto-rows: 120px;
+  ${tw`w-full h-half md:w-1/2 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-primary-light md:rounded-br-lg`}
+  grid-template-rows: 150px;
+  grid-auto-rows: 150px;
 `;
 
 const ProfilePresenter = ({
@@ -213,12 +213,11 @@ const ProfilePresenter = ({
                 />
               ))}
               {isMyself && (
-                <div className="mt-2 flex items-center" onClick={openAddDogModal}>
+                <div className="p-2 rounded-lg hover:shadow mt-2 flex items-center text-primary hover:bg-primary hover:text-white cursor-pointer transition duration-500 ease-in-out" onClick={openAddDogModal}>
                   <PlusCircle
                     size={30}
-                    className="text-primary cursor-pointer"
                   />
-                  <span className="cursor-pointer ml-2 text-primary">追加</span>
+                  <span className="ml-2">追加</span>
                 </div>
               )}
             </Dogs>

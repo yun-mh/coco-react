@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { X, Edit2 } from "react-feather";
+import { X, Edit2, ChevronLeft, ChevronRight } from "react-feather";
 import moment from "moment";
 import Modal from "react-modal";
-import Carousel, { Dots } from "@brainhubeu/react-carousel";
+import Carousel, { arrowsPlugin, Dots } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import TextareaAutosize from "react-autosize-textarea";
 import ScrollToBottom from "react-scroll-to-bottom";
@@ -21,25 +21,25 @@ const Location = styled.span`
 
 const Image = styled.div`
   background-image: url(${({ url }) => url});
-  ${tw`w-full h-quarter md:h-half bg-cover`}
+  ${tw`w-full h-quarter md:h-threequarter bg-cover`}
 `;
 
 Modal.setAppElement("#root");
 
 const ModalContainer = styled.div`
-  ${tw`h-full p-3 flex flex-col md:flex-row items-center`}
+  ${tw`h-full flex flex-col md:flex-row`}
 `;
 
 const ImageContainer = styled.div`
-  ${tw`w-full md:w-1/2 p-3`}
+  ${tw`w-full md:w-1/2 h-full`}
 `;
 
 const ContentContainer = styled.div`
-  ${tw`w-full md:w-1/2 px-3`}
+  ${tw`w-full md:w-1/2 px-5 relative`}
 `;
 
 const ModalHeader = styled.div`
-  ${tw`flex justify-between py-2 h-20`}
+  ${tw`flex justify-between py-5 h-20`}
 `;
 
 const UserInfo = styled.div`
@@ -55,7 +55,7 @@ const ModalClose = styled.div`
 `;
 
 const ModalCaption = styled.p`
-  ${tw`pb-3 border-b border-gray-300`}
+  ${tw`pb-5`}
 `;
 
 const Comment = styled.div`
@@ -71,7 +71,7 @@ const CommentDate = styled.div`
 `;
 
 const AddCommentContainer = styled.div`
-  ${tw`w-full h-16 flex items-center`}
+  ${tw`w-full pr-8 h-16 flex items-center absolute bottom-0`}
 `;
 
 export default ({
@@ -101,16 +101,21 @@ export default ({
       onAfterClose={unlock}
       shouldFocusAfterRender
       onRequestClose={closeModal}
-      className="w-4/5 md:w-2/3 md:h-threequarter bg-white rounded-lg shadow"
+      className="w-4/5 md:w-2/3 md:h-threequarter bg-white rounded-lg shadow overflow-hidden"
       overlayClassName="Overlay flex justify-center items-center"
     >
       <ModalContainer>
         <ImageContainer>
-          <Carousel value={subValue} onChange={onChangeSub}>
+          <Carousel value={subValue} onChange={onChangeSub} 
+             plugins={[
+              {
+                resolve: arrowsPlugin,
+              }
+            ]}
+            >
             {files &&
               files.map((file) => <Image key={file.id} url={file.url} />)}
           </Carousel>
-          <Dots value={subValue} onChange={onChangeSub} number={files.length} />
         </ImageContainer>
         <ContentContainer>
           <ModalHeader>
@@ -138,7 +143,7 @@ export default ({
             </ModalClose>
           </ModalHeader>
           <ModalCaption>{caption}</ModalCaption>
-          <ScrollToBottom className="overflow-y-auto h-quarter md:h-half">
+          <ScrollToBottom className="overflow-y-auto h-quarter md:h-half shadow-inner p-2">
             {comments &&
               comments.map((comment) => (
                 <Comment key={comment.id}>
@@ -172,7 +177,7 @@ export default ({
           </ScrollToBottom>
           <AddCommentContainer>
             <TextareaAutosize
-              className="h-10 w-full border px-3 py-1 mr-3 flex justify-center"
+              className="w-full h-10 border px-3 py-1 mr-3 flex justify-center"
               maxRows={2}
               value={newComment.value}
               onChange={newComment.onChange}

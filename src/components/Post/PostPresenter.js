@@ -12,7 +12,7 @@ import Avatar from "../Avatar";
 import PostModal from "../PostModal";
 
 const Post = styled.div`
-  ${tw`bg-white px-2 rounded-lg`}
+  ${tw`bg-white rounded-lg shadow`}
 `;
 
 const Header = styled.header`
@@ -41,11 +41,11 @@ const Image = styled.div`
 `;
 
 const Meta = styled.div`
-  padding: 15px;
+  ${tw`w-full flex items-end justify-between p-5`}
 `;
 
 const Button = styled.span`
-  ${tw`cursor-pointer text-gray-600`}
+  ${tw`cursor-pointer text-gray-600 hover:text-gray-400 transition duration-150 ease-in-out`}
 `;
 
 const LikeCount = styled.span`
@@ -61,7 +61,7 @@ const Buttons = styled.div`
 `;
 
 const Timestamp = styled.span`
-  ${tw`block text-right font-light text-gray-500 border-b text-xs my-2 pb-2`}
+  ${tw`block text-right font-light text-gray-500 text-xs`}
 `;
 
 export default ({
@@ -141,13 +141,13 @@ export default ({
       <Carousel value={value} onChange={onChange}>
         {files && files.map((file) => <Image key={file.id} url={file.url} />)}
       </Carousel>
-      <Dots value={value} onChange={onChange} number={files.length} />
+      <Dots value={value} onChange={onChange} number={files.length} className="text-green-500" />
       <Caption>{caption}</Caption>
       <Meta>
         <Buttons>
           <Button onClick={handleLike}>
             {isLiked ? (
-              <Heart size={28} className="text-red-400" />
+              <Heart size={28} className="text-red-400 hover:text-red-200 transition duration-150 ease-in-out" />
             ) : (
               <Heart size={28} />
             )}
@@ -158,8 +158,8 @@ export default ({
           </Button>
           <CommentCount>{commentCount}</CommentCount>
         </Buttons>
-        <span text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
-        <Timestamp>{moment(createdAt).format("ll")}</Timestamp>
+        {/* <span text={likeCount === 1 ? "1 like" : `${likeCount} likes`} /> */}
+        <Timestamp>{moment(createdAt).format("lll")}</Timestamp>
       </Meta>
 
       <PostModal

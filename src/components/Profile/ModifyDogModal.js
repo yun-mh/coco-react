@@ -163,6 +163,7 @@ export default ({
       breed,
     },
     validate,
+    validateOnChange: false,
     onSubmit: onSubmit,
   });
   

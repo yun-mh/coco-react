@@ -12,7 +12,7 @@ import "react-tippy/dist/tippy.css";
 import SetDogLostModal from "./SetDogLostModal";
 
 const Container = styled.div`
-  ${tw`w-3/4 h-24 md:h-32 px-4 py-2 my-2 flex flex-col md:flex-row items-center justify-between bg-white rounded-lg`}
+  ${tw`w-3/4 h-24 md:h-32 px-4 py-2 my-2 flex flex-col md:flex-row items-center justify-between bg-white rounded-lg shadow`}
 `;
 
 const InfoContainer = styled.div`

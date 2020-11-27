@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import useInput from "../hooks/useInput";
 
 const SearchBarWrapper = styled.div`
-  ${tw`sticky z-10 top-0 w-full h-16 flex flex-row items-center justify-center border-b bg-white`}
+  ${tw`sticky z-10 top-0 w-full h-16 flex flex-row items-center justify-center border-b bg-white shadow`}
 `;
 
 const SearchInput = styled.input`
