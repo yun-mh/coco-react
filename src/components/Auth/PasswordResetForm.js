@@ -55,6 +55,7 @@ const PasswordResetForm = ({ action, setAction }) => {
       email: "",
     },
     validate,
+    validateOnChange: false,
     onSubmit,
   });
 

@@ -6,8 +6,11 @@ import { Heart, MessageSquare, MoreHorizontal } from "react-feather";
 import moment from "moment";
 import { Tooltip } from "react-tippy";
 import "react-tippy/dist/tippy.css";
-import Carousel, { Dots } from "@brainhubeu/react-carousel";
-import "@brainhubeu/react-carousel/lib/style.css";
+// import Carousel, { Dots } from "@brainhubeu/react-carousel";
+// import "@brainhubeu/react-carousel/lib/style.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Avatar from "../Avatar";
 import PostModal from "../PostModal";
 
@@ -90,6 +93,15 @@ export default ({
     setValue(value);
   };
 
+  const settings = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   return (
     <Post>
       <Header>
@@ -138,16 +150,24 @@ export default ({
           ""
         )}
       </Header>
-      <Carousel value={value} onChange={onChange}>
+      <Slider {...settings} value={value} onChange={onChange}>
         {files && files.map((file) => <Image key={file.id} url={file.url} />)}
-      </Carousel>
-      <Dots value={value} onChange={onChange} number={files.length} className="text-green-500" />
+      </Slider>
+      {/* <Dots
+        value={value}
+        onChange={onChange}
+        number={files.length}
+        className="text-green-500"
+      /> */}
       <Caption>{caption}</Caption>
       <Meta>
         <Buttons>
           <Button onClick={handleLike}>
             {isLiked ? (
-              <Heart size={28} className="text-red-400 hover:text-red-200 transition duration-150 ease-in-out" />
+              <Heart
+                size={28}
+                className="text-red-400 hover:text-red-200 transition duration-150 ease-in-out"
+              />
             ) : (
               <Heart size={28} />
             )}

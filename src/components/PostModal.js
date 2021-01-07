@@ -5,8 +5,11 @@ import tw from "twin.macro";
 import { X, Edit2, ChevronLeft, ChevronRight } from "react-feather";
 import moment from "moment";
 import Modal from "react-modal";
-import Carousel, { arrowsPlugin, Dots } from "@brainhubeu/react-carousel";
-import "@brainhubeu/react-carousel/lib/style.css";
+// import Carousel, { arrowsPlugin, Dots } from "@brainhubeu/react-carousel";
+// import "@brainhubeu/react-carousel/lib/style.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import TextareaAutosize from "react-autosize-textarea";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { useScrollBodyLock } from "../hooks/useScrollBodyLock";
@@ -88,10 +91,12 @@ export default ({
 }) => {
   const { lock, unlock } = useScrollBodyLock();
 
-  const [subValue, setSubValue] = useState(0);
-
-  const onChangeSub = (subValue) => {
-    setSubValue(subValue);
+  const settings = {
+    arrows: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
   return (
@@ -106,31 +111,29 @@ export default ({
     >
       <ModalContainer>
         <ImageContainer>
-          <Carousel value={subValue} onChange={onChangeSub} 
-             plugins={[
-              {
-                resolve: arrowsPlugin,
-              }
-            ]}
-            >
+          <Slider {...settings}>
             {files &&
               files.map((file) => <Image key={file.id} url={file.url} />)}
-          </Carousel>
+          </Slider>
         </ImageContainer>
         <ContentContainer>
           <ModalHeader>
             <UserInfo>
-              <Link to={{
-                pathname: `/user/${user.username}`,
-                state: { id: user.id },
-              }}>
+              <Link
+                to={{
+                  pathname: `/user/${user.username}`,
+                  state: { id: user.id },
+                }}
+              >
                 <ModalAvatar src={user.avatar} />
               </Link>
               <UserColumn>
-                <Link to={{
-                  pathname: `/user/${user.username}`,
-                  state: { id: user.id },
-                }}>
+                <Link
+                  to={{
+                    pathname: `/user/${user.username}`,
+                    state: { id: user.id },
+                  }}
+                >
                   <span className="font-semibold">{user.username}</span>
                 </Link>
                 <Location>{location ? location : "　"}</Location>
@@ -147,7 +150,7 @@ export default ({
             {comments &&
               comments.map((comment) => (
                 <Comment key={comment.id}>
-                  <Link 
+                  <Link
                     to={{
                       pathname: `/user/${comment.user.username}`,
                       state: { id: comment.user.id },
@@ -158,14 +161,16 @@ export default ({
                   </Link>
                   <CommentContent>
                     <p className="text-sm">
-                    <Link to={{
-                      pathname: `/user/${comment.user.username}`,
-                      state: { id: comment.user.id },
-                    }}>
-                      <span className="font-semibold mr-2">
-                        {comment.user.username}
-                      </span>
-                    </Link>
+                      <Link
+                        to={{
+                          pathname: `/user/${comment.user.username}`,
+                          state: { id: comment.user.id },
+                        }}
+                      >
+                        <span className="font-semibold mr-2">
+                          {comment.user.username}
+                        </span>
+                      </Link>
                       {comment.text}
                     </p>
                     <CommentDate>

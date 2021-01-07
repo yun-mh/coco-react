@@ -89,6 +89,7 @@ const PasswordResetPresenter = ({ loading, isChecked, email }) => {
       checkPassword: "",
     },
     validate,
+    validateOnChange: false,
     onSubmit,
   });
 

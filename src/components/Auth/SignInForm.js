@@ -57,6 +57,7 @@ const SignInForm = ({ action, setAction }) => {
       password: "",
     },
     validate,
+    validateOnChange: false,
     onSubmit,
   });
 

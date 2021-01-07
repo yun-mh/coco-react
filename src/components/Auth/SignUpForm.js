@@ -68,6 +68,7 @@ const SignUpForm = ({ action, setAction }) => {
       password: "",
     },
     validate,
+    validateOnChange: false,
     onSubmit,
   });
 
