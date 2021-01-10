@@ -32,7 +32,7 @@
   overflow: hidden;
 }
 
-/* カロウセル` */
+/* カロウセル */
 .slick-dots li.slick-active button::before {
   color: rgb(115, 200, 183);
   opacity: 1;
