@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { X, Edit2, ChevronLeft, ChevronRight } from "react-feather";
+import { X, Edit2 } from "react-feather";
 import moment from "moment";
 import Modal from "react-modal";
-// import Carousel, { arrowsPlugin, Dots } from "@brainhubeu/react-carousel";
-// import "@brainhubeu/react-carousel/lib/style.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

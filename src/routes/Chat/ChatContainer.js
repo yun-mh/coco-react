@@ -58,6 +58,7 @@ const ChatContainer = ({
     if (newData !== undefined) {
       handleNewChatroom();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newData]);
 
   return (

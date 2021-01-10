@@ -32,6 +32,7 @@ const PostContainer = ({
   const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
     variables: {
       postId: id,
+      token: user.token,
     },
   });
 
@@ -39,6 +40,7 @@ const PostContainer = ({
     variables: {
       postId: id,
       text: comment.value,
+      token: user.token,
     },
     refetchQueries: () => [{ query: VIEW_POST, variables: { id } }],
   });
@@ -53,12 +55,12 @@ const PostContainer = ({
         fields: {
           viewFeed(existingPostRefs, { readField }) {
             return existingPostRefs.filter(
-              postRef => id !== readField('id', postRef)
+              (postRef) => id !== readField("id", postRef)
             );
           },
         },
-      })
-    }
+      });
+    },
   });
 
   const openModal = () => {

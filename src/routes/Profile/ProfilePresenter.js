@@ -116,6 +116,7 @@ const ProfilePresenter = ({
         postsCount,
         posts,
         dogs,
+        token,
       },
     } = data;
 
@@ -164,7 +165,13 @@ const ProfilePresenter = ({
                   </Tooltip>
                 ) : (
                   <div>
-                    <FollowButton id={id} isFollowing={isFollowing} />
+                    <FollowButton
+                      id={id}
+                      token={token}
+                      isFollowing={isFollowing}
+                      currentUser={id}
+                      isBig={false}
+                    />
                   </div>
                 )}
               </UsernameRow>
@@ -175,13 +182,19 @@ const ProfilePresenter = ({
                   </span>
                   <span>{postsCount}</span>
                 </Count>
-                <Count className="cursor-pointer" onClick={() => openFollowersModal()}>
+                <Count
+                  className="cursor-pointer"
+                  onClick={() => openFollowersModal()}
+                >
                   <span className="text-gray-600 text-xs sm:text-sm mr-2">
                     フォロワー
                   </span>
                   <span>{followersCount}</span>
                 </Count>
-                <Count className="cursor-pointer" onClick={() => openFollowingsModal()}>
+                <Count
+                  className="cursor-pointer"
+                  onClick={() => openFollowingsModal()}
+                >
                   <span className="text-gray-600 text-xs sm:text-sm mr-2">
                     フォロー中
                   </span>
@@ -213,10 +226,11 @@ const ProfilePresenter = ({
                 />
               ))}
               {isMyself && (
-                <div className="p-2 rounded-lg hover:shadow mt-2 flex items-center text-primary hover:bg-primary hover:text-white cursor-pointer transition duration-500 ease-in-out" onClick={openAddDogModal}>
-                  <PlusCircle
-                    size={30}
-                  />
+                <div
+                  className="p-2 rounded-lg hover:shadow mt-2 flex items-center text-primary hover:bg-primary hover:text-white cursor-pointer transition duration-500 ease-in-out"
+                  onClick={openAddDogModal}
+                >
+                  <PlusCircle size={30} />
                   <span className="ml-2">追加</span>
                 </div>
               )}

@@ -6,30 +6,38 @@ import { FOLLOW, UNFOLLOW, VIEW_USER } from "../queries/Main/MainQueries";
 
 const Container = styled.div`
   ${tw`flex flex-col`}
-  ${({ isBig }) =>
-    isBig === true ? tw`w-full mt-3` : "w-16" }
+  ${({ isBig }) => (isBig === true ? tw`w-full mt-3` : "w-16")}
 `;
 
 const Btn = styled.button`
   ${tw`rounded-full focus:outline-none active:bg-primary-light`}
   ${({ isBig }) =>
-    isBig === true ? tw`px-2 h-8 text-xs lg:px-5 lg:h-12 lg:text-base` : tw`px-2 h-6 text-xs` }
+    isBig === true
+      ? tw`px-2 h-8 text-xs lg:px-5 lg:h-12 lg:text-base`
+      : tw`px-2 h-6 text-xs`}
 `;
 
-const FollowButton = ({ currentUser, id, isFollowing, isBig = true }) => {
+const FollowButton = ({
+  currentUser,
+  id,
+  isFollowing,
+  token,
+  isBig = true,
+}) => {
   const [isFollowingS, setIsFollowing] = useState(isFollowing);
 
-  const [followMutation] = useMutation(FOLLOW, { 
-    variables: { 
-      id 
+  const [followMutation] = useMutation(FOLLOW, {
+    variables: {
+      id,
+      token,
     },
     refetchQueries: () => [
       { query: VIEW_USER, variables: { id: currentUser } },
     ],
   });
-  const [unfollowMutation] = useMutation(UNFOLLOW, { 
-    variables: { 
-      id 
+  const [unfollowMutation] = useMutation(UNFOLLOW, {
+    variables: {
+      id,
     },
     refetchQueries: () => [
       { query: VIEW_USER, variables: { id: currentUser } },

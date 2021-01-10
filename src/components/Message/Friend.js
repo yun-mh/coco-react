@@ -2,7 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { useMutation } from "@apollo/client";
-import { CREATE_CHATROOM, VIEW_CHATROOMS } from "../../queries/Main/MainQueries";
+import {
+  CREATE_CHATROOM,
+  VIEW_CHATROOMS,
+} from "../../queries/Main/MainQueries";
 
 const Container = styled.div`
   ${tw`p-1 flex-none`};
@@ -33,9 +36,7 @@ const Friend = ({ id, avatar, username, currentUser, toChatroom }) => {
   const createChatroom = async () => {
     try {
       const {
-        data: {
-          createChatRoom,
-        },
+        data: { createChatRoom },
       } = await createChatRoomMutation();
       if (createChatRoom) {
         toChatroom(createChatRoom.id, createChatRoom);
@@ -49,7 +50,9 @@ const Friend = ({ id, avatar, username, currentUser, toChatroom }) => {
     <Container>
       <TouchableContainer onClick={createChatroom}>
         <Avatar src={avatar} />
-        <Username>{username}</Username>
+        <Username>
+          {username.length > 8 ? username.substring(0, 8) + "..." : username}
+        </Username>
       </TouchableContainer>
     </Container>
   );

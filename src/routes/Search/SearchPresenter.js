@@ -32,7 +32,15 @@ const PostSection = styled.div`
   grid-auto-rows: 200px;
 `;
 
-const SearchPresenter = ({ currentUser, searchTerm, loading, data, tab, setTab }) => {
+const SearchPresenter = ({
+  currentUser,
+  searchTerm,
+  loading,
+  data,
+  tab,
+  setTab,
+}) => {
+  console.log(data);
   if (searchTerm === undefined) {
     return <Wrapper></Wrapper>;
   } else if (loading === true) {
@@ -70,7 +78,8 @@ const SearchPresenter = ({ currentUser, searchTerm, loading, data, tab, setTab }
         {tab === "user" &&
           (data.searchUser.length === 0 ? (
             <div className="h-48 flex items-center justify-center text-gray-700 text-lg">
-              <Frown size={36} className="text-red-300 mr-3" /> 一致する検索結果がありません。
+              <Frown size={36} className="text-red-300 mr-3" />{" "}
+              一致する検索結果がありません。
             </div>
           ) : (
             <UserSection>
@@ -83,6 +92,7 @@ const SearchPresenter = ({ currentUser, searchTerm, loading, data, tab, setTab }
                   isFollowing={user.isFollowing}
                   url={user.avatar}
                   isMyself={user.isMyself}
+                  token={user.token}
                 />
               ))}
             </UserSection>
@@ -90,7 +100,8 @@ const SearchPresenter = ({ currentUser, searchTerm, loading, data, tab, setTab }
         {tab === "post" &&
           (data.searchPost.length === 0 ? (
             <div className="h-48 flex items-center justify-center text-gray-700 text-lg">
-              <Frown size={36} className="text-red-300 mr-3" /> 一致する検索結果がありません。
+              <Frown size={36} className="text-red-300 mr-3" />{" "}
+              一致する検索結果がありません。
             </div>
           ) : (
             <PostSection>

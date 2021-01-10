@@ -55,6 +55,7 @@ const PostCard = ({
     variables: {
       postId: id,
       text: comment.value,
+      token: user.token,
     },
     refetchQueries: () => [{ query: VIEW_POST, variables: { id } }],
   });

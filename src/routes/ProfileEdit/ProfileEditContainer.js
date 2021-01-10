@@ -11,7 +11,7 @@ const ProfileEditContainer = ({
   location: {
     state: { id, username, email, avatar },
   },
-  history
+  history,
 }) => {
   const [avatarS, setAvatar] = useState(
     avatar ||
@@ -41,6 +41,8 @@ const ProfileEditContainer = ({
     const errors = {};
     if (!values.username) {
       errors.email = "ユーザ名を入力してください。";
+    } else if (values.username.length > 10) {
+      errors.username = "ユーザ名は10文字以内に設定してください。";
     }
     return errors;
   };
@@ -51,7 +53,7 @@ const ProfileEditContainer = ({
 
       if (image === undefined && username === formik.values.username) {
         setLoading(false);
-        history.push({pathname: `/${formik.values.username}`, state: {id}});
+        history.push({ pathname: `/${formik.values.username}`, state: { id } });
         return;
       }
 
@@ -84,7 +86,10 @@ const ProfileEditContainer = ({
         });
         if (editUser) {
           toast.success("😄 会員情報を変更しました！");
-          history.push({pathname: `/${formik.values.username}`, state: {id}});
+          history.push({
+            pathname: `/${formik.values.username}`,
+            state: { id },
+          });
         }
       } catch (e) {
         toast.error(`😢 ${e.message}`);

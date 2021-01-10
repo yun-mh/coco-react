@@ -15,6 +15,8 @@ const SignUpForm = ({ action, setAction }) => {
     const errors = {};
     if (!values.username) {
       errors.username = "必須項目です。";
+    } else if (values.username.length > 10) {
+      errors.username = "ユーザ名は10文字以内に設定してください。";
     } else if (!values.email) {
       errors.email = "必須項目です。";
     } else if (!values.password) {

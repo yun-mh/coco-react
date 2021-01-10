@@ -52,6 +52,7 @@ export const SEARCH = gql`
       id
       avatar
       username
+      token
       isFollowing
       isMyself
     }
@@ -97,6 +98,7 @@ export const VIEW_USER = gql`
           id
           avatar
           username
+          token
         }
         files {
           id
@@ -119,6 +121,7 @@ export const VIEW_USER = gql`
       }
       isFollowing
       isMyself
+      token
     }
   }
 `;
@@ -154,8 +157,8 @@ export const EDIT_USER = gql`
 `;
 
 export const FOLLOW = gql`
-  mutation follow($id: String!) {
-    follow(id: $id)
+  mutation follow($id: String!, $token: String) {
+    follow(id: $id, token: $token)
   }
 `;
 
@@ -220,14 +223,8 @@ export const MODIFY_DOG = gql`
 `;
 
 export const TOGGLE_STATUS = gql`
-  mutation toggleMissingStatus(
-    $id: String!
-    $isMissed: Boolean!
-  ) {
-    toggleMissingStatus(
-      id: $id
-      isMissed: $isMissed
-    )
+  mutation toggleMissingStatus($id: String!, $isMissed: Boolean!) {
+    toggleMissingStatus(id: $id, isMissed: $isMissed)
   }
 `;
 
@@ -254,6 +251,7 @@ export const VIEW_FEED = gql`
         id
         avatar
         username
+        token
       }
       files {
         id
@@ -278,8 +276,8 @@ export const VIEW_FEED = gql`
 `;
 
 export const TOGGLE_LIKE = gql`
-  mutation toggleLike($postId: String!) {
-    toggleLike(postId: $postId)
+  mutation toggleLike($postId: String!, $token: String) {
+    toggleLike(postId: $postId, token: $token)
   }
 `;
 
@@ -316,8 +314,8 @@ export const VIEW_POST = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($postId: String!, $text: String!) {
-    addComment(postId: $postId, text: $text)
+  mutation addComment($postId: String!, $text: String!, $token: String) {
+    addComment(postId: $postId, text: $text, token: $token)
   }
 `;
 
@@ -541,8 +539,18 @@ export const VIEW_CHATROOM = gql`
 `;
 
 export const SEND_MESSAGE = gql`
-  mutation sendMessage($roomId: String, $message: String!, $toId: String, $token: String) {
-    sendMessage(roomId: $roomId, message: $message, toId: $toId, token: $token) {
+  mutation sendMessage(
+    $roomId: String
+    $message: String!
+    $toId: String
+    $token: String
+  ) {
+    sendMessage(
+      roomId: $roomId
+      message: $message
+      toId: $toId
+      token: $token
+    ) {
       id
       text
       from {

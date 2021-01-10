@@ -75,6 +75,7 @@ export default ({ id, counterpart, currentUser }) => {
 
   useEffect(() => {
     handleNewMessage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newData]);
 
   const handleSendMessage = async () => {

@@ -37,6 +37,7 @@ const NotificationContainer = ({
 
   useEffect(() => {
     handleNewNotification();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newData]);
 
   return (

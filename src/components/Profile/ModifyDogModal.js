@@ -55,7 +55,8 @@ export default ({
   const { lock, unlock } = useScrollBodyLock();
 
   const [avatar, setAvatar] = useState(
-    imageP || "https://coco-for-dogs.s3-ap-northeast-1.amazonaws.com/anonymous-dog.jpg"
+    imageP ||
+      "https://coco-for-dogs.s3-ap-northeast-1.amazonaws.com/anonymous-dog.jpg"
   );
   const [image, setImage] = useState();
   const [name] = useState(nameP);
@@ -94,15 +95,22 @@ export default ({
     const errors = {};
     if (!values.name) {
       errors.name = "犬の名前を入力してください。";
-    }
-    if (!values.breed) {
+    } else if (values.name.length > 10) {
+      errors.username = "犬名は10文字以内に設定してください。";
+    } else if (!values.breed) {
       errors.breed = "犬種を入力してください。";
     }
     return errors;
   };
 
   const onSubmit = async () => {
-    if (formik.values.name === nameP && formik.values.breed === breedP && formik.values.birthdate === birthdateP && formik.values.gender === genderP && formik.values.image === undefined) {
+    if (
+      formik.values.name === nameP &&
+      formik.values.breed === breedP &&
+      formik.values.birthdate === birthdateP &&
+      formik.values.gender === genderP &&
+      formik.values.image === undefined
+    ) {
       closeModal();
       return;
     }
@@ -166,14 +174,14 @@ export default ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   useEffect(() => {
     formik.values.birthdate = birthdate;
-  }, [birthdate, formik.values.birthdate])
+  }, [birthdate, formik.values.birthdate]);
 
   useEffect(() => {
     formik.values.image = image;
-  }, [image, formik.values.image])
+  }, [image, formik.values.image]);
 
   const radioProps = [
     { key: "male", text: "男" },
@@ -231,10 +239,23 @@ export default ({
                 placeholder="犬種"
               />
               <Label>性別</Label>
-              <RadioButton name="gender" prop={radioProps} gender={gender} setGender={setGender} onChange={formik.handleChange} value={formik.values.gender} />
-              
+              <RadioButton
+                name="gender"
+                prop={radioProps}
+                gender={gender}
+                setGender={setGender}
+                onChange={formik.handleChange}
+                value={formik.values.gender}
+              />
+
               <Label>生年月日</Label>
-              <DatePicker name="birthdate" birthdate={birthdate} setBirthdate={setBirthdate} open={isDateModalVisible} toggleOpen={setIsDateModalVisible} />
+              <DatePicker
+                name="birthdate"
+                birthdate={birthdate}
+                setBirthdate={setBirthdate}
+                open={isDateModalVisible}
+                toggleOpen={setIsDateModalVisible}
+              />
             </InputContainer>
             <Button
               type="submit"

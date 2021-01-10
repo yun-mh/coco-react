@@ -14,7 +14,15 @@ const Username = styled.div`
   ${tw`text-gray-700 mt-2`}
 `;
 
-const UserCard = ({ currentUser, id, username, isFollowing, url, isMyself }) => {
+const UserCard = ({
+  currentUser,
+  id,
+  username,
+  isFollowing,
+  url,
+  isMyself,
+  token,
+}) => {
   return (
     <Card>
       <Link
@@ -27,7 +35,14 @@ const UserCard = ({ currentUser, id, username, isFollowing, url, isMyself }) => 
         <Avatar url={url} />
         <Username>{utils.truncateText(username, 14)}</Username>
       </Link>
-      {!isMyself && <FollowButton currentUser={currentUser} id={id} isFollowing={isFollowing} />}
+      {!isMyself && (
+        <FollowButton
+          currentUser={currentUser}
+          id={id}
+          isFollowing={isFollowing}
+          token={token}
+        />
+      )}
     </Card>
   );
 };
