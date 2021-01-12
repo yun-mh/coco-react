@@ -10,6 +10,8 @@ Coco is the SNS application for dogs and people who has dogs. \
 This app is for improving separation anxiety disorder that dogs usually suffer and low return rates of stray dogs.\
 This provides not only basic SNS features like upload posts, but also tracking feature which can meet other users' dogs and stray dog supports which anyone can report the dog's current status by scanning QR code of the dog.
 
+※　 Uploading posts and Tracking features are not supported on the Web version of Coco.
+
 ## Technologies
 
 This project is created with:
