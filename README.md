@@ -23,8 +23,8 @@ Read this in other languages: [日本語](./README.md), [English](./README.en.md
 
 ## 構成
 
-| <img src="./frontend.jpg" alt="drawing" width="600"/> |
-| :---------------------------------------------------: |
+| <img src="./web.jpg" alt="drawing" width="600"/> |
+| :----------------------------------------------: |
 
 ## デモ
 
