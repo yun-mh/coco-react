@@ -7,15 +7,15 @@ import { useMutation } from "@apollo/client";
 import { FOLLOW } from "../queries/Main/MainQueries";
 
 const Container = styled.div`
-  ${tw`bg-white rounded-lg flex font-thin p-5 mb-5 justify-between items-center`}
+  ${tw`bg-white rounded-lg flex font-thin p-5 mb-3 sm:mb-5 justify-between items-center shadow`}
 `;
 
 const Avatar = styled.img`
-  ${tw`w-16 h-16 rounded-full mr-5 object-cover`}
+  ${tw`w-10 h-10 lg:w-16 lg:h-16 rounded-full mr-2 lg:mr-5 object-cover`}
 `;
 
 const DataContainer = styled.div`
-  ${tw`font-thin`}
+  ${tw`w-3/5 font-thin text-xs md:text-base`}
 `;
 
 const Message = styled.p`
@@ -27,11 +27,11 @@ const Example = styled.p`
 `;
 
 const IconContainer = styled.div`
-  ${tw`w-16 h-16 border border-gray-300 flex items-center justify-center bg-gray-200 rounded-full`};
+  ${tw`w-10 h-10 lg:w-16 lg:h-16 border border-gray-300 flex items-center justify-center bg-gray-200 rounded-full`};
 `;
 
 const TouchableIconContainer = styled.div`
-  ${tw`w-16 h-16 rounded-full bg-primary hover:bg-primary-light flex items-center justify-center cursor-pointer`};
+  ${tw`w-10 h-10 lg:w-16 lg:h-16 rounded-full bg-primary hover:bg-primary-light flex items-center justify-center cursor-pointer`};
 `;
 
 export default ({ id, from, type, post, cmt, currentUser }) => {
@@ -91,22 +91,22 @@ export default ({ id, from, type, post, cmt, currentUser }) => {
       </DataContainer>
       {type === "COMMENT" && (
         <IconContainer>
-          <MessageSquare className="text-gray-600" size={28} />
+          <MessageSquare className="text-gray-600" />
         </IconContainer>
       )}
       {type === "LIKE" && (
         <IconContainer>
-          <Heart className="text-gray-600" size={28} />
+          <Heart className="text-gray-600" />
         </IconContainer>
       )}
       {type === "FOLLOW" && followDone === true && (
         <IconContainer>
-          <UserCheck className="text-gray-600" size={28} />
+          <UserCheck className="text-gray-600" />
         </IconContainer>
       )}
       {type === "FOLLOW" && followDone === false && (
         <TouchableIconContainer>
-          <UserPlus className="text-white" size={28} onClick={handleFollow} />
+          <UserPlus className="text-white" onClick={handleFollow} />
         </TouchableIconContainer>
       )}
     </Container>

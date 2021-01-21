@@ -7,11 +7,11 @@ const Container = styled.div`
 `;
 
 const Label = styled.label`
-  ${tw`ml-3 text-sm text-gray-800 font-semibold text-gray-500`}
+  ${tw`ml-3 text-xs sm:text-sm text-gray-800 font-semibold text-gray-500`}
 `;
 
 const Input = styled.input`
-  ${tw`border border-gray-400 px-5 py-1 rounded-full focus:outline-none focus:border-primary`}
+  ${tw`text-xs sm:text-sm border border-gray-400 px-5 py-1 rounded-full focus:outline-none focus:border-primary`}
 `;
 
 const Error = styled.div`

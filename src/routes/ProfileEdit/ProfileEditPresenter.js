@@ -7,7 +7,7 @@ import Field from "../../components/Field";
 import Button from "../../components/Button";
 
 const Container = styled.div`
-  ${tw`bg-white rounded-lg h-entire flex flex-col items-center justify-center`}
+  ${tw`bg-white rounded-lg h-mentire sm:h-entire flex flex-col items-center justify-center`}
 `;
 
 const AvatarContainer = styled.div`
@@ -60,7 +60,7 @@ const ProfileEditPresenter = ({
           />
         </AvatarContainer>
         <Email>{email}</Email>
-        <div className="w-1/3 mx-auto">
+        <div className="w-2/3 sm:w-1/3 mx-auto">
           <InputContainer>
             <Field
               label="ユーザ名"

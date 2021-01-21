@@ -7,9 +7,9 @@ module.exports = {
     "./public/**/*.html",
   ],
   theme: {
-    fill: theme => ({
-      'gray': theme('colors.gray.700'),
-      'white': theme('colors.white'),
+    fill: (theme) => ({
+      gray: theme("colors.gray.700"),
+      white: theme("colors.white"),
     }),
     extend: {
       height: {
@@ -18,6 +18,7 @@ module.exports = {
         quarter: "25vh",
         "1/2": "50%",
         entire: "calc(100vh - 8rem)",
+        mentire: "calc(100vh - 6rem)",
         chat: "calc(100vh - 16rem)",
       },
       maxHeight: {

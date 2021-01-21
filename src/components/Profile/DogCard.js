@@ -12,20 +12,20 @@ import "react-tippy/dist/tippy.css";
 import SetDogLostModal from "./SetDogLostModal";
 
 const Container = styled.div`
-  ${tw`w-3/4 h-24 md:h-32 px-4 py-2 my-2 flex flex-col md:flex-row items-center justify-between bg-white rounded-lg shadow`}
+  ${tw`w-full lg:w-3/4 h-24 md:h-32 px-4 py-2 my-2 flex items-center justify-between bg-white rounded-lg shadow`}
 `;
 
-const InfoContainer = styled.div`
-  ${tw`flex flex-col invisible md:visible`}
-`;
 const DogImage = styled.img`
-  ${tw`w-20 h-20 rounded-lg object-cover`}
+  ${tw`block w-10 h-10 lg:w-20 lg:h-20 rounded-lg object-cover`}
+`;
+const InfoContainer = styled.div`
+  ${tw`flex flex-col text-xs`}
 `;
 const DogHeader = styled.div`
   ${tw`flex flex-row`}
 `;
 const Name = styled.div`
-  ${tw`mr-3`}
+  ${tw`mr-3 lg:text-sm`}
 `;
 const Gender = styled.div`
   ${tw`mr-3`}
@@ -34,16 +34,16 @@ const DogYear = styled.div`
   ${tw`flex flex-row`}
 `;
 const Birthday = styled.div`
-  ${tw`flex flex-row text-sm items-center text-gray-500`}
+  ${tw`flex flex-row lg:text-sm items-center text-gray-500`}
 `;
 const Age = styled.div`
-  ${tw`text-sm text-gray-500`}
+  ${tw`lg:text-sm text-gray-500`}
 `;
 const DogInfo = styled.div`
   ${tw`flex flex-row`}
 `;
 const Breed = styled.div`
-  ${tw`mr-3 text-sm text-gray-500`}
+  ${tw`mr-3 lg:text-sm text-gray-500`}
 `;
 
 const DogCard = ({
@@ -89,7 +89,9 @@ const DogCard = ({
 
   const deleteDog = async (id) => {
     try {
-      const { data: { editDog } } = await deleteDogMutation();
+      const {
+        data: { editDog },
+      } = await deleteDogMutation();
       if (editDog) {
         toast.success("👍 削除が完了しました。");
       }
@@ -123,7 +125,7 @@ const DogCard = ({
           <Breed>{breed}</Breed>
         </DogInfo>
       </InfoContainer>
-      { isMyself && (
+      {isMyself && (
         <Tooltip
           interactive
           open={isPopoverOpen}
@@ -165,7 +167,10 @@ const DogCard = ({
             </ul>
           }
         >
-          <MoreHorizontal className="text-gray-600 cursor-pointer" onClick={() => setIsPopoverOpen(!isPopoverOpen)} />
+          <MoreHorizontal
+            className="w-4 h-4 lg:w-6 lg:h-6 text-gray-600 cursor-pointer"
+            onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+          />
         </Tooltip>
       )}
       <ModifyDogModal
