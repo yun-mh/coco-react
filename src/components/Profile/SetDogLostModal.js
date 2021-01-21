@@ -32,7 +32,7 @@ const StatusContainer = styled.div`
 `;
 
 const DogContainer = styled.div`
-  ${tw`w-full h-24 md:h-32 p-4 flex flex-col md:flex-row items-center justify-around border-b`}
+  ${tw`w-full h-24 md:h-32 p-4 flex items-center justify-around border-b`}
 `;
 
 const ButtonContainer = styled.div`
@@ -40,7 +40,7 @@ const ButtonContainer = styled.div`
 `;
 
 const CodeContainer = styled.div`
-  ${tw`w-full h-full flex flex-col items-center justify-center px-3`}
+  ${tw`w-full h-full flex flex-col items-center justify-center p-3`}
 `;
 
 const QRCodeContainer = styled.div`
@@ -52,34 +52,34 @@ const LinkContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  ${tw`flex flex-col invisible md:visible`}
+  ${tw`flex flex-col text-xs`}
 `;
 const DogImage = styled.img`
-  ${tw`w-20 h-20 rounded-lg object-cover`}
+  ${tw`w-10 h-10 sm:w-20 sm:h-20 rounded-lg object-cover`}
 `;
 const DogHeader = styled.div`
-  ${tw`flex flex-row`}
+  ${tw`flex flex-row sm:text-sm`}
 `;
 const Name = styled.div`
-  ${tw`mr-3`}
+  ${tw`mr-3 sm:text-sm`}
 `;
 const Gender = styled.div`
-  ${tw`mr-3`}
+  ${tw`mr-3 sm:text-sm`}
 `;
 const DogYear = styled.div`
-  ${tw`flex flex-row`}
+  ${tw`flex flex-row sm:text-sm`}
 `;
 const Birthday = styled.div`
-  ${tw`flex flex-row text-sm items-center text-gray-500`}
+  ${tw`flex flex-row sm:text-sm items-center text-gray-500`}
 `;
 const Age = styled.div`
-  ${tw`text-sm text-gray-500`}
+  ${tw`sm:text-sm text-gray-500`}
 `;
 const DogInfo = styled.div`
   ${tw`flex flex-row`}
 `;
 const Breed = styled.div`
-  ${tw`mr-3 text-sm text-gray-500`}
+  ${tw`mr-3 sm:text-sm text-gray-500`}
 `;
 
 export default ({
@@ -118,24 +118,28 @@ export default ({
   };
 
   const openAsNewWindow = () => {
-    window.open(`https://support.cocofordogs.com/${dogId}?owner=${currentUser}`);
+    window.open(
+      `https://support.cocofordogs.com/${dogId}?owner=${currentUser}`
+    );
   };
 
   const toggleMissingStatus = async () => {
     const result = window.confirm("本当に犬の迷子状態を変更しますか？");
     if (result) {
-      const { data: { toggleMissingStatus } } = await modifyDogMutation({ 
+      const {
+        data: { toggleMissingStatus },
+      } = await modifyDogMutation({
         variables: {
           id: dogId,
           isMissed: !isMissed,
-        } 
+        },
       });
       if (toggleMissingStatus) {
         setIsMissed(!isMissed);
-      }        
+      }
     }
   };
-  
+
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -143,7 +147,7 @@ export default ({
       onAfterClose={unlock}
       shouldFocusAfterRender
       onRequestClose={closeModal}
-      className="w-4/5 md:w-1/3 h-threequarter bg-white rounded-lg shadow"
+      className="w-4/5 md:w-1/3 h-mentire sm:h-threequarter bg-white rounded-lg shadow"
       overlayClassName="Overlay flex justify-center items-center"
     >
       <ModalTitle>
@@ -157,32 +161,30 @@ export default ({
           <DogContainer>
             <DogImage src={image} />
             <InfoContainer>
-                <DogHeader>
+              <DogHeader>
                 <Name>{name}</Name>
                 <Gender>
-                    {gender === "male" ? (
+                  {gender === "male" ? (
                     <span className="text-blue-500 text-sm">&#9794;</span>
-                    ) : (
+                  ) : (
                     <span className="text-red-400 text-sm">&#9792;</span>
-                    )}
+                  )}
                 </Gender>
-                </DogHeader>
-                <DogYear>
+              </DogHeader>
+              <DogYear>
                 <Birthday>
-                    <Calendar size={14} className="mr-1" />
-                    {moment(birthdate).format("ll")}
+                  <Calendar size={14} className="mr-1" />
+                  {moment(birthdate).format("ll")}
                 </Birthday>
                 <Age>({moment().diff(birthdate, "years")}歳)</Age>
-                </DogYear>
-                <DogInfo>
+              </DogYear>
+              <DogInfo>
                 <Breed>{breed}</Breed>
-                </DogInfo>
+              </DogInfo>
             </InfoContainer>
           </DogContainer>
           <ButtonContainer>
-            <div className="mr-3">
-                迷子状態に設定する
-            </div>
+            <div className="text-xs sm:text-sm mr-3">迷子状態に設定する</div>
             <Switch
               isOn={isMissed}
               onColor="#EF476F"
@@ -192,7 +194,7 @@ export default ({
         </StatusContainer>
         <CodeContainer>
           <QRCodeContainer>
-            <QRCode 
+            <QRCode
               ref={code}
               value={`https://support.cocofordogs.com/${dogId}`}
               quietZone={20}
@@ -200,14 +202,20 @@ export default ({
               logoHeight={40}
               logoImage={require("../../assets/images/qr-logo.png")}
             />
-            <div className="flex items-center px-5">
-              <Info size={14} />
-              <p className="ml-2 text-sm text-gray-700">QRコードをプリントし首輪・ハーネスなどに付着すると、迷子になった際に有用に使えます。</p>
+            <div className="flex justify-center items-center px-5">
+              <Info className="w-4 h-4 mr-2 sm:w-8 sm:h-8" />
+              <p className="w-3/4 ml-2 text-xs sm:text-sm text-gray-700">
+                QRコードをプリントし首輪・ハーネスなどに付着すると、迷子になった際に有用に使えます。
+              </p>
             </div>
           </QRCodeContainer>
           <LinkContainer>
             <Button title="QRコードダウンロード" onClick={downloadCode} />
-            <Button title="犬の迷子状況ページへ" accent={true} onClick={openAsNewWindow} />
+            <Button
+              title="犬の迷子状況ページへ"
+              accent={true}
+              onClick={openAsNewWindow}
+            />
           </LinkContainer>
         </CodeContainer>
       </ModalContainer>

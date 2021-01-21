@@ -5,14 +5,12 @@ import tw from "twin.macro";
 import { Heart, MessageSquare, MoreHorizontal } from "react-feather";
 import moment from "moment";
 import { Tooltip } from "react-tippy";
-import "react-tippy/dist/tippy.css";
-// import Carousel, { Dots } from "@brainhubeu/react-carousel";
-// import "@brainhubeu/react-carousel/lib/style.css";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Avatar from "../Avatar";
 import PostModal from "../PostModal";
+import "react-tippy/dist/tippy.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Post = styled.div`
   ${tw`bg-white rounded-lg shadow`}
@@ -35,7 +33,7 @@ const Location = styled.span`
 `;
 
 const Caption = styled.p`
-  ${tw`p-3`}
+  ${tw`p-3 text-sm md:text-base`}
 `;
 
 const Image = styled.div`
@@ -153,12 +151,6 @@ export default ({
       <Slider {...settings} value={value} onChange={onChange}>
         {files && files.map((file) => <Image key={file.id} url={file.url} />)}
       </Slider>
-      {/* <Dots
-        value={value}
-        onChange={onChange}
-        number={files.length}
-        className="text-green-500"
-      /> */}
       <Caption>{caption}</Caption>
       <Meta>
         <Buttons>

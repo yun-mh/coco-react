@@ -17,7 +17,7 @@ const LoggedInRoutes = () => (
     <Header />
     <div className="w-full pl-16">
       <SearchBar />
-      <div className="p-8">
+      <div className="p-3 md:p-8">
         <Switch>
           <Route exact path="/" component={Feed} />
           <Route path="/notification" component={Notification} />
