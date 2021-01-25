@@ -33,6 +33,22 @@
 }
 
 /* カロウセル */
+.slick-slider {
+  height: 100%;
+}
+
+.slick-list {
+  height: 100%;
+}
+
+.slick-track {
+  height: 100%;
+}
+
+.slick-track .slick-slide {
+  height: 100%;
+}
+
 .slick-dots li.slick-active button::before {
   color: rgb(115, 200, 183);
   opacity: 1;
@@ -47,50 +63,6 @@
   z-index: 40;
   right: 25px;
 }
-/* .BrainhubCarousel__container {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-*/
-/* 
-.BrainhubCarousel {
-  position: relative;
-}
-
-.BrainhubCarousel__arrows {
-  position: absolute;
-  z-index: 40;
-  border-radius: 9999px;
-  background-color: rgba(115, 200, 183, 0.5);
-}
-
-.BrainhubCarousel__arrows:focus {
-  outline: none;
-}
-
-.BrainhubCarousel__arrows:hover:enabled {
-  background-color: rgba(115, 200, 183, 1);
-}
-
-.BrainhubCarousel__arrows:disabled {
-  background-color: rgba(220, 220, 220, 0.5);
-}
-
-.BrainhubCarousel__arrowRight {
-  right: 0;
-}
-
-.BrainhubCarousel__dots .BrainhubCarousel__dot:before {
-  content: "";
-  display: block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  padding: 0;
-  border: none;
-  background: rgb(115, 200, 183);
-} */
 
 /* スイッチ */
 .react-switch-checkbox {

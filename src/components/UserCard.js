@@ -11,7 +11,7 @@ const Card = styled.div`
 `;
 
 const Username = styled.div`
-  ${tw`text-gray-700 mt-2`}
+  ${tw`text-xs sm:text-sm text-gray-700 mt-2`}
 `;
 
 const UserCard = ({

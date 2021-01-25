@@ -104,7 +104,7 @@ export default ({
       onAfterClose={unlock}
       shouldFocusAfterRender
       onRequestClose={closeModal}
-      className="w-4/5 md:w-2/3 md:h-threequarter bg-white rounded-lg shadow overflow-hidden"
+      className="w-4/5 md:w-2/3 h-mentire md:h-threequarter bg-white rounded-lg shadow overflow-hidden"
       overlayClassName="Overlay flex justify-center items-center"
     >
       <ModalContainer>

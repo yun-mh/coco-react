@@ -23,11 +23,11 @@ const ActionTab = styled.div`
 `;
 
 const UserSection = styled.div`
-  ${tw`p-5 grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8`}
+  ${tw`p-5 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8`}
 `;
 
 const PostSection = styled.div`
-  ${tw`p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4`}
+  ${tw`p-5 grid grid-cols-2 lg:grid-cols-4`}
   grid-template-rows: 200px;
   grid-auto-rows: 200px;
 `;
@@ -77,9 +77,11 @@ const SearchPresenter = ({
         {searchTerm === undefined && <div>Search for something</div>}
         {tab === "user" &&
           (data.searchUser.length === 0 ? (
-            <div className="h-48 flex items-center justify-center text-gray-700 text-lg">
+            <div className="h-48 px-3 flex items-center justify-center text-gray-700 text-lg">
               <Frown size={36} className="text-red-300 mr-3" />{" "}
-              一致する検索結果がありません。
+              <span className="text-xs sm:text-sm">
+                一致する検索結果がありません。
+              </span>
             </div>
           ) : (
             <UserSection>
@@ -99,9 +101,11 @@ const SearchPresenter = ({
           ))}
         {tab === "post" &&
           (data.searchPost.length === 0 ? (
-            <div className="h-48 flex items-center justify-center text-gray-700 text-lg">
+            <div className="h-48 px-3 flex items-center justify-center text-gray-700 text-lg">
               <Frown size={36} className="text-red-300 mr-3" />{" "}
-              一致する検索結果がありません。
+              <span className="text-xs sm:text-sm">
+                一致する検索結果がありません。
+              </span>
             </div>
           ) : (
             <PostSection>

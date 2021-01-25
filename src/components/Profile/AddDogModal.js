@@ -25,7 +25,7 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.img`
-  ${tw`w-64 h-64 rounded-full object-cover`}
+  ${tw`w-32 h-32 sm:w-64 sm:h-64 rounded-full object-cover`}
   position: absolute;
 `;
 
@@ -38,7 +38,7 @@ const ContentContainer = styled.div`
 `;
 
 const Label = styled.label`
-  ${tw`ml-3 text-sm text-gray-800 font-semibold text-gray-500`}
+  ${tw`ml-3 text-xs sm:text-sm text-gray-800 font-semibold text-gray-500`}
 `;
 
 export default ({ currentUser, modalIsOpen, closeModal }) => {
@@ -178,7 +178,7 @@ export default ({ currentUser, modalIsOpen, closeModal }) => {
       onAfterClose={unlock}
       shouldFocusAfterRender
       onRequestClose={closeModal}
-      className="w-4/5 md:w-2/3 md:h-threequarter bg-white rounded-lg shadow"
+      className="w-4/5 md:w-2/3 h-mentire sm:h-threequarter bg-white rounded-lg overflow-y-auto shadow"
       overlayClassName="Overlay flex justify-center items-center"
     >
       <ModalContainer
@@ -190,7 +190,7 @@ export default ({ currentUser, modalIsOpen, closeModal }) => {
           <Plus size={40} className="absolute" />
           <input
             ref={inputEl}
-            className="opacity-0 w-48 h-48 cursor-pointer rounded-full"
+            className="opacity-0 w-32 h-32 sm:w-64 sm:h-64 cursor-pointer rounded-full"
             type="file"
             accept="image/*"
             onChange={(e) => {
@@ -199,7 +199,7 @@ export default ({ currentUser, modalIsOpen, closeModal }) => {
           />
         </ImageContainer>
         <ContentContainer>
-          <div className="mx-10">
+          <div className="mx-2 sm:mx-10">
             <InputContainer>
               <Field
                 label="犬名"
