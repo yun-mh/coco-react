@@ -122,7 +122,7 @@ const AuthPresenter = ({ action, setAction }) => {
             </>
           )}
           <Footer>
-            <Copyright>© 2020 Minho Yun</Copyright>
+            <Copyright>© 2020~{new Date().getFullYear()} Minho Yun</Copyright>
           </Footer>
         </FormContainer>
       </ActionContainer>
