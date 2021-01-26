@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { useHistory, withRouter } from "react-router-dom";
 import tw from "twin.macro";
-import { PlusCircle, Settings } from "react-feather";
+import { PlusCircle, Settings, XCircle } from "react-feather";
 import { Tooltip } from "react-tippy";
 import Loader from "../../components/Loader";
 import PostCard from "../../components/PostCard";
@@ -38,11 +38,11 @@ const UserInfo = styled.div`
 `;
 
 const UsernameRow = styled.div`
-  ${tw`flex flex-row items-center`}
+  ${tw`flex flex-row items-center mt-2 sm:mt-0`}
 `;
 
 const Username = styled.span`
-  ${tw`block text-base sm:text-2xl mr-5`}
+  ${tw`block text-base sm:text-2xl mr-2 sm:mr-5`}
 `;
 
 const Counts = styled.ul`
@@ -57,7 +57,7 @@ const Count = styled.li`
 `;
 
 const Content = styled.div`
-  ${tw`flex flex-col md:flex-row h-full`}
+  ${tw`flex flex-col md:flex-row h-full overflow-y-auto`}
 `;
 
 const Dogs = styled.div`
@@ -73,9 +73,23 @@ const Title = styled.div`
 `;
 
 const Posts = styled.div`
-  ${tw`w-full h-half overflow-y-auto grid grid-cols-2 lg:grid-cols-3 bg-primary-light md:rounded-br-lg`}
-  grid-template-rows: 150px;
-  grid-auto-rows: 150px;
+  height: 35vh;
+  ${tw`w-full sm:h-half overflow-y-auto grid grid-cols-2 lg:grid-cols-3 bg-primary-light`}
+  grid-template-rows: 120px;
+  grid-auto-rows: 120px;
+
+  @media (min-width: 640px) {
+    grid-template-rows: 150px;
+    grid-auto-rows: 150px;
+  }
+`;
+
+const EmptyMessageContainer = styled.div`
+  ${tw`flex items-center mt-5`}
+`;
+
+const EmptyMessage = styled.p`
+  ${tw`ml-2 text-gray-600 text-xs sm:text-base`}
 `;
 
 const ProfilePresenter = ({
@@ -211,20 +225,27 @@ const ProfilePresenter = ({
           </TitleContainer>
           <Content>
             <Dogs>
-              {dogs.map((dog) => (
-                <DogCard
-                  key={dog.id}
-                  id={dog.id}
-                  name={dog.name}
-                  image={dog.image}
-                  gender={dog.gender}
-                  breed={dog.breed}
-                  birthdate={dog.birthdate}
-                  isMissed={dog.isMissed}
-                  currentUser={id}
-                  isMyself={isMyself}
-                />
-              ))}
+              {dogs.length > 0 ? (
+                dogs.map((dog) => (
+                  <DogCard
+                    key={dog.id}
+                    id={dog.id}
+                    name={dog.name}
+                    image={dog.image}
+                    gender={dog.gender}
+                    breed={dog.breed}
+                    birthdate={dog.birthdate}
+                    isMissed={dog.isMissed}
+                    currentUser={id}
+                    isMyself={isMyself}
+                  />
+                ))
+              ) : (
+                <EmptyMessageContainer>
+                  <XCircle className="w-4 h-4 sm:w-6 sm:h-6 text-gray-600" />
+                  <EmptyMessage>登録した犬がありません。</EmptyMessage>
+                </EmptyMessageContainer>
+              )}
               {isMyself && (
                 <div
                   className="p-2 rounded-lg hover:shadow sm:mt-2 flex items-center text-primary hover:bg-primary hover:text-white cursor-pointer transition duration-500 ease-in-out"
@@ -235,26 +256,36 @@ const ProfilePresenter = ({
                 </div>
               )}
             </Dogs>
-            <div className="w-full md:w-1/2 flex h-full bg-primary-light justify-center items-center overflow-hidden">
-              <Posts>
-                {posts.map((post) => (
-                  <PostCard
-                    key={post.id}
-                    id={post.id}
-                    user={post.user}
-                    location={post.location}
-                    caption={post.caption}
-                    files={post.files}
-                    isLiked={post.isLiked}
-                    likeCount={post.likeCount}
-                    comments={post.comments}
-                    commentCount={post.commentCount}
-                    createdAt={post.createdAt}
-                    file={post.files[0]}
-                  />
-                ))}
-              </Posts>
-            </div>
+            {posts.length > 0 && (
+              <div className="w-full md:w-1/2 flex h-full bg-primary-light justify-center items-center overflow-hidden">
+                <Posts>
+                  {posts.map((post) => (
+                    <PostCard
+                      key={post.id}
+                      id={post.id}
+                      user={post.user}
+                      location={post.location}
+                      caption={post.caption}
+                      files={post.files}
+                      isLiked={post.isLiked}
+                      likeCount={post.likeCount}
+                      comments={post.comments}
+                      commentCount={post.commentCount}
+                      createdAt={post.createdAt}
+                      file={post.files[0]}
+                    />
+                  ))}
+                </Posts>
+              </div>
+            )}
+            {posts.length === 0 && (
+              <div className="w-full md:w-1/2 p-2 md:p-5 flex h-full bg-primary-light justify-center items-baseline">
+                <EmptyMessageContainer>
+                  <XCircle className="w-4 h-4 sm:w-6 sm:h-6 text-gray-600" />
+                  <EmptyMessage>登録したポストがありません。</EmptyMessage>
+                </EmptyMessageContainer>
+              </div>
+            )}
           </Content>
         </div>
         <AddDogModal

@@ -15,23 +15,23 @@ import {
 import useInput from "../../hooks/useInput";
 
 const Container = styled.div`
-  ${tw`h-entire relative bg-primary-light rounded-lg`};
+  ${tw`h-full sm:h-entire relative bg-primary-light rounded-lg`};
 `;
 
 const ChatHeader = styled.div`
-  ${tw`w-full bg-white h-16 flex flex-row p-2 justify-center items-center font-semibold border-t border-white rounded-t-lg`};
+  ${tw`w-full bg-white h-10 sm:h-16 text-sm sm:text-base flex flex-row p-2 justify-center items-center font-semibold border-t border-white rounded-t-lg`};
 `;
 
 const LoaderContainer = styled.div`
-  ${tw`flex flex-col items-center h-chat`}
+  ${tw`flex flex-col items-center sm:h-chat`}
 `;
 
 const ChatContainer = styled(ScrollToBottom)`
-  ${tw`flex h-chat`};
+  ${tw`flex h-half pb-12 sm:pb-0 sm:h-chat`};
 `;
 
 const MessageInputContainer = styled.div`
-  ${tw`w-full absolute bg-white bottom-0 h-16 flex flex-row p-2 items-center rounded-b-lg`};
+  ${tw`w-full absolute bg-white bottom-0 h-12 sm:h-16 flex flex-row p-2 items-center rounded-b-lg`};
 `;
 
 export default ({ id, counterpart, currentUser }) => {
@@ -96,20 +96,18 @@ export default ({ id, counterpart, currentUser }) => {
             <Loader />
           </LoaderContainer>
         ) : (
-          <div>
-            {messages.map((message) => (
-              <MessageBox
-                key={message.id}
-                message={message}
-                isMyself={message.from.id === currentUser ? true : false}
-              />
-            ))}
-          </div>
+          messages.map((message) => (
+            <MessageBox
+              key={message.id}
+              message={message}
+              isMyself={message.from.id === currentUser ? true : false}
+            />
+          ))
         )}
       </ChatContainer>
       <MessageInputContainer>
         <TextareaAutosize
-          className="h-10 w-full border px-3 py-1 mr-3 flex justify-center"
+          className="text-sm sm:text-base h-8 sm:h-10 w-full border px-3 py-1 mr-3 flex justify-center"
           maxRows={2}
           value={msg.value}
           onChange={msg.onChange}

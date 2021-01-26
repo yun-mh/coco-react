@@ -17,12 +17,14 @@ const UserColumn = styled.div`
 `;
 
 const Location = styled.span`
-  ${tw`text-xs text-gray-600`}
+  font-size: 0.5rem;
+  ${tw`sm:text-xs text-gray-600`};
 `;
 
 const Image = styled.div`
   background-image: url(${({ url }) => url});
-  ${tw`w-full h-quarter md:h-threequarter bg-cover`}
+  height: 30vh;
+  ${tw`w-full md:h-threequarter bg-cover bg-center`}
 `;
 
 Modal.setAppElement("#root");
@@ -32,11 +34,11 @@ const ModalContainer = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  ${tw`w-full md:w-1/2 h-full`}
+  ${tw`w-full md:w-1/2`}
 `;
 
 const ContentContainer = styled.div`
-  ${tw`w-full md:w-1/2 px-5 relative`}
+  ${tw`w-full md:w-1/2 px-5 h-full flex flex-col justify-between`}
 `;
 
 const ModalHeader = styled.div`
@@ -48,7 +50,7 @@ const UserInfo = styled.div`
 `;
 
 const ModalAvatar = styled.img`
-  ${tw`w-8 h-8 bg-primary-light rounded-full`}
+  ${tw`w-6 h-6 sm:w-8 sm:h-8 bg-primary-light rounded-full`}
 `;
 
 const ModalClose = styled.div`
@@ -59,12 +61,17 @@ const ModalCaption = styled.p`
   ${tw`pb-5`}
 `;
 
+const CommentContainer = styled(ScrollToBottom)`
+  height: 28vh;
+  ${tw`overflow-y-auto md:h-half shadow-inner p-2`}
+`;
+
 const Comment = styled.div`
   ${tw`flex py-2`}
 `;
 
 const CommentContent = styled.div`
-  ${tw`ml-2`}
+  ${tw`text-xs sm:text-base ml-2`}
 `;
 
 const CommentDate = styled.div`
@@ -72,7 +79,7 @@ const CommentDate = styled.div`
 `;
 
 const AddCommentContainer = styled.div`
-  ${tw`w-full pr-8 h-16 flex items-center absolute bottom-0`}
+  ${tw`w-full h-16 flex items-center`}
 `;
 
 export default ({
@@ -144,53 +151,55 @@ export default ({
             </ModalClose>
           </ModalHeader>
           <ModalCaption>{caption}</ModalCaption>
-          <ScrollToBottom className="overflow-y-auto h-quarter md:h-half shadow-inner p-2">
-            {comments &&
-              comments.map((comment) => (
-                <Comment key={comment.id}>
-                  <Link
-                    to={{
-                      pathname: `/user/${comment.user.username}`,
-                      state: { id: comment.user.id },
-                    }}
-                    className="flex-none"
-                  >
-                    <ModalAvatar src={comment.user.avatar} />
-                  </Link>
-                  <CommentContent>
-                    <p className="text-sm">
-                      <Link
-                        to={{
-                          pathname: `/user/${comment.user.username}`,
-                          state: { id: comment.user.id },
-                        }}
-                      >
-                        <span className="font-semibold mr-2">
-                          {comment.user.username}
-                        </span>
-                      </Link>
-                      {comment.text}
-                    </p>
-                    <CommentDate>
-                      {moment(comment.createdAt).format("ll")}
-                    </CommentDate>
-                  </CommentContent>
-                </Comment>
-              ))}
-          </ScrollToBottom>
-          <AddCommentContainer>
-            <TextareaAutosize
-              className="w-full h-10 border px-3 py-1 mr-3 flex justify-center"
-              maxRows={2}
-              value={newComment.value}
-              onChange={newComment.onChange}
-              placeholder="コメント入力"
-              async={true}
-            />
-            <button className="focus:outline-none" onClick={handleAddComment}>
-              <Edit2 className="text-gray-600" />
-            </button>
-          </AddCommentContainer>
+          <div className="flex flex-grow flex-col justify-between">
+            <CommentContainer>
+              {comments &&
+                comments.map((comment) => (
+                  <Comment key={comment.id}>
+                    <Link
+                      to={{
+                        pathname: `/user/${comment.user.username}`,
+                        state: { id: comment.user.id },
+                      }}
+                      className="flex-none"
+                    >
+                      <ModalAvatar src={comment.user.avatar} />
+                    </Link>
+                    <CommentContent>
+                      <p className="text-xs sm:text-sm">
+                        <Link
+                          to={{
+                            pathname: `/user/${comment.user.username}`,
+                            state: { id: comment.user.id },
+                          }}
+                        >
+                          <span className="font-semibold mr-2">
+                            {comment.user.username}
+                          </span>
+                        </Link>
+                        {comment.text}
+                      </p>
+                      <CommentDate>
+                        {moment(comment.createdAt).format("ll")}
+                      </CommentDate>
+                    </CommentContent>
+                  </Comment>
+                ))}
+            </CommentContainer>
+            <AddCommentContainer>
+              <TextareaAutosize
+                className="w-full text-xs sm:text-base h-8 sm:h-10 border px-3 py-1 mr-3 flex justify-center"
+                maxRows={2}
+                value={newComment.value}
+                onChange={newComment.onChange}
+                placeholder="コメント入力"
+                async={true}
+              />
+              <button className="focus:outline-none" onClick={handleAddComment}>
+                <Edit2 className="text-gray-600" />
+              </button>
+            </AddCommentContainer>
+          </div>
         </ContentContainer>
       </ModalContainer>
     </Modal>

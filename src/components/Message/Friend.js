@@ -16,7 +16,7 @@ const TouchableContainer = styled.div`
 `;
 
 const Avatar = styled.img`
-  ${tw`w-12 h-12 rounded-full object-cover`};
+  ${tw`w-8 h-8 sm:w-12 sm:h-12 rounded-full object-cover`};
 `;
 
 const Username = styled.span`

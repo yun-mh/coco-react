@@ -125,7 +125,7 @@ const DogCard = ({
           <Breed>{breed}</Breed>
         </DogInfo>
       </InfoContainer>
-      {isMyself && (
+      {isMyself ? (
         <Tooltip
           interactive
           open={isPopoverOpen}
@@ -172,6 +172,8 @@ const DogCard = ({
             onClick={() => setIsPopoverOpen(!isPopoverOpen)}
           />
         </Tooltip>
+      ) : (
+        <MoreHorizontal className="w-4 h-4 lg:w-6 lg:h-6 invisible" />
       )}
       <ModifyDogModal
         currentUser={currentUser}

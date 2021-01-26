@@ -33,22 +33,6 @@
 }
 
 /* カロウセル */
-.slick-slider {
-  height: 100%;
-}
-
-.slick-list {
-  height: 100%;
-}
-
-.slick-track {
-  height: 100%;
-}
-
-.slick-track .slick-slide {
-  height: 100%;
-}
-
 .slick-dots li.slick-active button::before {
   color: rgb(115, 200, 183);
   opacity: 1;

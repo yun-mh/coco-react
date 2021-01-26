@@ -19,7 +19,7 @@ const ActionTabContainer = styled.div`
 `;
 
 const ActionTab = styled.div`
-  ${tw`flex flex-1 justify-center items-center cursor-pointer`}
+  ${tw`flex flex-1 justify-center items-center cursor-pointer text-xs sm:text-base`}
 `;
 
 const UserSection = styled.div`
@@ -40,7 +40,6 @@ const SearchPresenter = ({
   tab,
   setTab,
 }) => {
-  console.log(data);
   if (searchTerm === undefined) {
     return <Wrapper></Wrapper>;
   } else if (loading === true) {

@@ -38,7 +38,7 @@ const Caption = styled.p`
 
 const Image = styled.div`
   background-image: url(${({ url }) => url});
-  ${tw`w-full h-quarter md:h-half bg-cover`}
+  ${tw`w-full h-half bg-cover bg-center`}
 `;
 
 const Meta = styled.div`
@@ -119,7 +119,9 @@ export default ({
                 state: { id: user.id },
               }}
             >
-              <span className="font-semibold">{user.username}</span>
+              <span className="font-semibold text-sm sm:text-base">
+                {user.username}
+              </span>
             </Link>
             <Location>{location ? location : "　"}</Location>
           </UserColumn>

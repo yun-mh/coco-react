@@ -15,7 +15,7 @@ import SearchBar from "./SearchBar";
 const LoggedInRoutes = () => (
   <div className="container mx-auto border-r bg-secondary-light min-h-screen">
     <Header />
-    <div className="w-full pl-16">
+    <div className="w-full pl-12 sm:pl-16">
       <SearchBar />
       <div className="p-3 md:p-8">
         <Switch>
