@@ -54,8 +54,8 @@ const SignInForm = ({ action, setAction }) => {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: "guest@cocofordogs.com",
+      password: "cocolovesyou",
     },
     validate,
     validateOnChange: false,
