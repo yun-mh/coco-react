@@ -14,7 +14,14 @@ const Container = styled(InfiniteScroll)`
   ${tw`grid grid-cols-1 gap-4 lg:grid lg:grid-cols-2 lg:gap-8 relative`}
 `;
 
-const FeedPresenter = ({ loading, data, myId, onEndReached, canFetchMore }) => {
+const FeedPresenter = ({
+  loading,
+  data,
+  myId,
+  currentPosts,
+  onEndReached,
+  canFetchMore,
+}) => {
   return (
     <>
       <LoaderContainer>{loading && <Loader />}</LoaderContainer>
@@ -45,6 +52,7 @@ const FeedPresenter = ({ loading, data, myId, onEndReached, canFetchMore }) => {
               isLiked={post.isLiked}
               comments={post.comments}
               createdAt={post.createdAt}
+              currentPosts={currentPosts}
               myId={myId}
             />
           ))}

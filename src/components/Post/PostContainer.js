@@ -6,6 +6,7 @@ import {
   ADD_COMMENT,
   VIEW_POST,
   DELETE_POST,
+  VIEW_FEED,
 } from "../../queries/Main/MainQueries";
 import useInput from "../../hooks/useInput";
 import PostPresenter from "./PostPresenter";
@@ -21,6 +22,7 @@ const PostContainer = ({
   createdAt,
   caption,
   location,
+  currentPosts,
   myId,
 }) => {
   const [isLiked, setIsLiked] = useState(isLikedProp);
@@ -42,7 +44,10 @@ const PostContainer = ({
       text: comment.value,
       token: user.token,
     },
-    refetchQueries: () => [{ query: VIEW_POST, variables: { id } }],
+    refetchQueries: () => [
+      { query: VIEW_POST, variables: { id } },
+      { query: VIEW_FEED, variables: { offset: 0, limit: currentPosts } },
+    ],
   });
 
   const [deletePostMutation] = useMutation(DELETE_POST, {

@@ -9,6 +9,7 @@ const FeedContainer = () => {
 
   const [myId, setMyId] = useState();
   const [canFetchMore, setCanFetchMore] = useState(true);
+  const [currentPosts, setCurrentPosts] = useState(4);
 
   const { loading: myLoading, data: myData } = useQuery(CHECK_MYSELF);
 
@@ -27,6 +28,7 @@ const FeedContainer = () => {
           limit: ITEMS,
         },
       });
+      setCurrentPosts(data.viewFeed.length);
       if (res.data.viewFeed.length === 0) {
         setCanFetchMore(false);
       }
@@ -39,7 +41,16 @@ const FeedContainer = () => {
     }
   }, [myData, myLoading]);
 
-  return <FeedPresenter loading={loading} data={data} myId={myId} onEndReached={onEndReached} canFetchMore={canFetchMore} />;
+  return (
+    <FeedPresenter
+      loading={loading}
+      data={data}
+      myId={myId}
+      currentPosts={currentPosts}
+      onEndReached={onEndReached}
+      canFetchMore={canFetchMore}
+    />
+  );
 };
 
 export default withRouter(FeedContainer);
